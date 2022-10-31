@@ -1,14 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+import Dashboard from './pages/Dashboard';
+import Landing from './pages/Landing';
+import Login from './pages/Login';
 
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <>
+      <Router>
+        <div className='container'>
+          <Routes>
+            <Route path='/' element={<Landing />}/>
+            <Route path='/login' element={<Login />}/>
+            <Route path='/dashboard' element={<Dashboard/>}/>
+          </Routes>
+        </div>
+      </Router>
+      <ToastContainer />
+    </>
   );
 }
 
 export default App;
+
