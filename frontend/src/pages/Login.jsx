@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import logo from '../assets/images/logo.png'
-import '../assets/scss/login.scss'
 import {useSelector, useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {login, reset} from '../features/auth/authSlice'
+import '../assets/scss/login.scss'
 
 function Login() {
     const [formData, setFormData] = useState({
@@ -42,10 +42,11 @@ function Login() {
             idnum,
             password,
         }
+
         dispatch(login(userData))
     }
 
-  return (
+  return (<>
     <body>
       <div class="main-login">
         <div class="titling">
@@ -80,37 +81,33 @@ function Login() {
                   value = {idnum}
                   placeholder="Enter ID Number"
                   required
-                  onChange={onChange}
-                  onInvalid={e => e.target.setCustomValidity('Please enter ID Number')}
-                  onInput={e => e.target.setCustomValidity('')} />
+                  onChange={onChange} />
                   <br />
                 </div>
             
                 <div class="login-inputs">
                   <label>Password</label>
-                  <input                  
-                  type="password"
+                  <input
+                  type= 'password'
                   id='password'
                   name='password'
                   value = {password}
                   placeholder="Enter Password"
                   required
-                  onChange={onChange}
-                  onInvalid={e => e.target.setCustomValidity('Please enter Password')}
-                  onInput={e => e.target.setCustomValidity('')} />
+                  onChange={onChange} />
                   <br />
-                  <a href="/login">FORGOT PASSWORD?</a>
+                  <a href="/">FORGOT PASSWORD?</a>
                 </div>                
               </div>
               <div>
                 <button type='submit' class="login-button">Sign In</button>
-              </div>              
+              </div>           
             </form>
             </div>
           </div>
       </div>
     </body>
-  );
+  </>);
 }
 
 export default Login;

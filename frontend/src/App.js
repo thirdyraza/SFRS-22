@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Dashboard from './pages/Dashboard';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path='/' element={<Landing />}/>
             <Route path='/login' element={<Login />}/>
             <Route path='/dashboard' element={<Dashboard/>}/>
+            <Route path='/register' element={<Register/>}/>
           </Routes>
         </div>
       </Router>

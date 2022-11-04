@@ -1,10 +1,11 @@
 import {useEffect} from 'react'
+import {FaSignOutAlt} from 'react-icons/fa'
 import {useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import GoalForm from '../components/GoalForm'
-// import Spinner from '../components/Spinner'
 import GoalItem from '../components/GoalItem'
-import { reset, getGoals } from '../features/goals/goalSlice'
+import { getGoals } from '../features/goals/goalSlice'
+import {logout, reset} from '../features/auth/authSlice'
 
 function Dashboard() {
   const navigate = useNavigate()
@@ -18,19 +19,28 @@ function Dashboard() {
       console.log(message)
     }
     if(!user) {
-      navigate ('/login')
+      return navigate ('/login')
     }
 
     dispatch(getGoals())
     return () => {
-    dispatch(reset())
-    }
+      dispatch(reset());
+    };
   }, [user, navigate, isError, message, dispatch])
+  
+  const onLogout =() => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate('/dashboard')
+  }
 
   return (<>
     <section className="heading">
       <h1> Welcome {user && user.name}</h1>
       <p>Goals Dashboard</p>
+      <button className='btn' onClick={onLogout}>
+        <FaSignOutAlt /> Logout
+      </button>
     </section>
     <GoalForm />
 
