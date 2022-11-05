@@ -15,16 +15,18 @@ function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
+    const {user, isError, isSuccess, message} = useSelector((state) => state.auth)
 
     useEffect(() =>{
         if(isError){
-            toast.error(message)
+          toast.error(message)
         }
         if(isSuccess || user){
-            navigate('/dashboard')
+          navigate('/admin/dashboard')
         }
-        dispatch(reset())
+        return () => {
+          dispatch(reset())
+        }
 
     }, [user, isError, isSuccess, message, navigate, dispatch])
 
@@ -42,7 +44,6 @@ function Login() {
             idnum,
             password,
         }
-
         dispatch(login(userData))
     }
 

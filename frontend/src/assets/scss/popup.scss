@@ -1,0 +1,192 @@
+@import 'var&mixins.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+// Removable Testing Button
+.testing-popup{
+  h1{
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  h2{
+    font-weight: lighter;
+    transition: 0.2s;
+  }
+}
+#popup_container { 
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+
+
+    .p_close{
+      z-index: 1;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      transition: .5s;
+      display:flex;
+      place-self: end;
+      text-align: center;
+      background-color: $color-white;
+      border-radius: 50px;
+      padding: 15px;
+      cursor: pointer;
+
+      svg{
+        fill: $color-blue;
+        height: 20px;
+        width: 20px;
+      }
+      
+      &:hover {
+        transform: scale(1.1);
+        transition: 0.2s;
+      }
+    }
+  }
+
+  #User_Popup {
+    position: relative;
+    padding: 40px 100px;
+    border-radius: 15px;
+    background-color: #E6E6E6;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 60vw;
+
+    .UserType{
+      display: flex;
+      height: 40vh;     
+      .UserAdmin,.UserStudent,.UserFaculty{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 25px;
+        width: 30vh;
+        border-radius: 10px;
+        transition: .5s;
+
+        img{
+          width: 200px;
+          height: 200px;
+          padding: 25px;
+          background-color: #fff;
+          border-radius: 150px;
+          margin-bottom: 15px;
+        }
+
+        &:hover{
+          img{
+            border: #699BF7 solid 2px;
+          }
+          h2{
+            color: #699BF7;
+            font-weight: bold;
+          }
+          transition: 0.2s;
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+  #open_popup{
+
+    &:hover{
+      transform: scale(1.1);
+      transition: .5s ease;
+    }
+  }
+
+  // Settings Popup
+  .settings_popup{
+    position: relative;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 500px;
+    overflow: hidden;
+    color: #fff;
+    font-size: 15px;
+
+    .settings_header{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: $color-blue;
+      line-height: 1;
+      padding: 30px;
+      width: 100%;
+      height: 100%;
+
+      img{
+        width: 150px;
+        height: 150px;
+        padding: 25px;
+        background-color: #fff;
+        border-radius: 150px;
+        margin-bottom: 15px;
+      }
+      
+      .bold{
+        font-size:25px;
+        font-weight: bold;
+        font-family: 'Roboto', sans-serif;
+      }
+    }
+
+    .settings_body{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background-color: #383838;
+      padding: 25px;
+
+      .btnSettings{
+        text-decoration: none;
+        color: #fff;
+        background-color: $color-blue;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        padding: 15px;
+        width: 180px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+        transition: .5s ease;
+
+        &:hover{
+          border: solid 1px #fff;
+          background-color: #2f4152;
+        }
+      }
+      #btnLogout{
+        margin-top: 10px;
+        background-color: #E4A951;
+        &:hover{
+          background-color: #bb883c;
+        }
+      }
+    }
+  }

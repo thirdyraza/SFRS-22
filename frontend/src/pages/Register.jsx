@@ -4,7 +4,6 @@ import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {register, reset} from '../features/auth/authSlice'
 import {FaUser} from 'react-icons/fa'
-// import Spinner from '../components/Spinner'
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -17,20 +16,21 @@ function Register() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
+    const {isError, isSuccess, message} = useSelector((state) => state.auth)
 
     useEffect(() =>{
         if(isError){
             toast.error(message)
         }
-        if(isSuccess || user){
-            navigate('/login')
+        if(isSuccess){
+            toast.info('User Registered')
+            navigate('/admin/dashboard')
         }
-        return () => {
+        return () =>{
             dispatch(reset());
-        };
+        }
 
-    }, [isError, user, isSuccess, message, navigate, dispatch])
+    }, [isError, isSuccess, message, navigate, dispatch])
 
     const onChange = (e) =>{
         setFormData((prevState) => ({
@@ -43,9 +43,9 @@ function Register() {
         e.preventDefault()
 
         if(password !== cpassword){
-            toast.error('password do no match')
+            toast.error('Password do no match')
         } else {
-            const userData ={
+            const userData = {
                 name,
                 idnum,
                 password,
@@ -53,10 +53,6 @@ function Register() {
             dispatch(register(userData))
         }
     }
-
-    // if(isLoading){
-    //     return <Spinner />
-    // }
 
     return (
     <>

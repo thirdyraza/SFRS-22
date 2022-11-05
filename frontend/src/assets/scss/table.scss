@@ -1,0 +1,62 @@
+@import './var&mixins.scss';
+// Table Heading
+.heading{
+    margin: 20px auto;
+    padding: 20px 70px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    justify-content: space-evenly;
+    background-color: $color-blue;
+    color: $color-white;
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.315);
+
+    p{
+        margin: 0 10px;
+        font-size: 14px;
+
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .heading{
+        font-size: 2vw;
+    }
+}
+
+// Table Content
+.info-container{
+    margin: 15px 0;
+    padding: 35px 70px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr ;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $color-white;
+    color: $color-gray;
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.13);
+    
+    input{
+        width: 16px;
+        height: 16px;
+        place-self: center;
+    }
+
+    p{
+        margin: 0 10px;
+        font-size: 14px;
+        text-decoration: none;
+    }
+
+}
+
+@media only screen and (max-width: 700px) {
+    .info-container{
+        font-size: 2vw;
+    }
+}

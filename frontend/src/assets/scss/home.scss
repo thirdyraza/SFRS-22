@@ -1,0 +1,143 @@
+@import './var&mixins.scss';
+*{
+    z-index: 0;
+}
+.content-container{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 50px 0;
+
+    p{
+        font-size: 30px;
+    }
+    .home-banner{
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.458);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 220px;
+        display: flex;
+        z-index: 0;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 5vw;
+    
+        p{
+            font-size: 50px;
+            font-weight: 700;
+            color: $color-white;
+            text-shadow: 1px 1px 10px rgba(77, 77, 77, 0.579);
+        }
+        .louisian{
+            font-size: 63px;
+            margin-top: -20px;
+            color: $color-yellow;
+        }
+    }
+    .main-cont{
+        margin-top: -35px;
+        margin-left: -45px;
+        width: 100%;
+        justify-content: end;
+        display: flex;
+        .mainbtn{
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            height: 60px;
+            width: 300px;
+            gap: 0 10px;
+            border-radius: 100px;
+            background-color: $color-blue;
+            margin: 0px 5px;
+            
+            p{
+                color: $color-white;
+                font-size: 19px;
+                font-weight: 600;
+            }
+            svg{
+                fill: $color-white;
+                width: 30px;
+            }
+    
+            &:hover{
+                background-color: $color-yellow;
+                cursor: pointer;
+            }
+        }
+    }
+    .requests{
+        padding: 25px 50px;
+        border-radius: 20px;
+        box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.305);
+        margin-top: 43px;
+        min-height: 500px;
+        margin-top: 50px;
+        width: 100%;
+        background-color: $color-white;
+    
+        .request-title{
+            background-color: #699BF7;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 20px;
+            padding-left: 50px;
+    
+            p{
+                color: #fff;
+            }
+        }
+
+        #otherreq{
+            margin-top: 40px;
+        }
+    }
+    
+}
+
+// Justine's Additional CSS
+.header{
+    div{
+        font-size: 40px;
+        font-weight: 600;
+        color: $color-white;
+        text-shadow: 1px 0 15px $color-black;
+    }
+    div:nth-child(2) {
+        font-size: 60px;
+        margin-top: -25px;
+        color: $color-yellow;
+    }
+}
+
+
+#user-req-admin{
+    margin-top: 100px;
+}
+
+.user-req{
+
+    h1{
+        color: $color-blue;
+        font-weight: bold;
+    }
+}
+.more{
+    width: 100%;
+    background-color: $color-blue;
+    height: 45px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    color: $color-white;
+    font-weight: 500;
+
+    &:hover{
+        background-color: $color-yellow;
+    }
+}
