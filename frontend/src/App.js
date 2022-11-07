@@ -6,12 +6,12 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import MainAdmin from './pages/MainAdmin';
 import Register from './pages/Register';
+import UsersList from './pages/UsersList';
 
 function App() {
   return (
     <>
       <Router>
-        <div className='container'>
           <Routes>
             <Route path='/' element={<Landing />}/>
             <Route path='/login' element={<Login />}/>
@@ -20,10 +20,10 @@ function App() {
             <Route path='/admin' element={<MainAdmin/>}>
               <Route path='dashboard' element={<Dashboard/>}></Route>
               <Route path='registration' element={<Register/>}></Route>
+              <Route path='users-list' element={<UsersList/>}></Route>
             </Route>
 
           </Routes>
-        </div>
       </Router>
       <ToastContainer />
     </>
