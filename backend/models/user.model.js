@@ -13,7 +13,19 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Please add a password']
-    }
+    },
+    role: {
+        type: String,
+        required: [true, 'Please select a role'],
+    },
+    org: {
+        type: String,
+        required: [true, 'Please add an organization'],
+    },
+    dept: {
+        type: String,
+        required: [true, 'Please add a deparment'],
+    },
 }, {
     timestamps: true
 })

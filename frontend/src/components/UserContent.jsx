@@ -5,8 +5,8 @@ function UserContent({users}) {
         <div class='info-container'>
             <p id='id'>{users.idnum}</p>
             <p id='name'>{users.name}</p>
-            <p id='org'>'LITES'</p>
-            <p id='dept'>'SEAITE'</p>
+            <p id='org'>{users.org}</p>
+            <p id='dept'>{users.dept}</p>
         </div>
     );
 }

@@ -5,11 +5,11 @@ const User = require('../models/user.model')
 
 // @desc Register a user
 // @route POST /api/users
-// @access Public
+// @access Private
 const registerUser = asyncHandler(async(req, res) =>{
-    const { name, idnum, password } = req.body
+    const { name, idnum, password, role, org, dept } = req.body
 
-    if(!name || !idnum || !password){
+    if(!name || !idnum || !password || !role || !org || !dept){
         res.status(400)
         throw new Error('Please add input data')
     }
@@ -29,19 +29,15 @@ const registerUser = asyncHandler(async(req, res) =>{
     const user = await User.create({
         name,
         idnum,
-        password: hashedPass
+        password: hashedPass,
+        role,
+        org,
+        dept,
+
     })
     
     if(user){
-        res.status(201).json({
-            _id: user.id,
-            name: user.name,
-            idnum: user.idnum,
-            token: generateToken(user._id)
-        })
-    } else {
-        res.status(400)
-        throw new Error('Invalid user data')
+        res.status(201)
     }
 })
 
@@ -60,6 +56,9 @@ const loginUser = asyncHandler(async(req, res) =>{
             _id: user.id,
             name: user.name,
             idnum: user.idnum,
+            role: user.role,
+            org: user.org,
+            dept: user.dept,
             token: generateToken(user._id)
         })
     } else{
@@ -72,12 +71,13 @@ const loginUser = asyncHandler(async(req, res) =>{
 // @route GET /api/users/me
 // @access Private
 const getMe = asyncHandler(async(req, res) =>{
-    res.status(200).json(req.user)
-    res.json({message: 'User data'})
+    const me = await User.findOne({idnum})
+    
+    res.status(200).json(me)
 })
 
 // @desc Get user data
-// @route GET /api/users/me
+// @route GET /api/users/all
 // @access Private
 const getAll = asyncHandler(async(req, res) =>{
     const users = await User.find({user: req.user.id})
@@ -97,5 +97,5 @@ module.exports = {
     registerUser,
     loginUser,
     getMe,
-    getAll
+    getAll,
 }

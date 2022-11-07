@@ -11,7 +11,6 @@ function UsersList() {
 
     useEffect(() =>{ 
         dispatch(getUsers())
-
       }, [dispatch])
 
   return (

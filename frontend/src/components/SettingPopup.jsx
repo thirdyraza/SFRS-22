@@ -1,9 +1,10 @@
+import { useEffect } from 'react';
 import {FaSignOutAlt} from 'react-icons/fa'
 import faculty from '../assets/images/faculty.png'
 import '../assets/scss/popup.scss'
 import { Link, useNavigate } from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux'
-import {logout, reset} from '../features/auth/authSlice'
+import {useSelector, useDispatch} from 'react-redux'
+import {logout, reset, getMe} from '../features/auth/authSlice'
 
 function closePopup(){
     document.getElementById('popup_container').style.cssText = 'display:none';
@@ -17,10 +18,15 @@ function closePopup(){
 // }
 
 export default function SettingPopup(){
-    const navigate = useNavigate()
     const dispatch = useDispatch()
-
+    const navigate = useNavigate()
     const {user} = useSelector((state) => state.auth)
+
+    useEffect(() =>{ 
+        dispatch(getMe())
+
+    }, [dispatch])
+    
     const onLogout =() => {
         dispatch(logout())
         dispatch(reset())
@@ -39,7 +45,7 @@ export default function SettingPopup(){
                     <div className='settings_header'>
                         <img src={faculty} alt=''/>
                         <h1>{user && user.name}</h1>
-                        <p>Faculty</p>
+                        <p>{user.role}</p>
                     </div>
                     <div className='settings_body'>
                         <Link id='btnChange' className='btnSettings'>
