@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+.form-container{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: 100%;
+    width: 92.4vw;
+
+    // Button CSS
+    .btnForm{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        width: 100px;
+        border-radius: 10px;
+        font-size: 20px;
+        background-color: #699BF7;
+        color: #fff;
+        transition: all .2s,box-shadow .08s ease-in;
+        cursor: pointer;
+        font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+        font-size: 100%;
+        &:hover{
+            background-color: #294A70;
+        }
+    
+        .btn-text{
+            padding-right: 8px;
+        }
+    }
+    #btnSubmit{
+        float: right;
+        width: 7vw;
+    }
+    #btnAdd{
+        border-radius: 50px;
+        margin: 20px 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i{
+            font-size: 50px;
+            color: #699BF7;
+            transition: all .2s,box-shadow .08s ease-in;
+            &:hover{
+                color: #294A70;
+            }
+        }
+    }
+    #btnBack{
+        display: flex;
+        position: absolute;
+        width: 7vw;
+        i{
+            padding-right: 8px;
+        }
+    }
+    #btnAttach{
+        width: 9vw;
+        margin-bottom: 20px;
+    }
+    
+    // Form Title CSS
+    h2{
+        text-align: center;
+        color: #3B5165;
+        font-weight: bold;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.15);
+        font-size: 30px;
+        padding-bottom: 15px;
+    }
+    
+
+    .note{
+        background-color: #E9C185;
+        place-self: center;
+        border-radius: 8px;
+        padding: 10px 30px;
+        display: flex;
+        flex-direction: column;
+
+        .note_header{
+            font-weight: bolder;
+        }
+        .note_content{
+            margin: 10px;
+        }
+    }
+
+    .purpose{
+        display: grid;
+        flex-direction: column;
+        grid-template-columns: 1fr;
+        width: 100%;
+        textarea{
+            height: 100px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+        }
+    }
+
+    .in, .time-container{
+        display: flex;
+        flex-direction: column;
+        padding-right: 10px;
+
+        select{
+            border-radius: 15px;
+            height: 50px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border: none;
+        }
+
+        .time-container{
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            #time-span{
+                margin: 0px 20px;
+            }
+            select{
+                width: 100%;
+            }
+        }
+    }
+
+    .input-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .selectbottom{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        .date-container{
+            display: flex;
+            flex-direction: column;
+        }
+        .time-main{
+            display: flex;
+        }
+
+    }
+
+    .equipment-container{
+        display: grid;
+        grid-template-columns: 13fr 2fr 1fr;
+    }
+}
