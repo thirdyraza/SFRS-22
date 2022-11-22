@@ -33,7 +33,6 @@ const registerUser = asyncHandler(async(req, res) =>{
         role,
         org,
         dept,
-
     })
     
     if(user){

@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
 import {FaSignOutAlt} from 'react-icons/fa'
 import faculty from '../assets/images/faculty.png'
 import '../assets/scss/popup.scss'
 import { Link, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux'
-import {logout, reset, getMe} from '../features/auth/authSlice'
+import {logout, reset} from '../features/auth/authSlice'
 
 function closePopup(){
     document.getElementById('popup_container').style.cssText = 'display:none';
@@ -21,11 +20,6 @@ export default function SettingPopup(){
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {user} = useSelector((state) => state.auth)
-
-    useEffect(() =>{ 
-        dispatch(getMe())
-
-    }, [dispatch])
     
     const onLogout =() => {
         dispatch(logout())
