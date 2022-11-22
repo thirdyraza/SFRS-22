@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import MainAdmin from './pages/MainAdmin';
 import Register from './pages/Register';
 import UsersList from './pages/UsersList';
+import MainForm from './pages/MainForm';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path='dashboard' element={<Dashboard/>}></Route>
               <Route path='registration' element={<Register/>}></Route>
               <Route path='users-list' element={<UsersList/>}></Route>
+              <Route path='reserve' element={<MainForm/>}></Route>
             </Route>
 
           </Routes>
