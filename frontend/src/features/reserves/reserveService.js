@@ -10,6 +10,9 @@ const createReserve = async(reserveData, token) =>{
         }
     }
     const response = await axios.post(API_URL, reserveData, config)
+    if(response.data) {
+        localStorage.setItem('reserve', JSON.stringify(response.data))
+    }
     return response.data
 }
 

@@ -8,14 +8,14 @@ const Reserve = require('../models/reserve.model')
 const getReserves = asyncHandler( async (req, res) => {
     const reserves = await Reserve.find({ user: req.user.id })
 
-    res.status(200).json(goals)
+    res.status(200).json(reserves)
 })
 
 // @desc Set reservations
 // @route POST /api/reserves
 // @access Private
 const setReserve = asyncHandler( async (req, res) => {
-    if(!req.body.text){
+    if(!req.body.purpose){
         res.status(400)
         throw new Error('Please provide a purpose')
     }
@@ -25,6 +25,8 @@ const setReserve = asyncHandler( async (req, res) => {
         dept: req.body.dept,
         org: req.body.org,
         bldg: req.body.bldg,
+        room: req.body.room,
+        date: req.body.date,
         time_in: req.body.time_in,
         time_out: req.body.time_out,
         user: req.user.id,

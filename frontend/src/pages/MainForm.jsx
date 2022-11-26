@@ -1,39 +1,51 @@
-import React, { useState } from "react";
-import SelectInput from "./SelectInput";
+import { useState } from 'react'
+import {useDispatch} from 'react-redux'
+import {createReserve} from '../features/reserves/reserveSlice'
 import '../assets/scss/MainForm.scss';
+import { useNavigate } from 'react-router-dom';
 
-const MainForm=() =>{
+function MainForm(){
+    const [formData, setFormData] = useState({
+        purpose: '',
+        org: '',
+        dept: '',
+        bldg: '',
+        room: '',
+        date: '',
+        time_in: '',
+        time_out: '',
+        status: 'Not Approved'
+    })
 
+    const { purpose, org, dept, bldg, room, date, time_in, time_out, status } = formData
 
-    const [selectleft, setSelect1]=useState([
-        {   
-            label:'Organization', 
-            placeholder:'Select Organization', 
-            type:'text',
-            error:'Please select Organization'
-        },
-        {
-            label:'Building', 
-            placeholder:'Select Building', 
-            type:'text',
-            error:'Please select Building'
-        },
-    ]);
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-    const [selectright,setSelect2]=useState([
-        {   
-            label:'Department', 
-            placeholder:'Select Department', 
-            type:'text',
-            error:'Please select Department'
-        },
-        {
-            label:'Room', 
-            placeholder:'Select Room', 
-            type:'text',
-            error:'Please select Room'
-        },
-    ]);
+    // const onChange = (e) =>{
+    //     setFormData((prevState) => ({
+    //         ...prevState,
+    //         [e.target.name]: e.target.value,
+    //     }))
+    // }
+
+    const onSubmit = (e) =>{
+        e.preventDefault()
+        
+            const reserveData = {
+                purpose,
+                org,
+                dept,
+                bldg,
+                room,
+                date,
+                time_in,
+                time_out,
+                status
+            }
+            dispatch(createReserve(reserveData))
+            navigate('../dashboard')
+    }
 
     return(
     <div className="app">
@@ -41,7 +53,7 @@ const MainForm=() =>{
         <div>
                 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>
                 <div className="form-container">
-                    <form>
+                    <form onSubmit={onSubmit}>
                         <h2>ACTIVITY VENUE RESERVATION FORM</h2>
                         <div className="note">
                             <h3 class="note_header">NOTE:</h3>
@@ -53,44 +65,125 @@ const MainForm=() =>{
                         </div>
                         <div className="purpose">
                             <label>Purpose</label>
-                            <textarea placeholder="State your Purpose"/>
-                        </div>
-                        <div id="btnAttach" className="btnForm">
-                            <p className="btn-text">Attach Files</p>
-                            <i class='bx bxs-file' ></i>
+                            <textarea
+                            type='text'
+                            className='form-control'
+                            id='purpose'
+                            name='purpose'
+                            value={purpose}
+                            onChange={(e) => setFormData(e.target.value)}
+                            placeholder="State your Purpose" />
                         </div>
 
                         <div className="input-container">
                             <div className="selectleft">
-                                <SelectInput select={selectleft}/>
+                                <div className="in">
+                                    <label>Organization</label>
+                                    <select
+                                    type="text"
+                                    value = {org}
+                                    onChange={(e) => setFormData(e.target.value)}>
+                                        <option>- - - - -</option>
+                                        <option>LITES</option>
+                                        <option>IIEE</option>
+                                        <option>GESA</option>
+                                        <option>UAPSA</option>
+                                        <option>JCIEPEP</option>
+                                    </select>
+                                </div>
+                                <div className="in">
+                                    <label>Department</label>
+                                    <select
+                                    type="text"
+                                    value = {dept}
+                                    onChange={(e) => setFormData(e.target.value)}>
+                                        <option>- - - - -</option>
+                                        <option>SEAITE</option>
+                                        <option>SEAS</option>
+                                        <option>SABH</option>
+                                        <option>SHAS</option>
+                                        <option>SHS</option>
+                                    </select>
+                                </div>
                             </div>
+
                             <div className="selectright">
-                                <SelectInput select={selectright}/>
+                                <div className="in">
+                                    <label>Building</label>
+                                    <select
+                                    type="text"
+                                    value = {bldg}
+                                    onChange={(e) => setFormData(e.target.value)}>
+                                        <option>- - - - -</option>
+                                        <option>R Building</option>
+                                        <option>N Building</option>
+                                        <option>J Building</option>
+                                        <option>H Building</option>
+                                        <option>K Building</option>
+                                    </select>
+                                </div>
+                                <div className="in">
+                                    <label>Room</label>
+                                    <select
+                                    type="text"
+                                    value = {date}
+                                    onChange={(e) => setFormData(e.target.value)}>
+                                        <option>- - - - -</option>
+                                        <option>R 21</option>
+                                        <option>N 46</option>
+                                        <option>J 43</option>
+                                        <option>H 23</option>
+                                        <option>K 13</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
                         <div className="selectbottom">
                             <div className="in">
                                 <label>Date</label>
-                                <select type="text" placeholder="MM/DD/YY">
-                                    <option>Default Value</option>
+                                <select
+                                type="text"
+                                value = {date}
+                                onChange={(e) => setFormData(e.target.value)}>
+                                    <option>-- / -- / --</option>
+                                    <option>Monday</option>
+                                    <option>Tuesday</option>
+                                    <option>Wednesday</option>
+                                    <option>Thursday</option>
+                                    <option>Friday</option>
                                 </select>
                             </div>
 
                             <div className="in">
                                 <label>Time</label>
-
                                 <div className="time-container">
-                                    
-                                    <select type="text" placeholder="MM/DD/YY">
-                                        <option>Default Value</option>
+                                    <select
+                                    type="text"
+                                    value = {time_in}
+                                    onChange={(e) => setFormData(e.target.value)}>
+                                        <option>-- : --</option>
+                                        <option>7:30</option>
+                                        <option>9:00</option>
+                                        <option>10:30</option>
+                                        <option>12:00</option>
+                                        <option>1:30</option>
                                     </select>
                                     <p id="time-span">to</p>
-                                    <select type="text" placeholder="MM/DD/YY">
-                                        <option>Default Value</option>
+                                    <select
+                                    type="text"
+                                    value={time_out}
+                                    onChange={(e) => setFormData(e.target.value)}>
+                                        <option>-- : --</option>
+                                        <option>7:30</option>
+                                        <option>9:00</option>
+                                        <option>10:30</option>
+                                        <option>12:00</option>
+                                        <option>1:30</option>
                                     </select>
                                 </div>
                             </div>
+
                         </div>
 
                         <div className="equipment-container">  
@@ -114,10 +207,9 @@ const MainForm=() =>{
 
                         <br/>
                         <div id="btnSubmit"className="btnForm">
-                            <p className="btn-text">Submit</p>
+                            <button type='submit' className='btn btn-block'>Submit</button>
                             <i class='bx bx-check-circle' ></i>
                         </div>
-
                     </form>
                 </div>
             </div>

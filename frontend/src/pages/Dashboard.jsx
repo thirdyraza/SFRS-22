@@ -2,19 +2,24 @@ import {useEffect} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {reset} from '../features/auth/authSlice'
+import { getReserves } from '../features/reserves/reserveSlice'
 import '../assets/scss/home.scss'
 import bg from '../assets/images/bannerpic1.jpg'
 
 import TableHead from '../components/TableHeading'
-import UserTable from '../components/TableContent'
+import ReservesContent from '../components/ReservesContent'
 
 function Dashboard() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const {user, isError, message} = useSelector((state) => state.auth)
+  const {reserves} = useSelector((state) => state.reserve)
 
   useEffect(() =>{
+
+    
+
     if(isError){
       console.log(message)
     }
@@ -22,6 +27,7 @@ function Dashboard() {
       return navigate ('/login')
     }
     return () =>{
+      dispatch(getReserves())
       dispatch(reset());
     }
     
@@ -54,20 +60,19 @@ function Dashboard() {
           <div id='ownreq' class='user-req'>
             <h1>YOUR REQUESTS</h1>
               <TableHead />
-              <UserTable/>
-              <UserTable/>
-              <UserTable/>
-              <UserTable/>  
-            <div class='more'>See more ...</div>
+              {reserves.length > 0 ? (
+                <div>
+                {reserves.map((reserve) => (
+                    <ReservesContent key={user._id} reserves={reserve} />
+                ))}
+                </div>
+              ) : (<h3>No Users Found</h3>)} 
+              <div class='more'>See more ...</div>
           </div>
 
           <div id='otherreq' class='user-req'>
             <h1>USER REQUESTS</h1>
               <TableHead />
-              <UserTable/>
-              <UserTable/>
-              <UserTable/>
-              <UserTable/> 
               <div class='more'>See more ...</div> 
           </div>
 

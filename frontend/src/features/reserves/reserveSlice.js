@@ -1,8 +1,10 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import reserveService from './reserveService'
 
+const reserve = JSON.parse(localStorage.getItem('reserve'))
 const initialState = {
-    reserves: [],
+    reserve: reserve ? reserve:null,
+    reserves: [reserve],
     isError: false,
     isSuccess: false,
     isLoading: false,
