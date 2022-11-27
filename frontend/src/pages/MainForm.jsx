@@ -2,7 +2,6 @@ import { useState } from 'react'
 import {useDispatch} from 'react-redux'
 import {createReserve} from '../features/reserves/reserveSlice'
 import '../assets/scss/MainForm.scss';
-import { useNavigate } from 'react-router-dom';
 
 function MainForm(){
     const [formData, setFormData] = useState({
@@ -20,14 +19,13 @@ function MainForm(){
     const { purpose, org, dept, bldg, room, date, time_in, time_out, status } = formData
 
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
-    // const onChange = (e) =>{
-    //     setFormData((prevState) => ({
-    //         ...prevState,
-    //         [e.target.name]: e.target.value,
-    //     }))
-    // }
+    const onChange = (e) =>{
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }))
+    }
 
     const onSubmit = (e) =>{
         e.preventDefault()
@@ -44,7 +42,17 @@ function MainForm(){
                 status
             }
             dispatch(createReserve(reserveData))
-            navigate('../dashboard')
+            setFormData({
+                purpose: '',
+                org: '',
+                dept: '',
+                bldg: '',
+                room: '',
+                date: '',
+                time_in: '',
+                time_out: '',
+                status: 'Not Approved'
+            })
     }
 
     return(
@@ -71,7 +79,7 @@ function MainForm(){
                             id='purpose'
                             name='purpose'
                             value={purpose}
-                            onChange={(e) => setFormData(e.target.value)}
+                            onChange={onChange}
                             placeholder="State your Purpose" />
                         </div>
 
@@ -82,7 +90,7 @@ function MainForm(){
                                     <select
                                     type="text"
                                     value = {org}
-                                    onChange={(e) => setFormData(e.target.value)}>
+                                    onChange={onChange}>
                                         <option>- - - - -</option>
                                         <option>LITES</option>
                                         <option>IIEE</option>
@@ -96,7 +104,7 @@ function MainForm(){
                                     <select
                                     type="text"
                                     value = {dept}
-                                    onChange={(e) => setFormData(e.target.value)}>
+                                    onChange={onChange}>
                                         <option>- - - - -</option>
                                         <option>SEAITE</option>
                                         <option>SEAS</option>
@@ -113,7 +121,7 @@ function MainForm(){
                                     <select
                                     type="text"
                                     value = {bldg}
-                                    onChange={(e) => setFormData(e.target.value)}>
+                                    onChange={onChange}>
                                         <option>- - - - -</option>
                                         <option>R Building</option>
                                         <option>N Building</option>
@@ -127,7 +135,7 @@ function MainForm(){
                                     <select
                                     type="text"
                                     value = {date}
-                                    onChange={(e) => setFormData(e.target.value)}>
+                                    onChange={onChange}>
                                         <option>- - - - -</option>
                                         <option>R 21</option>
                                         <option>N 46</option>
@@ -145,7 +153,7 @@ function MainForm(){
                                 <select
                                 type="text"
                                 value = {date}
-                                onChange={(e) => setFormData(e.target.value)}>
+                                onChange={onChange}>
                                     <option>-- / -- / --</option>
                                     <option>Monday</option>
                                     <option>Tuesday</option>
@@ -161,7 +169,7 @@ function MainForm(){
                                     <select
                                     type="text"
                                     value = {time_in}
-                                    onChange={(e) => setFormData(e.target.value)}>
+                                    onChange={onChange}>
                                         <option>-- : --</option>
                                         <option>7:30</option>
                                         <option>9:00</option>
@@ -173,7 +181,7 @@ function MainForm(){
                                     <select
                                     type="text"
                                     value={time_out}
-                                    onChange={(e) => setFormData(e.target.value)}>
+                                    onChange={onChange}>
                                         <option>-- : --</option>
                                         <option>7:30</option>
                                         <option>9:00</option>

@@ -13,7 +13,7 @@ const register = async (userData) => {
     return response.data
 }
 
-// get user goals
+// get all users
 const getUsers = async(token) =>{
     const config = {
         headers: {

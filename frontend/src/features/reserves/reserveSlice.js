@@ -1,10 +1,8 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import reserveService from './reserveService'
 
-const reserve = JSON.parse(localStorage.getItem('reserve'))
 const initialState = {
-    reserve: reserve ? reserve:null,
-    reserves: [reserve],
+    reserves: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -12,10 +10,10 @@ const initialState = {
 }
 
 // create reservation
-export const createReserve =createAsyncThunk('reserves/create', async(reserveData, thunkAPI) =>{
+export const createReserve =createAsyncThunk('reserves/create', async(reserve, thunkAPI) =>{
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await reserveService.createReserve(reserveData, token)
+        return await reserveService.createReserve(reserve, token)
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)

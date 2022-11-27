@@ -87,9 +87,19 @@ const deleteReserve = asyncHandler( async (req, res) => {
     res. status(200).json({ id: req.params.id })
 })
 
+// @desc Get all reservation
+// @route GET /api/reserves/all
+// @access Private
+const getAllReserves = asyncHandler(async(req, res) =>{
+    const reserves = await Reserve.find()
+    
+    res.status(200).json(reserves)
+})
+
 module.exports = {
     getReserves,
     setReserve,
     updateReserve,
-    deleteReserve
+    deleteReserve,
+    getAllReserves
 }

@@ -6,19 +6,17 @@ import { getReserves } from '../features/reserves/reserveSlice'
 import '../assets/scss/home.scss'
 import bg from '../assets/images/bannerpic1.jpg'
 
-import TableHead from '../components/TableHeading'
+import ReservesHead from '../components/ReservesHead'
 import ReservesContent from '../components/ReservesContent'
 
-function Dashboard() {
+function DashboardAdmin() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const {user, isError, message} = useSelector((state) => state.auth)
-  const {reserves} = useSelector((state) => state.reserve)
+  const {user} = useSelector((state) => state.auth)
+  const {reserves, isError, message} = useSelector((state) => state.reserves)
 
   useEffect(() =>{
-
-    
 
     if(isError){
       console.log(message)
@@ -26,8 +24,10 @@ function Dashboard() {
     if(!user) {
       return navigate ('/login')
     }
+
+    dispatch(getReserves())
     return () =>{
-      dispatch(getReserves())
+      
       dispatch(reset());
     }
     
@@ -59,20 +59,21 @@ function Dashboard() {
 
           <div id='ownreq' class='user-req'>
             <h1>YOUR REQUESTS</h1>
-              <TableHead />
+              <ReservesHead />
               {reserves.length > 0 ? (
                 <div>
                 {reserves.map((reserve) => (
-                    <ReservesContent key={user._id} reserves={reserve} />
+                    <ReservesContent key={reserve._id} reserves={reserve} />
                 ))}
                 </div>
-              ) : (<h3>No Users Found</h3>)} 
+              ) : (<h3>No Reservations Found</h3>)}
               <div class='more'>See more ...</div>
           </div>
 
           <div id='otherreq' class='user-req'>
             <h1>USER REQUESTS</h1>
-              <TableHead />
+              <ReservesHead />
+              
               <div class='more'>See more ...</div> 
           </div>
 
@@ -83,4 +84,4 @@ function Dashboard() {
   </>)
 }
 
-export default Dashboard
+export default DashboardAdmin
