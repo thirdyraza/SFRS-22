@@ -10,10 +10,10 @@ const initialState = {
 }
 
 // create reservation
-export const createReserve =createAsyncThunk('reserves/create', async(reserve, thunkAPI) =>{
+export const createReserve =createAsyncThunk('reserves/create', async(reserveData, thunkAPI) =>{
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await reserveService.createReserve(reserve, token)
+        return await reserveService.createReserve(reserveData, token)
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)

@@ -13,10 +13,9 @@ function MainForm(){
         date: '',
         time_in: '',
         time_out: '',
-        status: 'Not Approved'
     })
 
-    const { purpose, org, dept, bldg, room, date, time_in, time_out, status } = formData
+    const { purpose, org, dept, bldg, room, date, time_in, time_out } = formData
 
     const dispatch = useDispatch()
 
@@ -30,29 +29,18 @@ function MainForm(){
     const onSubmit = (e) =>{
         e.preventDefault()
         
-            const reserveData = {
-                purpose,
-                org,
-                dept,
-                bldg,
-                room,
-                date,
-                time_in,
-                time_out,
-                status
-            }
-            dispatch(createReserve(reserveData))
-            setFormData({
-                purpose: '',
-                org: '',
-                dept: '',
-                bldg: '',
-                room: '',
-                date: '',
-                time_in: '',
-                time_out: '',
-                status: 'Not Approved'
-            })
+            // const reserveData = {
+            //     purpose,
+            //     org,
+            //     dept,
+            //     bldg,
+            //     room,
+            //     date,
+            //     time_in,
+            //     time_out,
+            // }
+            
+            dispatch(createReserve(formData))
     }
 
     return(
@@ -89,6 +77,8 @@ function MainForm(){
                                     <label>Organization</label>
                                     <select
                                     type="text"
+                                    name='org'
+                                    id='org'
                                     value = {org}
                                     onChange={onChange}>
                                         <option>- - - - -</option>
@@ -103,6 +93,8 @@ function MainForm(){
                                     <label>Department</label>
                                     <select
                                     type="text"
+                                    name='dept'
+                                    id='dept'
                                     value = {dept}
                                     onChange={onChange}>
                                         <option>- - - - -</option>
@@ -120,6 +112,8 @@ function MainForm(){
                                     <label>Building</label>
                                     <select
                                     type="text"
+                                    name='bldg'
+                                    id='bldg'
                                     value = {bldg}
                                     onChange={onChange}>
                                         <option>- - - - -</option>
@@ -134,7 +128,9 @@ function MainForm(){
                                     <label>Room</label>
                                     <select
                                     type="text"
-                                    value = {date}
+                                    name='room'
+                                    id='room'
+                                    value = {room}
                                     onChange={onChange}>
                                         <option>- - - - -</option>
                                         <option>R 21</option>
@@ -152,6 +148,8 @@ function MainForm(){
                                 <label>Date</label>
                                 <select
                                 type="text"
+                                name='date'
+                                id='date'
                                 value = {date}
                                 onChange={onChange}>
                                     <option>-- / -- / --</option>
@@ -168,6 +166,8 @@ function MainForm(){
                                 <div className="time-container">
                                     <select
                                     type="text"
+                                    name='time_in'
+                                    id='time_in'
                                     value = {time_in}
                                     onChange={onChange}>
                                         <option>-- : --</option>
@@ -180,6 +180,8 @@ function MainForm(){
                                     <p id="time-span">to</p>
                                     <select
                                     type="text"
+                                    name='time_out'
+                                    id='time_out'
                                     value={time_out}
                                     onChange={onChange}>
                                         <option>-- : --</option>

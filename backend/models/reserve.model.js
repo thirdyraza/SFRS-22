@@ -27,7 +27,7 @@ const reserveSchema = mongoose.Schema({
         required: [true, 'Please add a room']
     },
     date: {
-        type: Date,
+        type: String,
         required: [true, 'Please add a date']
     },
     time_in: {

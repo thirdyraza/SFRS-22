@@ -29,6 +29,7 @@ const setReserve = asyncHandler( async (req, res) => {
         date: req.body.date,
         time_in: req.body.time_in,
         time_out: req.body.time_out,
+        status: req.body.status,
         user: req.user.id,
     })
 
