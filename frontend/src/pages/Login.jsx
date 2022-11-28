@@ -21,9 +21,17 @@ function Login() {
         if(isError){
           toast.error(message)
         }
+        
         if(isSuccess || user){
-          navigate('/admin/dashboard')
+          if(user.role === 'Faculty' || user.role === 'Student Officer'){
+            const role = 'user'
+            navigate('/' + role + '/dashboard')
+          } else if(user.role === 'Approving Admin' || user.role === 'System Admin'){
+            const role = 'admin'
+            navigate('/' + role + '/dashboard')
+          }
         }
+
         return () => {
           dispatch(reset())
         }
@@ -45,6 +53,12 @@ function Login() {
             password,
         }
         dispatch(login(userData))
+
+        if(user.role === 'Admin'){
+          navigate('/admin/dashboard')
+        } else if(user.role === 'Student Officer' || user.role === 'Faculty'){
+          navigate('/user/dashboard')
+        }
     }
 
   return (<>

@@ -1,0 +1,172 @@
+.notifications{
+    font-size: 13px; 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0px 150px;
+  
+    .select-sort{
+        display: flex;
+        align-items: center;
+
+        p{
+            color: #838383;
+            margin-right: 10px;
+        }
+        select{
+            border-radius: 15px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border: none;
+        }
+    }
+
+    button{
+        padding: 10px;
+        width: 250px;
+        border-radius: 10px;
+        border-style: none;
+        font-size: 20px;
+        background-color: #699BF7;
+        color: #fff;
+        transition: all .2s,box-shadow .08s ease-in;
+        cursor: pointer;
+        font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+        font-size: 100%;
+        place-self: end;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        transition: all 0.5s ease;
+
+        &:hover{
+            background-color: #294A70;
+        }
+    }
+
+    // Header Notification CSS
+    .n-header{
+        display:grid;
+        grid-template-columns: 5fr 1fr 1fr;
+        .notif-head{
+            display: flex;
+            font-size: 25px;
+            flex-direction: column;
+
+
+            .notif-name{
+                display: flex;
+                align-items: center;
+            }
+
+            .notif-ctr{
+                p{
+                    color: #658AFE;
+                    font-size: 15px;
+                }
+            }
+            .notif-header{
+                margin-right: 10px;
+            }
+        }
+    }
+
+    // Notification Content CSS
+    .notif-content{
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: .5fr 1.5fr 1fr 1fr 1fr;
+        align-items: center;
+        width: auto;
+        background-color: rgb(247, 247, 247);
+        padding: 15px 10px;
+        border-radius: 15px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        transition: all 0.2s ease;
+        &:hover{
+            border-left: 40px #294A70 solid;
+        }
+
+        .notif-role{
+            color: #838383;
+            text-align: center;
+        }
+
+        .notif-indicator{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .notif-container{
+            display: flex;
+            flex-direction: row;
+            font-size: 16px;
+            align-items: center;
+
+
+            .notif-name{
+                color:#658AFE;
+            }
+
+            .notif-subject, .notif-dt{
+                color: #838383;
+                line-height: 1.1;
+            }
+            i{
+                background-color: #fff;
+                padding: 15px;
+                border-radius: 50px;
+                font-size: 30px;
+                box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+                margin-right: 25px;
+                color: #838383;
+            }
+        }
+        .notif-dt{
+            color: #838383;
+        }
+    }
+
+.n-top{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: .5fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    width: auto;
+    background-color: rgb(247, 247, 247);
+    padding: 15px 10px;
+    border-radius: 15px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+}
+div[value=unread]{
+    font-size: 20px;
+    color:#699BF7;
+}
+div[value=read]{
+    i{
+        display: none;
+    }
+}
+
+// Media Queries
+@media only screen and (max-width: 1200px) {
+    .notifications{
+        padding: 10px 25px;
+        margin: 0px 70px;
+        background-color: #E6E6E6;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+        border-radius: 10px;
+        font-size: 15px;
+        .n-header{
+            display:grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+    #btnDetails{
+        width: 10vw;
+    }
+}

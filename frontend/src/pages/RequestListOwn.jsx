@@ -5,8 +5,6 @@ import ReservesHead from '../components/ReservesHead';
 import ReservesContent from '../components/ReservesContent';
 import '../assets/scss/table.scss';
 
-
-
 function RequestList() {
   const dispatch = useDispatch()
 

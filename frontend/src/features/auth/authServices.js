@@ -51,12 +51,24 @@ const logout = () =>{
     localStorage.removeItem('user')
 }
 
+//delete user
+const deleteUser = async(userId, token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.delete(API_URL + userId, config)
+    return response.data
+}
+
 const authService = {
     register,
     login,
     logout,
     getUsers,
-    getMe
+    getMe,
+    deleteUser
 }
 
 export default authService

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {useDispatch} from 'react-redux'
 import {createReserve} from '../features/reserves/reserveSlice'
-import '../assets/scss/MainForm.scss';
+import '../assets/scss/mainform.scss';
 
 function MainForm(){
     const [formData, setFormData] = useState({

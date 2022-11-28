@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import {useSelector, useDispatch} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
-import {toast} from 'react-toastify'
-import {register, reset} from '../features/auth/authSlice'
-import {FaUser} from 'react-icons/fa'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { register, reset } from '../features/auth/authSlice'
+import '../assets/scss/registry.scss'
 
-function Register() {
+function Registry() {
     const [formData, setFormData] = useState({
         name: '',
         idnum: '',
@@ -26,7 +26,7 @@ function Register() {
             toast.error(message)
         }
         if(!user){
-            return navigate ('/login')
+            return navigate('/login')
         }
         if(isSuccess){
             toast.info('User Registered')
@@ -64,17 +64,14 @@ function Register() {
     }
 
     return (
-    <>
-        <section className="heading">
-            <h1>
-                <FaUser /> Register
-            </h1>
-            <p>Please Create An Account</p>
-        </section>
-
-        <section className="form">
+      <div class='ehe'>
+        <div class='form-container'>
             <form onSubmit={onSubmit}>
-                <div className="form-group">
+            <div class='form-title'><h1>USER REGISTRATION</h1></div>
+
+            <div class='form-fields'>
+                <div>
+                    <label>Name</label>
                     <input
                     type='text'
                     className='form-control'
@@ -84,7 +81,8 @@ function Register() {
                     placeholder='Enter Name'
                     onChange={onChange} />
                 </div>
-                <div className="form-group">
+                <div>
+                    <label>ID Number</label>
                     <input
                     type='text'
                     className='form-control'
@@ -94,7 +92,8 @@ function Register() {
                     placeholder='Enter ID Number'
                     onChange={onChange} />
                 </div>
-                <div className="form-group">
+                <div>
+                    <label>Password</label>
                     <input
                     type='password'
                     className='form-control'
@@ -104,7 +103,8 @@ function Register() {
                     placeholder='Enter Password'
                     onChange={onChange} />
                 </div>
-                <div className="form-group">
+                <div>
+                    <label>Confirm Password</label>
                     <input
                     type='password'
                     className='form-control'
@@ -114,44 +114,66 @@ function Register() {
                     placeholder='Confirm Password'
                     onChange={onChange} />
                 </div>
-                <br/>
-                <div className="form-group">
-                    <input
-                    type='text'
+                <div>
+                    <label>Role</label>
+                    <select type='text'
                     className='form-control'
                     id='role'
                     name='role'
                     value={role}
                     placeholder='Select Role'
-                    onChange={onChange} />
+                    onChange={onChange}>
+                        <option>- - - - -</option>
+                        <option>Student Officer</option>
+                        <option>Faculty</option>
+                        <option>Approving Admin</option>
+                    </select>
                 </div>
-                <div className="form-group">
-                    <input
-                    type='text'
+
+                <div class='small-fields'>
+                    <div>
+                    <label>Department</label>
+                        <select type='text'
+                        className='form-control'
+                        id='dept'
+                        name='dept'
+                        value={dept}
+                        placeholder='Select Department'
+                        onChange={onChange}>
+                            <option>- - - - -</option>
+                            <option>SEAITE</option>
+                            <option>SABH</option>
+                            <option>SHAS</option>
+                            <option>SEAS</option>
+                        </select>
+                    </div>
+
+                    <div>
+                    <label>Organization</label>
+                    <select type='text'
                     className='form-control'
                     id='org'
                     name='org'
                     value={org}
                     placeholder='Select Organization'
-                    onChange={onChange} />
+                    onChange={onChange}>
+                        <option>- - - - -</option>
+                        <option>LITES</option>
+                        <option>JPIA</option>
+                        <option>LMTS</option>
+                        <option>LIFE</option>
+                    </select>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <input
-                    type='text'
-                    className='form-control'
-                    id='dept'
-                    name='dept'
-                    value={dept}
-                    placeholder='Select Department'
-                    onChange={onChange} />
+
+                <div class='buttons' id='form-buttons'>
+                  <button type='submit' className='btn btn-block'>Register</button>
                 </div>
-                <div className="form-group">
-                    <button type='submit' className='btn btn-block'>Register</button>
-                </div>
+            </div>
             </form>
-        </section>
-    </>
-    )
+        </div>
+    </div>
+    );
 }
 
-export default Register
+export default Registry

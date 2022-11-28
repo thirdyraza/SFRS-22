@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema({
     role: {
         type: String,
         required: [true, 'Please select a role'],
-        enum: ["Faculty","Student Officer" ,"Admin"]
+        enum: ["Faculty", "Student Officer","Admin"]
     },
     org: {
         type: String,
