@@ -1,8 +1,11 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import reserveService from './reserveService'
 
+const reservation = JSON.parse(localStorage.getItem('reserve'))
 const initialState = {
+    reservation: reservation ? reservation: null,
     reserves: [],
+    allReserves: [reservation],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -21,10 +24,22 @@ export const createReserve =createAsyncThunk('reserves/create', async(reserveDat
 })
 
 // get user reservation
-export const getReserves = createAsyncThunk('reserves/getAll', async(_id, thunkAPI) => {
+export const getReserves = createAsyncThunk('reserves/getMine', async(_id, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await reserveService.getReserves(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get all reservation
+export const getAllReserves = createAsyncThunk('reserves/getAll', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getAllReserves(token)
 
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
@@ -73,6 +88,19 @@ export const reserveSlice = createSlice({
                 state.reserves = action.payload
             })
             .addCase(getReserves.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getAllReserves.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAllReserves.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.allReserves = action.payload
+            })
+            .addCase(getAllReserves.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

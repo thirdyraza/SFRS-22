@@ -28,19 +28,7 @@ function MainForm(){
 
     const onSubmit = (e) =>{
         e.preventDefault()
-        
-            // const reserveData = {
-            //     purpose,
-            //     org,
-            //     dept,
-            //     bldg,
-            //     room,
-            //     date,
-            //     time_in,
-            //     time_out,
-            // }
-            
-            dispatch(createReserve(formData))
+        dispatch(createReserve(formData))
     }
 
     return(

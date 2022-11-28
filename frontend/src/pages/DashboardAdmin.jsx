@@ -2,7 +2,7 @@ import {useEffect} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {reset} from '../features/auth/authSlice'
-import { getReserves } from '../features/reserves/reserveSlice'
+import { getAllReserves, getReserves } from '../features/reserves/reserveSlice'
 import '../assets/scss/home.scss'
 import bg from '../assets/images/bannerpic1.jpg'
 
@@ -14,7 +14,7 @@ function DashboardAdmin() {
   const dispatch = useDispatch()
 
   const {user} = useSelector((state) => state.auth)
-  const {reserves, isError, message} = useSelector((state) => state.reserves)
+  const {reserves, allReserves, isError, message} = useSelector((state) => state.reserves)
 
   useEffect(() =>{
 
@@ -25,6 +25,7 @@ function DashboardAdmin() {
       return navigate ('/login')
     }
 
+    dispatch(getAllReserves())
     dispatch(getReserves())
     return () =>{
       
@@ -45,7 +46,7 @@ function DashboardAdmin() {
 
           {/* Dashboard button */}
           <div class='main-cont'>
-            <Link to='/admin-home/reserve'class='mainbtn'>
+            <Link to='../reserve'class='mainbtn'>
               <p>RESERVE FACILITY</p>
               <svg class="icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM256 368C269.3 368 280 357.3 280 344V280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H280V168C280 154.7 269.3 144 256 144C242.7 144 232 154.7 232 168V232H168C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H232V344C232 357.3 242.7 368 256 368z"/></svg>
             </Link>
@@ -60,9 +61,9 @@ function DashboardAdmin() {
           <div id='ownreq' class='user-req'>
             <h1>YOUR REQUESTS</h1>
               <ReservesHead />
-              {reserves.length > 0 ? (
+              {allReserves.length > 0 ? (
                 <div>
-                {reserves.map((reserve) => (
+                {allReserves.map((reserve) => (
                     <ReservesContent key={reserve._id} reserves={reserve} />
                 ))}
                 </div>
@@ -73,8 +74,18 @@ function DashboardAdmin() {
           <div id='otherreq' class='user-req'>
             <h1>USER REQUESTS</h1>
               <ReservesHead />
+              {reserves.length > 0 ? (
+                <div>
+                {reserves.map((reserve) => (
+                    <ReservesContent key={reserve._id} reserves={reserve} />
+                ))}
+                </div>
+              ) : (<h3>No Reservations Found</h3>)}
               
-              <div class='more'>See more ...</div> 
+              <Link to='../your-request-list'>
+                <div class='more'>See more ...</div> 
+              </Link>
+              
           </div>
 
           </div>

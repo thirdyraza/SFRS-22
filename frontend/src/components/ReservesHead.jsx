@@ -3,6 +3,7 @@ import '../assets/scss/table.scss';
 function ReservesHead() {
     return (
         <div class='heading'>
+            <p>Requestor</p>
             <p>Activity</p>
             <p>Building/Facility</p>
             <p>Room</p>

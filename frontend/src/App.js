@@ -8,6 +8,7 @@ import MainAdmin from './pages/MainAdmin';
 import Register from './pages/Register';
 import UsersList from './pages/UsersList';
 import MainForm from './pages/MainForm';
+import RequestList from './pages/RequestListOwn';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path='/admin' element={<MainAdmin/>}>
               <Route path='dashboard' element={<Dashboard/>}></Route>
               <Route path='registration' element={<Register/>}></Route>
+              <Route path='your-request-list' element={<RequestList/>}></Route>
               <Route path='users-list' element={<UsersList/>}></Route>
               <Route path='reserve' element={<MainForm/>}></Route>
             </Route>

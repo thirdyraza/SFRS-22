@@ -4,7 +4,8 @@ function UserHeading() {
     return (
         <div class='heading'>
             <p>ID Number</p>
-            <p>Name</p>            
+            <p>Name</p>
+            <p>Role</p>            
             <p>Organization</p>
             <p>Department</p>
         </div>
