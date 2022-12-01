@@ -21,7 +21,10 @@ function DashboardUser(){
     if(isError){
       console.log(message)
     }
-    if(!user) {
+    if(!user || user.role === 'OSAS Staff'
+    || user.role === 'Director Student Affairs and Services'
+    || user.role === 'Venue-In-Charge'
+    || user.role === 'Department Dean') {
       return navigate ('/login')
     }
     dispatch(getReserves())
@@ -60,7 +63,7 @@ function DashboardUser(){
                     <ReservesContent key={reserve._id} reserves={reserve} />
                   ))}
                   </div>
-                ) : (<h3>No Reservations Found</h3>)}
+                ) : (<h3 id='none'>No reservations found</h3>)}
                 
                 <Link to='../your-request-list'>
                   <div class='more'>See more ...</div> 

@@ -7,7 +7,7 @@
     font-weight: 600;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
     justify-content: space-evenly;
     background-color: $color-blue;
     color: $color-white;
@@ -32,14 +32,15 @@
     padding: 35px 70px;
     font-size: 14px;
     font-weight: 600;
-    border-radius: 30px;
+    border-radius: 15px;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr ;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
     justify-content: space-between;
     align-items: center;
     background-color: $color-white;
     color: $color-gray;
     box-shadow: 0 1px 20px rgba(0, 0, 0, 0.13);
+    transition: all 0.2s ease;
     
     input{
         width: 16px;
@@ -52,7 +53,9 @@
         font-size: 14px;
         text-decoration: none;
     }
-
+    &:hover{
+        border-left: 40px #294A70 solid;
+    }
 }
 
 @media only screen and (max-width: 700px) {

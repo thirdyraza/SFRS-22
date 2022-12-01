@@ -35,7 +35,7 @@ function RequestList() {
         <ReservesContent key={reserve._id} reserves={reserve} />
       ))}
       </div>
-    ) : (<h3>No Reservations Found</h3>)}
+    ) : (<h2 id='none'>No Reservations Found</h2>)}
   </div>
   <div class='buttons'>
       <button></button>

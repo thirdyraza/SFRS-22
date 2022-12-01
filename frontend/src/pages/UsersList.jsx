@@ -42,7 +42,7 @@ function UsersList() {
                     <UserContent key={user._id} users={user} />
                 ))}
                 </div>
-            ) : (<h3>No Users Found</h3>)}
+            ) : (<h3 id='none'>No Users Found</h3>)}
             </section>
             <div class='buttons'>
                 <div>ARCHIVE</div>

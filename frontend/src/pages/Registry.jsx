@@ -126,7 +126,10 @@ function Registry() {
                         <option>- - - - -</option>
                         <option>Student Officer</option>
                         <option>Faculty</option>
-                        <option>Approving Admin</option>
+                        <option>Director of Student Affairs and Services</option>
+                        <option>OSAS Staff</option>
+                        <option>Venue-In-Charge</option>
+                        <option>Department Dean</option>
                     </select>
                 </div>
 

@@ -13,6 +13,7 @@ function MainForm(){
         date: '',
         time_in: '',
         time_out: '',
+        status: 'Not Approved'
     })
 
     const { purpose, org, dept, bldg, room, date, time_in, time_out } = formData
@@ -204,10 +205,9 @@ function MainForm(){
 
 
                         <br/>
-                        <div id="btnSubmit"className="btnForm">
-                            <button type='submit' className='btn btn-block'>Submit</button>
-                            <i class='bx bx-check-circle' ></i>
-                        </div>
+                        <button type='submit' id="btnSubmit" className='btnForm btn btn-block'>
+                            Submit
+                        </button>
                     </form>
                 </div>
             </div>

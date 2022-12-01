@@ -23,12 +23,16 @@ function Login() {
         }
         
         if(isSuccess || user){
-          if(user.role === 'Faculty' || user.role === 'Student Officer'){
-            const role = 'user'
-            navigate('/' + role + '/dashboard')
-          } else if(user.role === 'Approving Admin' || user.role === 'System Admin'){
-            const role = 'admin'
-            navigate('/' + role + '/dashboard')
+          if(user.role === 'Faculty'
+            || user.role === 'Student Officer'){
+              const role = 'user'
+              navigate('/' + role + '/dashboard')
+          } else if(user.role === 'OSAS Staff'
+            || user.role === 'Director Student Affairs and Services'
+            || user.role === 'Venue-In-Charge'
+            || user.role === 'Department Dean'){
+              const role = 'admin'
+              navigate('/' + role + '/dashboard')
           }
         }
 

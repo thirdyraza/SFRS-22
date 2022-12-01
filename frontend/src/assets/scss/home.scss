@@ -53,6 +53,8 @@
             border-radius: 100px;
             background-color: $color-blue;
             margin: 0px 5px;
+            transition: all 0.2s ease;
+    
             
             p{
                 color: $color-white;
@@ -136,6 +138,8 @@
     place-items: center;
     color: $color-white;
     font-weight: 500;
+    transition: all 0.2s ease;
+    
 
     &:hover{
         background-color: $color-yellow;

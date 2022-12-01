@@ -40,6 +40,7 @@ const reserveSchema = mongoose.Schema({
     },
     status: {
         type: String,
+        enum: ["Not Approved", "Approved by Dean", "Approved by OSAS Staff", "Approved by OSAS Director", "Approved by Venue-In-Charge"]
     },
 
 }, {
