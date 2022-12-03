@@ -6,9 +6,18 @@ const Reserve = require('../models/reserve.model')
 // @route GET /api/reserves
 // @access Private
 const getReserves = asyncHandler( async (req, res) => {
-    const reserves = await Reserve.find({ user: req.user.id })
+    const reserves = await Reserve.find({ user: req.user.id }).populate('requestor-name')
 
     res.status(200).json(reserves)
+})
+
+// @desc Get one reservation
+// @route GET /api/reserves:id
+// @access Private
+const getReservation = asyncHandler(async(req, res) =>{
+    const reservation = await Reserve.findById(req.params.id)
+    
+    res.status(200).json(reservation)
 })
 
 // @desc Set reservations
@@ -22,15 +31,16 @@ const setReserve = asyncHandler( async (req, res) => {
 
     const reserve = await Reserve.create({
         purpose: req.body.purpose,
-        dept: req.body.dept,
+        dept: req.user.dept,
         org: req.body.org,
         bldg: req.body.bldg,
         room: req.body.room,
         date: req.body.date,
         time_in: req.body.time_in,
         time_out: req.body.time_out,
-        status: req.body.status,
+        status: 'Not Approved',
         user: req.user.id,
+        requestor: req.user.name,
     })
 
     res.status(200).json(reserve)
@@ -85,20 +95,27 @@ const deleteReserve = asyncHandler( async (req, res) => {
     }
 
     await reserve.remove()
-    res. status(200).json({ id: req.params.id })
+    res.status(200).json({ id: req.params.id })
 })
 
 // @desc Get all reservation
 // @route GET /api/reserves/all
 // @access Private
 const getAllReserves = asyncHandler(async(req, res) =>{
-    const reserve = await Reserve.find({})
-    
-    res.status(200).json(reserve)
+    Reserve.find()
+        .then(allReserves => {
+            res.status(200).json(allReserves)
+        }).catch(err=>{
+            res.status(500).json({
+                message:err.message || "Can't retrieve all reservations"
+            })
+        })
+
 })
 
 module.exports = {
     getReserves,
+    getReservation,
     setReserve,
     updateReserve,
     deleteReserve,

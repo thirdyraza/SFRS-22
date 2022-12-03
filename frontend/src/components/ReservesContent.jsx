@@ -1,27 +1,38 @@
 import '../assets/scss/table.scss'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { getAllReserves, getReserves } from '../features/reserves/reserveSlice'
+import { getAllReserves, getReserves, getReservation } from '../features/reserves/reserveSlice'
+import { useNavigate } from 'react-router-dom'
 
-function ReservesContent({reserves}) {
+function ReservesContent({reserves, selectedValue}) {
 
-const dispatch = useDispatch()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-useEffect(() =>{
+    // const {reservation} = useSelector((state) => state.reserves)
 
-    dispatch(getAllReserves())
-    dispatch(getReserves())
-    
-  }, [dispatch])
+    const gotoDetails = () =>{
+        dispatch(getReservation())
+        navigate('../details:' + selectedValue)
+    }
+
+    useEffect(() =>{
+
+        dispatch(getAllReserves())
+        dispatch(getReserves())
+        
+    }, [dispatch])
+
   
     return (
-        <div class='info-container'>
-            <p id='requestor'>{reserves.user}</p>
-            <p id='purpose'>{reserves.purpose}</p>
-            <p id='building'>{reserves.bldg}</p>
-            <p id='room'>{reserves.room}</p>
-            <p id='time_in'>{reserves.time_in}</p>
-            <p id='time_out'>{reserves.time_out}</p>
+        <div class='info-container' onClick={gotoDetails}>
+            <p>{reserves.requestor}</p>
+            <p>{reserves.purpose}</p>
+            <p>{reserves.org}</p>
+            <p>{reserves.bldg}</p>
+            <p>{reserves.room}</p>
+            <p>{reserves.time_in} - {reserves.time_out}</p>
+            <p>{reserves.status}</p>
         </div>
     );
 }

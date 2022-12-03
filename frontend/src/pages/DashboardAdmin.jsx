@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import { useEffect, useState } from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {reset} from '../features/auth/authSlice'
@@ -10,11 +10,12 @@ import ReservesHead from '../components/ReservesHead'
 import ReservesContent from '../components/ReservesContent'
 
 function DashboardAdmin() {
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const {user} = useSelector((state) => state.auth)
-  const {reserves, allReserves, isError, message} = useSelector((state) => state.reserves)
+  const { reserves, allReserves, isError, message} = useSelector((state) => state.reserves)
 
   useEffect(() =>{
 
@@ -27,12 +28,13 @@ function DashboardAdmin() {
 
     dispatch(getAllReserves())
     dispatch(getReserves())
+
     return () =>{
-      
       dispatch(reset());
     }
     
   }, [user, navigate, isError, message, dispatch])
+
 
   return (<>
 
@@ -64,7 +66,7 @@ function DashboardAdmin() {
               {allReserves.length > 0 ? (
                 <div>
                 {allReserves.map((reserve) => (
-                    <ReservesContent key={reserve._id} reserves={reserve} />
+                    <ReservesContent key={reserve._id} reserves={reserve}/>
                 ))}
                 </div>
               ) : (<h3>No Reservations Found</h3>)}
@@ -77,7 +79,7 @@ function DashboardAdmin() {
               {reserves.length > 0 ? (
                 <div>
                 {reserves.map((reserve) => (
-                  <ReservesContent key={reserve._id} reserves={reserve} />
+                  <ReservesContent key={reserve._id} reserves={reserve}/>
                 ))}
                 </div>
               ) : (<h3>No Reservations Found</h3>)}

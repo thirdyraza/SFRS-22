@@ -4,7 +4,11 @@ const reserveSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Users'
+        ref: 'User'
+    },
+    requestor: {
+        type: String,
+        required: true
     },
     purpose: {
         type: String,
@@ -45,6 +49,12 @@ const reserveSchema = mongoose.Schema({
 
 }, {
     timestamps: true,
+})
+
+reserveSchema.virtual('requestor-name', {
+    ref: 'User',
+    localField: 'requestor',
+    foreignField: 'name',
 })
 
 module.exports = mongoose.model('Reserve', reserveSchema)

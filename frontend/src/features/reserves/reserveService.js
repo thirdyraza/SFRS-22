@@ -29,6 +29,17 @@ const getReserves = async(token) =>{
     return response.data
 }
 
+// get reservation
+const getReservation = async(reserveId, token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + reserveId, config)
+    return response.data
+}
+
 // get all reservations
 const getAllReserves = async(token) =>{
     const config = {
@@ -56,6 +67,7 @@ const reserveService = {
     getReserves,
     deleteReserve,
     getAllReserves,
+    getReservation,
 }
 
 export default reserveService

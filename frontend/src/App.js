@@ -12,6 +12,7 @@ import RequestList from './pages/RequestListOwn';
 import Notifications from './pages/Notifications';
 import Registry from './pages/Registry';
 import MainUser from './pages/MainUser';
+import DetailedRequest from './pages/DetailedRequest';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Route path='reserve' element={<MainForm/>}></Route>
               <Route path='registry' element={<Registry/>}></Route>
               <Route path='your-request-list' element={<RequestList/>}></Route>
+              <Route path='details:id' element={<DetailedRequest/>}></Route>
               <Route path='users-list' element={<UsersList/>}></Route>
               <Route path='notifications' element={<Notifications/>}></Route>
             </Route>
@@ -36,6 +38,7 @@ function App() {
               <Route path='dashboard' element={<DashboardUser/>}></Route>
               <Route path='reserve' element={<MainForm/>}></Route>
               <Route path='your-request-list' element={<RequestList/>}></Route>
+              <Route path='details:id' element={<DetailedRequest/>}></Route>
               <Route path='notifications' element={<Notifications/>}></Route>
             </Route>
 
