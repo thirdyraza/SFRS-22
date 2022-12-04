@@ -13,7 +13,7 @@ function MainForm(){
         date: '',
         time_in: '',
         time_out: '',
-        status: 'Not Approved'
+        status: 'None'
     })
 
     const { subject, org, dept, bldg, room, date, time_in, time_out } = formData
@@ -30,6 +30,18 @@ function MainForm(){
     const onSubmit = (e) =>{
         e.preventDefault()
         dispatch(createReserve(formData))
+
+        setFormData({
+            subject: '',
+            org: '',
+            dept: '',
+            bldg: '',
+            room: '',
+            date: '',
+            time_in: '',
+            time_out: '',
+            status: 'None'
+        })
     }
 
     return(

@@ -10,6 +10,10 @@ const reserveSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    reqid: {
+        type: String,
+        required: true
+    },
     reqrole: {
         type: String,
     },
@@ -46,7 +50,7 @@ const reserveSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["Not Approved", "Approved by Dean", "Approved by OSAS Staff", "Approved by OSAS Director", "Approved by Venue-In-Charge"]
+        enum: ["None", "Department Dean", "OSAS Staff", "OSAS Director", "Venue-In-Charge"]
     },
 
 }, {
@@ -57,6 +61,13 @@ reserveSchema.virtual('requestor-name', {
     ref: 'User',
     localField: 'requestor',
     foreignField: 'name',
+    },
+)
+
+reserveSchema.virtual('requestor-idnum', {
+    ref: 'User',
+    localField: 'reqid',
+    foreignField: 'idnum',
     },
 )
 

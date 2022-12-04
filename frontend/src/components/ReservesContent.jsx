@@ -25,7 +25,7 @@ function ReservesContent({reserves}) {
             <p>{reserves.bldg}</p>
             <p>{reserves.room}</p>
             <p>{reserves.time_in} - {reserves.time_out}</p>
-            <p>{reserves.status}</p>
+            <p>Approved by: {reserves.status}</p>
         </div>
         </>);
 }

@@ -81,7 +81,7 @@ return (
                                 </div>
                                 <div className="r_email">
                                     <i class='bx bx-envelope'/>
-                                    <p>1302281@usl.edu.ph</p>
+                                    <p>{reservation.reqid}@usl.edu.ph</p>
                                 </div>
 
                             </div>

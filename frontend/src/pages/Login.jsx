@@ -28,7 +28,7 @@ function Login() {
               const role = 'user'
               navigate('/' + role + '/dashboard')
           } else if(user.role === 'OSAS Staff'
-            || user.role === 'Director Student Affairs and Services'
+            || user.role === 'OSAS Director'
             || user.role === 'Venue-In-Charge'
             || user.role === 'Department Dean'){
               const role = 'admin'

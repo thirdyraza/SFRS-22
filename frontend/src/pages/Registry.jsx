@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { register, reset } from '../features/auth/authSlice'
+import { register } from '../features/auth/authSlice'
 import '../assets/scss/registry.scss'
 
 function Registry() {
@@ -32,9 +32,6 @@ function Registry() {
             toast.info('User Registered')
             navigate('/admin/dashboard')
         }
-        return () =>{
-            dispatch(reset());
-        }
 
     }, [user, isError, isSuccess, message, navigate, dispatch])
 
@@ -61,6 +58,16 @@ function Registry() {
             }
             dispatch(register(userData))
         }
+
+        setFormData({
+            name: '',
+            idnum: '',
+            password: '',
+            cpassword: '',
+            role: '',
+            org: '',
+            dept: '',
+        })
     }
 
     return (
@@ -126,7 +133,7 @@ function Registry() {
                         <option>- - - - -</option>
                         <option>Student Officer</option>
                         <option>Faculty</option>
-                        <option>Director of Student Affairs and Services</option>
+                        <option>OSAS Director</option>
                         <option>OSAS Staff</option>
                         <option>Venue-In-Charge</option>
                         <option>Department Dean</option>
