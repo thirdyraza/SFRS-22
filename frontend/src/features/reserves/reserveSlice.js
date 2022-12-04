@@ -36,11 +36,9 @@ export const getReserves = createAsyncThunk('reserves/getMine', async(_id, thunk
 })
 
 // get current reservation
-export const getReservation = createAsyncThunk('reserves/getOne', async(_id, thunkAPI) => {
+export const getReservation = createAsyncThunk('reserves/getOne', async(resID, thunkAPI) => {
     try {
-        const token = thunkAPI.getState().auth.user.token
-        return await reserveService.getReservation(token)
-
+        return await reserveService.getReservation(resID)
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)

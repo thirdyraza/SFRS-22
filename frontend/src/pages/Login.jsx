@@ -57,12 +57,6 @@ function Login() {
             password,
         }
         dispatch(login(userData))
-
-        if(user.role === 'Admin'){
-          navigate('/admin/dashboard')
-        } else if(user.role === 'Student Officer' || user.role === 'Faculty'){
-          navigate('/user/dashboard')
-        }
     }
 
   return (<>

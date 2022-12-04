@@ -5,7 +5,7 @@ import '../assets/scss/mainform.scss';
 
 function MainForm(){
     const [formData, setFormData] = useState({
-        purpose: '',
+        subject: '',
         org: '',
         dept: '',
         bldg: '',
@@ -16,7 +16,7 @@ function MainForm(){
         status: 'Not Approved'
     })
 
-    const { purpose, org, dept, bldg, room, date, time_in, time_out } = formData
+    const { subject, org, dept, bldg, room, date, time_in, time_out } = formData
 
     const dispatch = useDispatch()
 
@@ -49,15 +49,15 @@ function MainForm(){
                             </div>
                         </div>
                         <div className="purpose">
-                            <label>Purpose</label>
+                            <label>Subject</label>
                             <textarea
                             type='text'
                             className='form-control'
-                            id='purpose'
-                            name='purpose'
-                            value={purpose}
+                            id='subject'
+                            name='subject'
+                            value={subject}
                             onChange={onChange}
-                            placeholder="State your Purpose" />
+                            placeholder="State your Subject" />
                         </div>
 
                         <div className="input-container">

@@ -30,13 +30,8 @@ const getReserves = async(token) =>{
 }
 
 // get reservation
-const getReservation = async(reserveId, token) =>{
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
-    const response = await axios.get(API_URL + reserveId, config)
+const getReservation = async(resID) =>{
+    const response = await axios.get(API_URL + resID)
     return response.data
 }
 

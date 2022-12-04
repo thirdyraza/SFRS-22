@@ -1,28 +1,25 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-import { getReservation, reset } from '../features/reserves/reserveSlice';
 import '../assets/scss/detailed-reserves.scss'
-import { getMe } from '../features/auth/authSlice';
+import { getMe, reset } from '../features/auth/authSlice';
 
-function DetailedRequest() {
+const DetailedRequest = () => {
     
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const {reservation} = useSelector((state) => state.reserves)
     const {user} = useSelector((state) => state.auth)
+    const {reservation} = useSelector((state) => state.reserves)
 
     useEffect(() => {
 
         dispatch(getMe())
-        dispatch(getReservation(reservation))
-
         return () => {
             dispatch(reset())
         };
 
-    }, [dispatch, reservation, user]);
+    }, [dispatch]);
 
     var role
 
@@ -40,8 +37,6 @@ function DetailedRequest() {
         navigate(-1)
     }
 
-    
-    
 return (
     <div class='app'>
             <div id='home' class="RD-Container">
@@ -81,8 +76,8 @@ return (
                             
                             <div className="r_name">
                                 <div>
-                                    <p>Andrei Louis C. Pagalilauan</p>  
-                                    <p id="r_deptrole">SEAITE Department | Student Officer</p>
+                                    <p>{reservation.requestor}</p>
+                                    <p id="r_deptrole">{reservation.reqdept} | {reservation.reqrole}</p>
                                 </div>
                                 <div className="r_email">
                                     <i class='bx bx-envelope'/>
@@ -100,7 +95,7 @@ return (
 
                     <div className="RDC-Body">
                         <div>
-                            <p>SUBJECT: {reservation.purpose}</p>
+                            <p>SUBJECT: {reservation.subject}</p>
                         </div>
                         <div>
                             <p className="b_title">PURPOSE:</p>
@@ -122,10 +117,10 @@ return (
                         <div id="btnAttached" class="RD-Btns">Attached Files<i class='bx bx-download'/></div>
                     </div>
                     <div className="RDA-Body">
-                        <p>Building:   {reservation.bldg}</p>
-                        <p>Room:   {reservation.room}</p>
-                        <p>Requested Date:   {reservation.date}</p>
-                        <p>Time:   {reservation.time_in} to {reservation.time_out}</p>
+                        <p>Building:  {reservation.bldg}</p>
+                        <p>Room:  {reservation.room}</p>
+                        <p>Requested Date: {reservation.date}</p>
+                        <p>Time: {reservation.time_in} to {reservation.time_out}</p>
                     </div>
                 </div>
                 

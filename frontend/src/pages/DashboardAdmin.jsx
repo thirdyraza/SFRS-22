@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {reset} from '../features/auth/authSlice'
-import { getAllReserves, getReserves } from '../features/reserves/reserveSlice'
+import { getAllReserves, getReservation, getReserves } from '../features/reserves/reserveSlice'
 import '../assets/scss/home.scss'
 import bg from '../assets/images/bannerpic1.jpg'
 
@@ -34,7 +34,7 @@ function DashboardAdmin() {
     }
     
   }, [user, navigate, isError, message, dispatch])
-
+  
 
   return (<>
 

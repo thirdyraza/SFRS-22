@@ -24,14 +24,13 @@ const getReservation = asyncHandler(async(req, res) =>{
 // @route POST /api/reserves
 // @access Private
 const setReserve = asyncHandler( async (req, res) => {
-    if(!req.body.purpose){
+    if(!req.body.subject){
         res.status(400)
-        throw new Error('Please provide a purpose')
+        throw new Error('Please provide a subject')
     }
 
     const reserve = await Reserve.create({
-        purpose: req.body.purpose,
-        dept: req.user.dept,
+        subject: req.body.subject,
         org: req.body.org,
         bldg: req.body.bldg,
         room: req.body.room,
@@ -41,6 +40,8 @@ const setReserve = asyncHandler( async (req, res) => {
         status: 'Not Approved',
         user: req.user.id,
         requestor: req.user.name,
+        reqrole: req.user.role,
+        reqdept: req.user.dept,
     })
 
     res.status(200).json(reserve)

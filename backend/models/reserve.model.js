@@ -10,13 +10,15 @@ const reserveSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    purpose: {
+    reqrole: {
         type: String,
-        required: [true, 'Please add a purpose']
     },
-    dept: {
+    reqdept: {
+        type: String
+    },
+    subject: {
         type: String,
-        required: [true, 'Please choose a department']
+        required: [true, 'Please add a subject']
     },
     org: {
         type: String,
@@ -55,6 +57,21 @@ reserveSchema.virtual('requestor-name', {
     ref: 'User',
     localField: 'requestor',
     foreignField: 'name',
-})
+    },
+)
+
+reserveSchema.virtual('requestor-role', {
+    ref: 'User',
+    localField: 'reqrole',
+    foreignField: 'role',
+    },
+)
+
+reserveSchema.virtual('requestor-dept', {
+    ref: 'User',
+    localField: 'reqdept',
+    foreignField: 'dept',
+    },
+)
 
 module.exports = mongoose.model('Reserve', reserveSchema)
