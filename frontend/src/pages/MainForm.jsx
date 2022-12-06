@@ -13,7 +13,6 @@ function MainForm(){
         date: '',
         time_in: '',
         time_out: '',
-        status: 'None'
     })
 
     const { subject, org, dept, bldg, room, date, time_in, time_out } = formData
@@ -40,7 +39,6 @@ function MainForm(){
             date: '',
             time_in: '',
             time_out: '',
-            status: 'None'
         })
     }
 
