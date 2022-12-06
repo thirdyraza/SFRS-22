@@ -46,6 +46,24 @@ const getAllReserves = async(token) =>{
     return response.data
 }
 
+// get reservation
+const getForReview = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'review', config)
+    return response.data
+}
+
+//update reservation
+const updateReserve = async(resID) => {
+    const response = await axios.put(API_URL + resID)
+    
+    return response.data
+}
+
 //delete reservation
 const deleteReserve = async(reserveId, token) =>{
     const config = {
@@ -63,6 +81,8 @@ const reserveService = {
     deleteReserve,
     getAllReserves,
     getReservation,
+    getForReview,
+    updateReserve,
 }
 
 export default reserveService

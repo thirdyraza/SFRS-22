@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import '../assets/scss/detailed-reserves.scss'
 import { getMe, reset } from '../features/auth/authSlice';
+import { updateReserve } from '../features/reserves/reserveSlice';
 
 const DetailedRequest = () => {
     
@@ -27,10 +28,23 @@ const DetailedRequest = () => {
         || user.role === 'Student Officer'){
             role = 'user'
     } else if(user.role === 'OSAS Staff'
-        || user.role === 'Director Student Affairs and Services'
+        || user.role === 'OSAS Director'
         || user.role === 'Venue-In-Charge'
         || user.role === 'Department Dean'){
             role = 'admin'    
+    }
+
+    const approveReq = (e) => {
+        e.preventDefault()
+
+        const resID = reservation._id
+        dispatch(updateReserve(resID))
+    }
+
+    const denyReq = (e) => {
+        e.preventDefault()
+
+        reservation.status = 'Denied'
     }
 
     const goBack = () => {
@@ -88,7 +102,7 @@ return (
                         </div>
 
                         <div className="r_right">
-                            <p>September 27, 2022</p>
+                            <p>{reservation.createdAt}</p>
                             <i class='bx bxs-info-square'></i>
                         </div>
                     </div>
@@ -131,7 +145,7 @@ return (
                         <i class='bx bxs-x-circle'/>
                     </div>
               ) : (<>
-                    <div id="btnCancel" class="RD-Btns">
+                    <div id="btnCancel" class="RD-Btns" onClick={approveReq}>
                         <p>Approve Request</p>
                         <i class='bx bxs-x-circle'/>
                     </div>

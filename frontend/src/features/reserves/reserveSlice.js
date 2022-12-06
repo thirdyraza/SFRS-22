@@ -6,6 +6,7 @@ const initialState = {
     reservation: reservation ? reservation: null,
     reserves: [],
     allReserves: [reservation],
+    forReviews: [reservation],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -51,6 +52,28 @@ export const getAllReserves = createAsyncThunk('reserves/getAll', async(_id, thu
         const token = thunkAPI.getState().auth.user.token
         return await reserveService.getAllReserves(token)
 
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get reservation for review
+export const getForReview = createAsyncThunk('reserves/review', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getForReview(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// update reservation
+export const updateReserve = createAsyncThunk('reserves/update', async(resID, thunkAPI) =>{
+    try {
+        return await reserveService.updateReserve(resID)
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -124,6 +147,32 @@ export const reserveSlice = createSlice({
                 state.allReserves = action.payload
             })
             .addCase(getAllReserves.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getForReview.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getForReview.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.forReviews = action.payload
+            })
+            .addCase(getForReview.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(updateReserve.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(updateReserve.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.reserves = state.reserves.filter((reserve) => reserve._id !== action.payload.id)
+            })
+            .addCase(updateReserve.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

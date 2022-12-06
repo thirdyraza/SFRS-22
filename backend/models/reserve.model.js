@@ -50,7 +50,7 @@ const reserveSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["None", "Department Dean", "OSAS Staff", "OSAS Director", "Venue-In-Charge"]
+        enum: ["Successfully Reserved", "Department Dean", "OSAS Staff", "OSAS Director", "Venue-In-Charge", "Denied"]
     },
 
 }, {

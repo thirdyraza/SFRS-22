@@ -1,12 +1,13 @@
 const asyncHandler = require('express-async-handler')
 
 const Reserve = require('../models/reserve.model')
+const User = require('../models/user.model')
 
-// @desc Get reservations
+// @desc Get own reservations
 // @route GET /api/reserves
 // @access Private
 const getReserves = asyncHandler( async (req, res) => {
-    const reserves = await Reserve.find({ user: req.user.id }).populate('requestor-name')
+    const reserves = await Reserve.find({ user: req.user.id })
 
     res.status(200).json(reserves)
 })
@@ -37,7 +38,7 @@ const setReserve = asyncHandler( async (req, res) => {
         date: req.body.date,
         time_in: req.body.time_in,
         time_out: req.body.time_out,
-        status: 'None',
+        status: 'OSAS Staff',
         user: req.user.id,
         requestor: req.user.name,
         reqid: req.user.idnum,
@@ -58,19 +59,19 @@ const updateReserve = asyncHandler( async (req, res) => {
         res.status(400)
         throw new Error('Reservation not found')
     }
-    // check for user
-    if(!req.user){
-        res.status(401)
-        throw new Error('User not found')
+    let updStat
+
+    if(reserve.status === 'OSAS Staff') {
+        updStat = 'Department Dean'
+    } else if(reserve.status === 'Department Dean') {
+        updStat = 'Venue-In-Charge'
+    } else if(reserve.status === 'Venue-In-Charge') {
+        updStat = 'OSAS Director'
+    } else {
+        updStat = 'Successfully Reserved'
     }
 
-    // logged in user = reservation owner
-    if(reserve.user.toString() !== req.user.id){
-        res.status(401)
-        throw new Error('User not authorized')
-    }
-
-    const updatedReserve = await Reserve.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    const updatedReserve = await Reserve.findByIdAndUpdate(req.params.id, {status: updStat}, {new: true})
     res. status(200).json(updatedReserve)
 })
 
@@ -115,11 +116,22 @@ const getAllReserves = asyncHandler(async(req, res) =>{
 
 })
 
+// @desc Get reservation for review
+// @route GET /api/reserves/review
+// @access Private
+const getForReview = asyncHandler( async (req, res) => {
+    
+    const forReview = await Reserve.find({ status: req.user.role })
+
+    res.status(200).json(forReview)
+})
+
 module.exports = {
     getReserves,
     getReservation,
     setReserve,
     updateReserve,
     deleteReserve,
-    getAllReserves
+    getAllReserves,
+    getForReview,
 }

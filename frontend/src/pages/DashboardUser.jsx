@@ -21,10 +21,7 @@ function DashboardUser(){
     if(isError){
       console.log(message)
     }
-    if(!user || user.role === 'OSAS Staff'
-    || user.role === 'Director Student Affairs and Services'
-    || user.role === 'Venue-In-Charge'
-    || user.role === 'Department Dean') {
+    if(!user) {
       return navigate ('/login')
     }
     dispatch(getReserves())

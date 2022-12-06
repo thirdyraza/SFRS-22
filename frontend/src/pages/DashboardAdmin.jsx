@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {reset} from '../features/auth/authSlice'
-import { getAllReserves, getReserves } from '../features/reserves/reserveSlice'
+import { getForReview, getAllReserves } from '../features/reserves/reserveSlice'
 import '../assets/scss/home.scss'
 import bg from '../assets/images/bannerpic1.jpg'
 
@@ -15,7 +15,7 @@ function DashboardAdmin() {
   const dispatch = useDispatch()
 
   const {user} = useSelector((state) => state.auth)
-  const { reserves, allReserves, isError, message} = useSelector((state) => state.reserves)
+  const { allReserves, forReviews, isError, message} = useSelector((state) => state.reserves)
 
   useEffect(() =>{
 
@@ -26,15 +26,14 @@ function DashboardAdmin() {
       return navigate ('/login')
     }
 
+    dispatch(getForReview())
     dispatch(getAllReserves())
-    dispatch(getReserves())
 
     return () =>{
       dispatch(reset());
     }
     
   }, [user, navigate, isError, message, dispatch])
-  
 
   return (<>
 
@@ -63,9 +62,9 @@ function DashboardAdmin() {
           <div id='ownreq' class='user-req'>
             <h1>USER REQUESTS</h1>
               <ReservesHead />
-              {allReserves.length > 0 ? (
+              {forReviews.length > 0 ? (
                 <div>
-                {allReserves.map((reserve) => (
+                {forReviews.map((reserve) => (
                     <ReservesContent key={reserve._id} reserves={reserve}/>
                 ))}
                 </div>
@@ -74,11 +73,11 @@ function DashboardAdmin() {
           </div>
 
           <div id='otherreq' class='user-req'>
-            <h1>YOUR REQUESTS</h1>
+            <h1>ALL USER REQUESTS</h1>
               <ReservesHead />
-              {reserves.length > 0 ? (
+              {allReserves.length > 0 ? (
                 <div>
-                {reserves.map((reserve) => (
+                {allReserves.map((reserve) => (
                   <ReservesContent key={reserve._id} reserves={reserve}/>
                 ))}
                 </div>
