@@ -34,19 +34,19 @@ function ReservesContent({reserves}) {
 
         { role === 'user' ? (
             <div class='info-container' onClick={gotoDetails}>
-                <p>{reserves.subject}</p>
+                <p>{reserves.activity}</p>
                 <p>{reserves.org}</p>
-                <p>{reserves.bldg}</p>
+                <p>{reserves.venue}</p>
                 <p>{reserves.room}</p>
                 <p>{reserves.time_in} - {reserves.time_out}</p>
-                <p>{reserves.status}</p>
+                <p>Held by:  {reserves.status}</p>
             </div>
         ) : (
             <div class='info-container' onClick={gotoDetails}>
                 <p>{reserves.requestor}</p>
-                <p>{reserves.subject}</p>
+                <p>{reserves.activity}</p>
                 <p>{reserves.org}</p>
-                <p>{reserves.bldg}</p>
+                <p>{reserves.venue}</p>
                 <p>{reserves.room}</p>
                 <p>{reserves.time_in} - {reserves.time_out}</p>
             </div>

@@ -20,24 +20,24 @@ const reserveSchema = mongoose.Schema({
     reqdept: {
         type: String
     },
-    subject: {
+    activity: {
         type: String,
-        required: [true, 'Please add a subject']
+        required: [true, 'Please add a activity']
     },
     org: {
         type: String,
         required: [true, 'Please choose an organization']
     },
-    bldg: {
+    venue: {
         type: String,
-        required: [true, 'Please choose a building']
+        required: [true, 'Please choose a venue']
     },
     room: {
         type: String,
         required: [true, 'Please add a room']
     },
     date: {
-        type: String,
+        type: Date,
         required: [true, 'Please add a date']
     },
     time_in: {
@@ -50,8 +50,11 @@ const reserveSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["Successfully Reserved", "Department Dean", "OSAS Staff", "OSAS Director", "Venue-In-Charge", "Denied"]
+        enum: ["Successfully Reserved", "Department Dean", "OSAS Staff", "OSAS Director", "Venue In-Charge", "Head of Office", "Organization Adviser", "Denied", "Cancelled"]
     },
+    counter:{
+        type: Number,
+    }
 
 }, {
     timestamps: true,

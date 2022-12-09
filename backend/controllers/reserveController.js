@@ -25,20 +25,29 @@ const getReservation = asyncHandler(async(req, res) =>{
 // @route POST /api/reserves
 // @access Private
 const setReserve = asyncHandler( async (req, res) => {
-    if(!req.body.subject){
+    if(!req.body.activity){
         res.status(400)
-        throw new Error('Please provide a subject')
+        throw new Error('Please provide a activity')
+    }
+
+    let respo
+
+    if(req.user.role === 'Student Officer'){
+        respo = 'Organization Adviser'
+    } else if(req.user.role === 'Faculty'){
+        respo = 'Head of Office'
     }
 
     const reserve = await Reserve.create({
-        subject: req.body.subject,
+        activity: req.body.activity,
         org: req.body.org,
-        bldg: req.body.bldg,
+        venue: req.body.venue,
         room: req.body.room,
         date: req.body.date,
         time_in: req.body.time_in,
         time_out: req.body.time_out,
-        status: 'OSAS Staff',
+        status: respo,
+        counter: 0,
         user: req.user.id,
         requestor: req.user.name,
         reqid: req.user.idnum,
@@ -61,17 +70,15 @@ const updateReserve = asyncHandler( async (req, res) => {
     }
     let updStat
 
-    if(reserve.status === 'OSAS Staff') {
+    if(reserve.status === 'Head of Office' || reserve.status === 'Organization Adviser') {
         updStat = 'Department Dean'
-    } else if(reserve.status === 'Department Dean') {
-        updStat = 'Venue-In-Charge'
-    } else if(reserve.status === 'Venue-In-Charge') {
+    } else if(reserve.status === 'Deparment Dean') {
         updStat = 'OSAS Director'
     } else {
         updStat = 'Successfully Reserved'
     }
 
-    const updatedReserve = await Reserve.findByIdAndUpdate(req.params.id, {status: updStat}, {new: true})
+    const updatedReserve = await Reserve.findByIdAndUpdate(req.params.id, {status: updStat, counter: +1}, {new: true})
     res. status(200).json(updatedReserve)
 })
 
@@ -120,10 +127,44 @@ const getAllReserves = asyncHandler(async(req, res) =>{
 // @route GET /api/reserves/review
 // @access Private
 const getForReview = asyncHandler( async (req, res) => {
+
+    let respooff
+
+    if(req.user.role === 'Organization Adviser'){
+        respooff = req.user.org
+    } else if(req.user.role === 'Head of Office'){
+        respooff = req.user.org
+    } else if(req.user.role === 'Department Dean'){
+        respooff = req.reserve.org
+    } else if(req.user.role === 'OSAS Director'){
+        respooff = req.reserve.org
+    }
     
-    const forReview = await Reserve.find({ status: req.user.role })
+    const forReview = await Reserve.find({ status: req.user.role, org: respooff})
 
     res.status(200).json(forReview)
+})
+
+// @desc Get reservation for checking
+// @route GET /api/reserves/check
+// @access Private
+const getForCheck = asyncHandler( async (req, res) => {
+
+    let venrespo
+
+    if(req.user.role === 'Gym In-Charge'){
+        venrespo = 'James Ter Mier Gymnasium'
+    } else if(req.user.role === 'Outdoor Stage In-Charge'){
+        venrespo = 'Open Stage'
+    } else if(req.user.role === 'Friendship Park In-Charge'){
+        venrespo = 'Friendship Park'
+    } else if(req.user.role === 'OSAS Staff'){
+        venrespo = req.reserve.venue
+    }
+    
+    const forCheck = await Reserve.find({venue: venrespo})
+
+    res.status(200).json(forCheck)
 })
 
 module.exports = {
@@ -134,4 +175,5 @@ module.exports = {
     deleteReserve,
     getAllReserves,
     getForReview,
+    getForCheck,
 }

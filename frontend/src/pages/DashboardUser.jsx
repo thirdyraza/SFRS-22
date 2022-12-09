@@ -60,7 +60,7 @@ function DashboardUser(){
                     <ReservesContent key={reserve._id} reserves={reserve} />
                   ))}
                   </div>
-                ) : (<h3 id='none'>No reservations found</h3>)}
+                ) : (<h3 className='none'>No reservations found</h3>)}
                 
                 <Link to='../your-request-list'>
                   <div class='more'>See more ...</div> 

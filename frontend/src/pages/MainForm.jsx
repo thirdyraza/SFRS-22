@@ -5,17 +5,17 @@ import '../assets/scss/mainform.scss';
 
 function MainForm(){
     const [formData, setFormData] = useState({
-        subject: '',
+        activity: '',
         org: '',
         dept: '',
-        bldg: '',
+        venue: '',
         room: '',
         date: '',
         time_in: '',
         time_out: '',
     })
 
-    const { subject, org, dept, bldg, room, date, time_in, time_out } = formData
+    const { activity, org, dept, venue, room, date, time_in, time_out } = formData
 
     const dispatch = useDispatch()
 
@@ -31,10 +31,10 @@ function MainForm(){
         dispatch(createReserve(formData))
 
         setFormData({
-            subject: '',
+            activity: '',
             org: '',
             dept: '',
-            bldg: '',
+            venue: '',
             room: '',
             date: '',
             time_in: '',
@@ -59,15 +59,15 @@ function MainForm(){
                             </div>
                         </div>
                         <div className="purpose">
-                            <label>Subject</label>
+                            <label>Activity</label>
                             <textarea
                             type='text'
                             className='form-control'
-                            id='subject'
-                            name='subject'
-                            value={subject}
+                            id='activity'
+                            name='activity'
+                            value={activity}
                             onChange={onChange}
-                            placeholder="State your Subject" />
+                            placeholder="State your Activity" />
                         </div>
 
                         <div className="input-container">
@@ -108,13 +108,14 @@ function MainForm(){
 
                             <div className="selectright">
                                 <div className="in">
-                                    <label>Building</label>
+                                    <label>Venue</label>
                                     <select
                                     type="text"
-                                    name='bldg'
-                                    id='bldg'
-                                    value = {bldg}
-                                    onChange={onChange}>
+                                    name='venue'
+                                    id='venue'
+                                    value = {venue}
+                                    onChange={onChange}
+                                    >
                                         <option>- - - - -</option>
                                         <option>R Building</option>
                                         <option>N Building</option>
@@ -219,6 +220,7 @@ function MainForm(){
                             Submit
                         </button>
                     </form>
+                    
                 </div>
             </div>
         </div>

@@ -68,7 +68,7 @@ function DashboardAdmin() {
                     <ReservesContent key={reserve._id} reserves={reserve}/>
                 ))}
                 </div>
-              ) : (<h3>No Reservations Found</h3>)}
+              ) : (<h3 className='none'>No Reservations Found</h3>)}
               <div class='more'>See more ...</div>
           </div>
 
@@ -81,7 +81,7 @@ function DashboardAdmin() {
                   <ReservesContent key={reserve._id} reserves={reserve}/>
                 ))}
                 </div>
-              ) : (<h3>No Reservations Found</h3>)}
+              ) : (<h3 className='none'>No Reservations Found</h3>)}
               
               <Link to='../your-request-list'>
                 <div class='more'>See more ...</div> 

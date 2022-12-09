@@ -15,14 +15,13 @@ function ReservesHead() {
             role = 'admin'
     }
 
-
     return (<>
 
         { role === 'user' ? (
             <div class='heading'>
                 <p>Activity</p>
                 <p>Organization</p>
-                <p>Building/Facility</p>
+                <p>Venue</p>
                 <p>Room</p>
                 <p>Time</p>
                 <p>Status</p>
@@ -32,7 +31,7 @@ function ReservesHead() {
                 <p>Requestor</p>
                 <p>Activity</p>
                 <p>Organization</p>
-                <p>Building/Facility</p>
+                <p>Venue</p>
                 <p>Room</p>
                 <p>Time</p>
             </div>

@@ -47,6 +47,12 @@ const DetailedRequest = () => {
         reservation.status = 'Denied'
     }
 
+    const cancelReq = (e) => {
+        e.preventDefault()
+
+        reservation.status = 'Cancelled'
+    }
+
     const goBack = () => {
         navigate(-1)
     }
@@ -109,7 +115,7 @@ return (
 
                     <div className="RDC-Body">
                         <div>
-                            <p>SUBJECT: {reservation.subject}</p>
+                            <p>SUBJECT: {reservation.activity}</p>
                         </div>
                         <div>
                             <p className="b_title">PURPOSE:</p>
@@ -131,7 +137,7 @@ return (
                         <div id="btnAttached" class="RD-Btns">Attached Files<i class='bx bx-download'/></div>
                     </div>
                     <div className="RDA-Body">
-                        <p>Building:  {reservation.bldg}</p>
+                        <p>Building:  {reservation.venue}</p>
                         <p>Room:  {reservation.room}</p>
                         <p>Requested Date: {reservation.date}</p>
                         <p>Time: {reservation.time_in} to {reservation.time_out}</p>
@@ -140,7 +146,7 @@ return (
                 
                 {/* RD Buttons */}
                 {role === 'user' ? (
-                    <div id="btnCancel" class="RD-Btns">
+                    <div id="btnCancel" class="RD-Btns" onClick={cancelReq}>
                         <p>Cancel Request</p>
                         <i class='bx bxs-x-circle'/>
                     </div>
@@ -150,7 +156,7 @@ return (
                         <i class='bx bxs-x-circle'/>
                     </div>
                     
-                    <div id="btnCancel" class="RD-Btns">
+                    <div id="btnCancel" class="RD-Btns" onClick={denyReq}>
                         <p>Deny Request</p>
                         <i class='bx bxs-x-circle'/>
                     </div>

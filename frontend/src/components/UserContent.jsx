@@ -1,9 +1,6 @@
 import '../assets/scss/table.scss'
-import {useDispatch} from 'react-redux';
-// import {deleteUser} from '../features/auth/authSlice'
 
 function UserContent({users}) {
-    const dispatch = useDispatch()
 
     return (
         <div class='info-container'>
@@ -12,7 +9,6 @@ function UserContent({users}) {
             <p id='role'>{users.role}</p>
             <p id='org'>{users.org}</p>
             <p id='dept'>{users.dept}</p>
-            {/* <button onClick={() => dispatch(deleteUser(users._id))} className="close">X</button> */}
         </div>
     );
 }
