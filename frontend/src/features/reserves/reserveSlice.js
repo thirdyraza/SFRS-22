@@ -7,6 +7,7 @@ const initialState = {
     reserves: [],
     allReserves: [reservation],
     forReviews: [reservation],
+    forChecks: [reservation],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -58,11 +59,23 @@ export const getAllReserves = createAsyncThunk('reserves/getAll', async(_id, thu
     }
 })
 
-// get reservation for review
+// get reservation for reviewing
 export const getForReview = createAsyncThunk('reserves/review', async(_id, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await reserveService.getForReview(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get reservation for checking
+export const getForCheck = createAsyncThunk('reserves/check', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getForCheck(token)
 
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
@@ -160,6 +173,19 @@ export const reserveSlice = createSlice({
                 state.forReviews = action.payload
             })
             .addCase(getForReview.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getForCheck.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getForCheck.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.forChecks = action.payload
+            })
+            .addCase(getForCheck.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

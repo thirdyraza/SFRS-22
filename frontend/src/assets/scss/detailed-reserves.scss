@@ -15,7 +15,6 @@
         width: 100px;
         border-radius: 10px;
         font-size: 20px;
-        background-color: #699BF7;
         color: #fff;
         transition: all .2s,box-shadow .08s ease-in;
         cursor: pointer;
@@ -32,7 +31,7 @@
     #btnBack{
         display: flex;
         width: 7vw;
-        background-color: #699BF7;
+        background-color: #294A70;
         color: #fff;
         justify-content: center;
         align-items: center;
@@ -48,6 +47,24 @@
         border: #fff solid 1px;
     }
     #btnCancel{
+        background-color: #999999;
+        margin-top: 30px;
+        width: 200px;
+        display: flex;
+        float: right;
+    }
+
+    #btnApprove{
+        background-color: #51cb4d;
+        margin-top: 30px;
+        width: 200px;
+        display: flex;
+        float: right;
+    }
+
+    #btnDeny{
+        background-color: #999999;
+        margin-right: 30px;
         margin-top: 30px;
         width: 200px;
         display: flex;
@@ -72,7 +89,8 @@
             display: flex;
             color: #fff;
             align-items: center;
-            background-color: #DA9733;
+            background-color: #F4B844;
+            border-radius: 10px;
             padding: 20px 45px;
             box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 

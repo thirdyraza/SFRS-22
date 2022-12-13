@@ -46,7 +46,7 @@ const getAllReserves = async(token) =>{
     return response.data
 }
 
-// get reservation
+// get reservation for reviewing
 const getForReview = async(token) =>{
     const config = {
         headers: {
@@ -54,6 +54,17 @@ const getForReview = async(token) =>{
         }
     }
     const response = await axios.get(API_URL + 'review', config)
+    return response.data
+}
+
+// get reservation for checking
+const getForCheck = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'check', config)
     return response.data
 }
 
@@ -82,6 +93,7 @@ const reserveService = {
     getAllReserves,
     getReservation,
     getForReview,
+    getForCheck,
     updateReserve,
 }
 

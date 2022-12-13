@@ -24,6 +24,10 @@ const reserveSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add a activity']
     },
+    purpose: {
+        type: String,
+        required: [true, 'Please add a purpose']
+    },
     org: {
         type: String,
         required: [true, 'Please choose an organization']
@@ -37,7 +41,7 @@ const reserveSchema = mongoose.Schema({
         required: [true, 'Please add a room']
     },
     date: {
-        type: Date,
+        type: String,
         required: [true, 'Please add a date']
     },
     time_in: {
@@ -55,9 +59,8 @@ const reserveSchema = mongoose.Schema({
     counter:{
         type: Number,
     }
-
 }, {
-    timestamps: true,
+    timestamps: true
 })
 
 reserveSchema.virtual('requestor-name', {

@@ -24,14 +24,11 @@ const DetailedRequest = () => {
 
     var role
 
-    if(user.role === 'Faculty'
-        || user.role === 'Student Officer'){
+    if(user.role === 'Faculty' || user.role === 'Student Officer'){
             role = 'user'
-    } else if(user.role === 'OSAS Staff'
-        || user.role === 'OSAS Director'
-        || user.role === 'Venue-In-Charge'
-        || user.role === 'Department Dean'){
-            role = 'admin'    
+    } else if(user.role === 'OSAS Director' || user.role === 'Department Dean'
+        || user.role === 'Organization Adviser' || user.role === 'Head of Office'){
+            role = 'admin'
     }
 
     const approveReq = (e) => {
@@ -75,13 +72,7 @@ return (
                 <div className="RD-Header">
                     <h3>REQUEST DETAILS</h3>
                     <div id='RStatus1' className="RStatus">
-                        <p className="pending">PENDING</p> 0/2
-                    </div>
-                    <div id='RStatus2' className="RStatus">
-                        <p className="pending">PENDING</p> 1/2
-                    </div>
-                    <div id='RStatus3' className="RStatus">
-                        <p className="pending">REQUEST APPROVED</p>
+                        <p className="pending">PENDING</p> {reservation.counter}/3
                     </div>
                 </div>
 
@@ -119,12 +110,7 @@ return (
                         </div>
                         <div>
                             <p className="b_title">PURPOSE:</p>
-                            <p>To whom it may concern, <br/>
-
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. 
-                            The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. 
-                            Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web 
-                            sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>        
+                            <p>{reservation.purpose}</p>        
                         </div>
                     </div>
                 </div>
@@ -134,7 +120,6 @@ return (
                 <div>
                     <div className="RDA-Header">
                         <div>REQUEST OVERVIEW</div>
-                        <div id="btnAttached" class="RD-Btns">Attached Files<i class='bx bx-download'/></div>
                     </div>
                     <div className="RDA-Body">
                         <p>Building:  {reservation.venue}</p>
@@ -151,12 +136,12 @@ return (
                         <i class='bx bxs-x-circle'/>
                     </div>
               ) : (<>
-                    <div id="btnCancel" class="RD-Btns" onClick={approveReq}>
+                    <div id="btnApprove" class="RD-Btns" onClick={approveReq}>
                         <p>Approve Request</p>
                         <i class='bx bxs-x-circle'/>
                     </div>
                     
-                    <div id="btnCancel" class="RD-Btns" onClick={denyReq}>
+                    <div id="btnDeny" class="RD-Btns" onClick={denyReq}>
                         <p>Deny Request</p>
                         <i class='bx bxs-x-circle'/>
                     </div>

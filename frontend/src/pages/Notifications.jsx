@@ -1,21 +1,39 @@
 import NotificationContent from '../components/NotificationContent';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllReserves, reset } from '../features/reserves/reserveSlice';
+import { getForReview, getReserves, getForCheck, reset } from '../features/reserves/reserveSlice';
+import { getMe } from '../features/auth/authSlice';
 import '../assets/scss/notifications.scss'
 
 function Notifications() {
 
     const dispatch = useDispatch()
 
-    const { allReserves } = useSelector((state) => state.reserves)
+    const { user } = useSelector((state) => state.auth)
+    const { reserves, forReviews, forChecks } = useSelector((state) => state.reserves)
 
     useEffect(() => {
-        dispatch(getAllReserves())
+
+        dispatch(getReserves())
+        dispatch(getForReview())
+        dispatch(getForCheck())
+        dispatch(getMe())
+
         return () => {
             dispatch(reset())
         };
     }, [dispatch]);
+
+    var role
+
+    if(user.role === 'Faculty' || user.role === 'Student Officer'){
+        role = 'user'
+    } else if(user.role === 'OSAS Director' || user.role === 'Department Dean'
+        || user.role === 'Organization Adviser' || user.role === 'Head of Office'){
+            role = 'admin'
+    } else if(user.role === 'Gym In-Charge' || user.role === 'Friendship Park In-Charge' || user.role === 'Outdoor Stage In-Charge'){
+        role = 'venue in-charge'
+    }
 
     return ( 
         <div className="app">
@@ -27,10 +45,7 @@ function Notifications() {
                 <div className="notif-head">
                     <div className='notif-name'>
                         <p className="notif-header">Notifications</p>
-                        <i class='bx bx-notification' ></i>
-                    </div>
-                    <div className='notif-ctr'>
-                        <p>You curently have notifications</p>
+                        <i class='bx bx-notification'></i>
                     </div>
 
                 </div>
@@ -44,27 +59,45 @@ function Notifications() {
                     </select>
                 </div>
 
-                <div>
-                    <button type='submit'>Mark as read</button>
-                </div>
-
-
             </div>
 
             <div className="n-top">
-                <span/>
-                <p>Details</p>
-                <span/>
-                <p>Date</p>
+                <span/>      
+                <p>Reservation Details</p>
+                <p>Role</p>
+                <p>Requested Date</p>
+                <p>Status</p>
             </div>
 
-            {allReserves.length > 0 ? (
-                <div>
-                {allReserves.map((reserve) => (
+            {role === 'admin' ? (<>
+                {forReviews.length > 0 ? (
+                    <div>
+                    {forReviews.map((reserve) => (
                     <NotificationContent key={reserve._id} reserves={reserve}/>
-                ))}
-                </div>
-              ) : (<h3>No Notifications Found</h3>)}
+                    ))}
+                    </div>
+                ) : (<h3 className='notif-none'>No Notifications Found</h3>)}</>
+            ) : (<>
+                {role === 'venue in-charge' ? (<>
+                    {forChecks.length > 0 ? (
+                        <div>
+                        {forChecks.map((reserve) => (
+                        <NotificationContent key={reserve._id} reserves={reserve}/>
+                        ))}
+                        </div>
+                    ) : (<h3 className='notif-none'>No Notifications Found</h3>)}</>
+                ) : (<>
+                    {reserves.length > 0 ? (
+                        <div>
+                        {reserves.map((reserve) => (
+                        <NotificationContent key={reserve._id} reserves={reserve}/>
+                        ))}
+                        </div>
+                    ) : (<h3 className='notif-none'>No Notifications Found</h3>)}
+                    </>)}
+            </>)}
+
+            
 
         </div>
         </div>

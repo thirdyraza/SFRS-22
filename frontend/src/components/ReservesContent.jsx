@@ -23,11 +23,8 @@ function ReservesContent({reserves}) {
 
     if(user.role === 'Faculty' || user.role === 'Student Officer'){
         role = 'user'
-    } else if(user.role === 'OSAS Staff'
-        || user.role === 'OSAS Director'
-        || user.role === 'Venue-In-Charge'
-        || user.role === 'Department Dean'){
-            role = 'admin'
+    } else if(user.role === 'OSAS Director' || user.role === 'Department Dean'){
+        role = 'admin'
     }
   
     return (<>

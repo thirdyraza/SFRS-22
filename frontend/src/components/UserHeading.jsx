@@ -1,8 +1,8 @@
-import '../assets/scss/table.scss';
+import '../assets/scss/users-list.scss';
 
 function UserHeading() {
     return (
-        <div class='heading'>
+        <div class='user-heading'>
             <p>ID Number</p>
             <p>Name</p>
             <p>Role</p>            

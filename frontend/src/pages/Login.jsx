@@ -27,12 +27,17 @@ function Login() {
             || user.role === 'Student Officer'){
               const role = 'user'
               navigate('/' + role + '/dashboard')
-          } else if(user.role === 'OSAS Staff'
-            || user.role === 'OSAS Director'
-            || user.role === 'Venue-In-Charge'
-            || user.role === 'Department Dean'){
+          } else if(user.role === 'OSAS Staff' || user.role === 'OSAS Director'
+            || user.role === 'Department Dean'
+            || user.role === 'Organization Adviser' || user.role === 'Head of Office'){
               const role = 'admin'
               navigate('/' + role + '/dashboard')
+          } else if(user.role === 'Outdoor Stage In-Charge' || user.role === 'Gym In-Charge'){
+            const role = 'venue-incharge'
+            navigate('/' + role + '/dashboard')
+          } else if(user.role === 'System Admin'){
+            const role = 'system-admin'
+            navigate('/' + role + '/dashboard')
           }
         }
 

@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import {useDispatch} from 'react-redux'
-import {createReserve} from '../features/reserves/reserveSlice'
+import { useNavigate } from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux'
+import { createReserve, getReservation } from '../features/reserves/reserveSlice'
 import '../assets/scss/mainform.scss';
 
-function MainForm(){
+function ReservationForm(){
     const [formData, setFormData] = useState({
         activity: '',
+        purpose: '',
         org: '',
-        dept: '',
         venue: '',
         room: '',
         date: '',
@@ -15,9 +16,11 @@ function MainForm(){
         time_out: '',
     })
 
-    const { activity, org, dept, venue, room, date, time_in, time_out } = formData
+    const { activity, purpose, org, venue, room, date, time_in, time_out } = formData
+    const {reserves} = useSelector((state) => state.reserves)
 
     const dispatch = useDispatch()
+    const navigate = useNavigate
 
     const onChange = (e) =>{
         setFormData((prevState) => ({
@@ -29,17 +32,22 @@ function MainForm(){
     const onSubmit = (e) =>{
         e.preventDefault()
         dispatch(createReserve(formData))
-
         setFormData({
             activity: '',
+            purpose: '',
             org: '',
-            dept: '',
             venue: '',
             room: '',
             date: '',
             time_in: '',
             time_out: '',
         })
+
+        const resID = reserves._id
+        dispatch(getReservation(resID))
+    
+        navigate('../details:' + resID)
+        
     }
 
     return(
@@ -47,7 +55,7 @@ function MainForm(){
         <div id="home">
         <div>
                 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>
-                <div className="form-container">
+                <div className="reserve-form-container">
                     <form onSubmit={onSubmit}>
                         <h2>ACTIVITY VENUE RESERVATION FORM</h2>
                         <div className="note">
@@ -58,9 +66,9 @@ function MainForm(){
                                 <p>3. Extra copies shall be given to ever approving bodies.</p>
                             </div>
                         </div>
-                        <div className="purpose">
+                        <div className="activity">
                             <label>Activity</label>
-                            <textarea
+                            <input
                             type='text'
                             className='form-control'
                             id='activity'
@@ -69,9 +77,19 @@ function MainForm(){
                             onChange={onChange}
                             placeholder="State your Activity" />
                         </div>
+                        <div className="purpose">
+                            <label>Purpose</label>
+                            <textarea
+                            type='text'
+                            className='form-control'
+                            id='purpose'
+                            name='purpose'
+                            value={purpose}
+                            onChange={onChange}
+                            placeholder="State your Purpose" />
+                        </div>
 
                         <div className="input-container">
-                            <div className="selectleft">
                                 <div className="in">
                                     <label>Organization</label>
                                     <select
@@ -80,7 +98,7 @@ function MainForm(){
                                     id='org'
                                     value = {org}
                                     onChange={onChange}>
-                                        <option>- - - - -</option>
+                                        <option hidden>- - - - -</option>
                                         <option>LITES</option>
                                         <option>IIEE</option>
                                         <option>GESA</option>
@@ -88,25 +106,6 @@ function MainForm(){
                                         <option>JCIEPEP</option>
                                     </select>
                                 </div>
-                                <div className="in">
-                                    <label>Department</label>
-                                    <select
-                                    type="text"
-                                    name='dept'
-                                    id='dept'
-                                    value = {dept}
-                                    onChange={onChange}>
-                                        <option>- - - - -</option>
-                                        <option>SEAITE</option>
-                                        <option>SEAS</option>
-                                        <option>SABH</option>
-                                        <option>SHAS</option>
-                                        <option>SHS</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="selectright">
                                 <div className="in">
                                     <label>Venue</label>
                                     <select
@@ -116,7 +115,7 @@ function MainForm(){
                                     value = {venue}
                                     onChange={onChange}
                                     >
-                                        <option>- - - - -</option>
+                                        <option hidden>- - - - -</option>
                                         <option>R Building</option>
                                         <option>N Building</option>
                                         <option>J Building</option>
@@ -132,7 +131,7 @@ function MainForm(){
                                     id='room'
                                     value = {room}
                                     onChange={onChange}>
-                                        <option>- - - - -</option>
+                                        <option hidden>- - - - -</option>
                                         <option>R 21</option>
                                         <option>N 46</option>
                                         <option>J 43</option>
@@ -140,57 +139,34 @@ function MainForm(){
                                         <option>K 13</option>
                                     </select>
                                 </div>
-                            </div>
                         </div>
 
                         <div className="selectbottom">
                             <div className="in">
                                 <label>Date</label>
-                                <select
-                                type="text"
-                                name='date'
-                                id='date'
-                                value = {date}
-                                onChange={onChange}>
-                                    <option>-- / -- / --</option>
-                                    <option>Monday</option>
-                                    <option>Tuesday</option>
-                                    <option>Wednesday</option>
-                                    <option>Thursday</option>
-                                    <option>Friday</option>
-                                </select>
+                                <input type="date" name="date" id="date" className='date-container' value={date} onChange={onChange}/>
                             </div>
 
                             <div className="in">
                                 <label>Time</label>
-                                <div className="time-container">
-                                    <select
-                                    type="text"
-                                    name='time_in'
-                                    id='time_in'
-                                    value = {time_in}
-                                    onChange={onChange}>
-                                        <option>-- : --</option>
-                                        <option>7:30</option>
-                                        <option>9:00</option>
-                                        <option>10:30</option>
-                                        <option>12:00</option>
-                                        <option>1:30</option>
-                                    </select>
+                                <div className="time-container">                        
+                                    <input type="time"
+                                    name="time_in"
+                                    id="time_in"
+                                    value={time_in}
+                                    onChange={onChange}
+                                    className='time-input'
+                                    min="07:30" max="19:30"/>
+
                                     <p id="time-span">to</p>
-                                    <select
-                                    type="text"
-                                    name='time_out'
-                                    id='time_out'
+
+                                    <input type="time"
+                                    name="time_out"
+                                    id="time_out"
                                     value={time_out}
-                                    onChange={onChange}>
-                                        <option>-- : --</option>
-                                        <option>7:30</option>
-                                        <option>9:00</option>
-                                        <option>10:30</option>
-                                        <option>12:00</option>
-                                        <option>1:30</option>
-                                    </select>
+                                    onChange={onChange}
+                                    className='time-input'
+                                    min="07:30" max="21:00"/>
                                 </div>
                             </div>
 
@@ -199,26 +175,17 @@ function MainForm(){
                         <div className="equipment-container">  
                             <div className="in">
                                 <label>Equipment</label>
-                                <select type="text" placeholder="MM/DD/YY">
-                                    <option>Default Value</option>
+                                <select type="text">
+                                    <option hidden>- - - - -</option>
+                                    <option>Projector</option>
+                                    <option>Microphone</option>
                                 </select>
-                            </div>
-                            <div className="in">
-                                <label>Quantity</label>
-                                <select type="text" placeholder="MM/DD/YY">
-                                    <option>Default Value</option>
-                                </select>
-                            </div>
-                            <div id="btnAdd">
-                                <i class='bx bxs-plus-circle'></i>
                             </div>
                         </div>
-
-
-                        <br/>
                         <button type='submit' id="btnSubmit" className='btnForm btn btn-block'>
                             Submit
                         </button>
+
                     </form>
                     
                 </div>
@@ -229,4 +196,4 @@ function MainForm(){
     )
 }
 
-export default MainForm;
+export default ReservationForm;

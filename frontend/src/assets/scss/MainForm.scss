@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import './var&mixins.scss';
 
-.form-container{
-    margin-left: auto;
-    margin-right: auto;
+.reserve-form-container{
+    margin: 80px auto;
+    border-radius: 25px;
     padding: 50px 0;
     display: flex;
     justify-content: center;
+    background-color: $color-white;
     align-items: center;
-    min-height: 100vh;
-    height: 100%;
-    width: 92.4vw;
+    width: 70%;
 
     // Button CSS
     .btnForm{
@@ -21,14 +21,14 @@
         width: 100px;
         border-radius: 10px;
         font-size: 20px;
-        background-color: #699BF7;
+        background-color: #294A70;
         color: #fff;
         transition: all .2s,box-shadow .08s ease-in;
         cursor: pointer;
         font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
         font-size: 100%;
         &:hover{
-            background-color: #294A70;
+            background-color: #F4B844;
         }
     
         .btn-text{
@@ -38,6 +38,7 @@
     #btnSubmit{
         float: right;
         width: 7vw;
+        border-style: none;
     }
     #btnAdd{
         border-radius: 50px;
@@ -47,10 +48,10 @@
         align-items: center;
         i{
             font-size: 50px;
-            color: #699BF7;
+            color: #294A70;
             transition: all .2s,box-shadow .08s ease-in;
             &:hover{
-                color: #294A70;
+                color: #F4B844;
             }
         }
     }
@@ -94,6 +95,22 @@
         }
     }
 
+    .activity{
+        margin-top: 10px;
+        display: grid;
+        flex-direction: column;
+        grid-template-columns: 1fr;
+        width: 100%;
+        input{
+            font-size: 15px;
+            border-radius: 15px;
+            height: 50px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 1px solid #E5E4E2;
+        }
+    }
+
     .purpose{
         display: grid;
         flex-direction: column;
@@ -103,7 +120,7 @@
             height: 100px;
             padding: 12px 20px;
             margin: 8px 0;
-            border: 1px solid #ccc;
+            border: 1px solid #E5E4E2;
             border-radius: 15px;
         }
     }
@@ -114,11 +131,19 @@
         padding-right: 10px;
 
         select{
+            background-color: #E5E4E2;
             border-radius: 15px;
             height: 50px;
             padding: 12px 20px;
             margin: 8px 0;
-            border: 1px solid #ccc;
+            border: none;
+        }
+        input{
+            background-color: #E5E4E2;
+            border-radius: 15px;
+            height: 50px;
+            padding: 12px 20px;
+            margin: 8px 0;
             border: none;
         }
 
@@ -130,7 +155,7 @@
             #time-span{
                 margin: 0px 20px;
             }
-            select{
+            .time-input{
                 width: 100%;
             }
         }
@@ -138,7 +163,7 @@
 
     .input-container{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: .8fr 1.2fr .5fr;
     }
 
     .selectbottom{
@@ -156,6 +181,6 @@
 
     .equipment-container{
         display: grid;
-        grid-template-columns: 13fr 2fr 1fr;
+        grid-template-columns: 10fr 10fr;
     }
 }

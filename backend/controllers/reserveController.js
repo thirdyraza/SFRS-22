@@ -40,6 +40,7 @@ const setReserve = asyncHandler( async (req, res) => {
 
     const reserve = await Reserve.create({
         activity: req.body.activity,
+        purpose: req.body.purpose,
         org: req.body.org,
         venue: req.body.venue,
         room: req.body.room,
@@ -78,7 +79,7 @@ const updateReserve = asyncHandler( async (req, res) => {
         updStat = 'Successfully Reserved'
     }
 
-    const updatedReserve = await Reserve.findByIdAndUpdate(req.params.id, {status: updStat, counter: +1}, {new: true})
+    const updatedReserve = await Reserve.findByIdAndUpdate(req.params.id, {status: updStat, counter: counter+1}, {new: true})
     res. status(200).json(updatedReserve)
 })
 
@@ -129,18 +130,19 @@ const getAllReserves = asyncHandler(async(req, res) =>{
 const getForReview = asyncHandler( async (req, res) => {
 
     let respooff
+    let respodept
 
     if(req.user.role === 'Organization Adviser'){
         respooff = req.user.org
     } else if(req.user.role === 'Head of Office'){
         respooff = req.user.org
     } else if(req.user.role === 'Department Dean'){
-        respooff = req.reserve.org
+        respodept = req.user.dept
     } else if(req.user.role === 'OSAS Director'){
         respooff = req.reserve.org
     }
     
-    const forReview = await Reserve.find({ status: req.user.role, org: respooff})
+    const forReview = await Reserve.find({ status: req.user.role, reqdept:respodept})
 
     res.status(200).json(forReview)
 })

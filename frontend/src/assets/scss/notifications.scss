@@ -1,3 +1,5 @@
+@import './var&mixins.scss';
+
 .notifications{
     font-size: 13px; 
     display: flex;
@@ -49,23 +51,15 @@
     // Header Notification CSS
     .n-header{
         display:grid;
-        grid-template-columns: 5fr 1fr 1fr;
+        grid-template-columns: 5fr 1fr;
         .notif-head{
             display: flex;
-            font-size: 25px;
+            font-size: 30px;
             flex-direction: column;
-
 
             .notif-name{
                 display: flex;
                 align-items: center;
-            }
-
-            .notif-ctr{
-                p{
-                    color: #658AFE;
-                    font-size: 15px;
-                }
             }
             .notif-header{
                 margin-right: 10px;
@@ -77,11 +71,11 @@
     .notif-content{
         margin-top: 20px;
         display: grid;
-        grid-template-columns: .5fr 1.5fr 1fr 1fr 1fr;
+        grid-template-columns: 1.5fr 1fr 1fr .3fr .7fr;
         align-items: center;
         width: auto;
         background-color: rgb(247, 247, 247);
-        padding: 15px 10px;
+        padding: 25px 30px;
         border-radius: 15px;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
         transition: all 0.2s ease;
@@ -93,14 +87,12 @@
             color: #838383;
             text-align: center;
         }
-
-        .notif-indicator{
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .notif-stat{
+            color: #838383;
         }
 
         .notif-container{
+            
             display: flex;
             flex-direction: row;
             font-size: 16px;
@@ -130,26 +122,24 @@
         }
     }
 
-.n-top{
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: .5fr 1fr 1fr 1fr 1fr;
-    align-items: center;
-    width: auto;
-    background-color: rgb(247, 247, 247);
-    padding: 15px 10px;
-    border-radius: 15px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-}
-}
-div[value=unread]{
-    font-size: 20px;
-    color:#699BF7;
-}
-div[value=read]{
-    i{
-        display: none;
+    .n-top{
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: .6fr 2.3fr .9fr 1.5fr 1.8fr;
+        align-items: center;
+        width: auto;
+        background-color: rgb(247, 247, 247);
+        padding: 25px 30px;
+        border-radius: 15px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     }
+}
+
+.notif-none {
+    font-size: 20px;
+    text-align: center;
+    color: $color-gray;
+    padding: 20px;
 }
 
 // Media Queries
