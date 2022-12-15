@@ -36,7 +36,9 @@ function ReservesContent({reserves}) {
                 <p>{reserves.venue}</p>
                 <p>{reserves.room}</p>
                 <p>{reserves.time_in} - {reserves.time_out}</p>
-                <p>Held by:  {reserves.status}</p>
+                <p>{reserves.status}</p>
+                {reserves.status === 'Cancelled' || reserves.status === 'Denied' ? (<></>) : (<><p>{reserves.counter}  /  3</p></>)}
+                
             </div>
         ) : (
             <div class='info-container' onClick={gotoDetails}>
@@ -46,6 +48,7 @@ function ReservesContent({reserves}) {
                 <p>{reserves.venue}</p>
                 <p>{reserves.room}</p>
                 <p>{reserves.time_in} - {reserves.time_out}</p>
+                <p>{reserves.counter}  /  3</p>
             </div>
         )}
     </>);

@@ -68,9 +68,20 @@ const getForCheck = async(token) =>{
     return response.data
 }
 
+// check if reservations exist
+const getIfExist = async(venue, token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'exist', venue, config)
+    return response.data
+}
+
 //update reservation
-const updateReserve = async(resID) => {
-    const response = await axios.put(API_URL + resID)
+const updateReserve = async(updateData) => {
+    const response = await axios.put(API_URL + updateData.resID, updateData)
     
     return response.data
 }
@@ -94,6 +105,7 @@ const reserveService = {
     getReservation,
     getForReview,
     getForCheck,
+    getIfExist,
     updateReserve,
 }
 

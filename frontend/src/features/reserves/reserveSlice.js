@@ -8,6 +8,7 @@ const initialState = {
     allReserves: [reservation],
     forReviews: [reservation],
     forChecks: [reservation],
+    ifExist: [reservation],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -83,10 +84,22 @@ export const getForCheck = createAsyncThunk('reserves/check', async(_id, thunkAP
     }
 })
 
-// update reservation
-export const updateReserve = createAsyncThunk('reserves/update', async(resID, thunkAPI) =>{
+// check for existing reservations
+export const getIfExist = createAsyncThunk('reserves/exist', async(venue, _id, thunkAPI) => {
     try {
-        return await reserveService.updateReserve(resID)
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getIfExist(venue, token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// update reservation
+export const updateReserve = createAsyncThunk('reserves/update', async(updateData, thunkAPI) =>{
+    try {
+        return await reserveService.updateReserve(updateData)
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -186,6 +199,19 @@ export const reserveSlice = createSlice({
                 state.forChecks = action.payload
             })
             .addCase(getForCheck.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getIfExist.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getIfExist.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.ifExist = action.payload
+            })
+            .addCase(getIfExist.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

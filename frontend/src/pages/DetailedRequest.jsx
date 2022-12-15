@@ -1,26 +1,49 @@
-import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import '../assets/scss/detailed-reserves.scss'
-import { getMe, reset } from '../features/auth/authSlice';
-import { updateReserve } from '../features/reserves/reserveSlice';
+import PopupCancel from '../components/PopupCancel';
+import PopupApprove from '../components/PopupApprove';
+import PopupDeny from '../components/PopupDeny';
 
-const DetailedRequest = () => {
+function openApprove(){
+    document.getElementById('popup_container').style.cssText = 'display:flex';
+    document.getElementById('close').style.cssText = 'display:flex';
+    document.getElementById('open_popup').style.cssText = 'display:hidden';
+}
+function openDeny(){
+    document.getElementById('popup_container').style.cssText = 'display:flex';
+    document.getElementById('close').style.cssText = 'display:flex';
+    document.getElementById('open_popup').style.cssText = 'display:hidden';
+}
+function openCancel(){
+    document.getElementById('popup_cancel').style.cssText = 'display:flex';
+    document.getElementById('close').style.cssText = 'display:flex';
+    document.getElementById('open_cancel').style.cssText = 'display:hidden';
+}
+function closeCancel(){
+    document.getElementById('popup_cancel').style.cssText = 'display:none';
+    document.getElementById('close').style.cssText = 'display:none';
+    document.getElementById('open_cancel').style.cssText = 'opacity: 100%';
+}
+function closeDeny(){
+    document.getElementById('popup_deny').style.cssText = 'display:none';
+    document.getElementById('close').style.cssText = 'display:none';
+    document.getElementById('open_popup').style.cssText = 'opacity: 100%';
+}
+function closeApprove(){
+    document.getElementById('popup_approve').style.cssText = 'display:none';
+    document.getElementById('close').style.cssText = 'display:none';
+    document.getElementById('open_popup').style.cssText = 'opacity: 100%';
+}
+
+
+
+function DetailedRequest() {
     
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const {user} = useSelector((state) => state.auth)
     const {reservation} = useSelector((state) => state.reserves)
-
-    useEffect(() => {
-
-        dispatch(getMe())
-        return () => {
-            dispatch(reset())
-        };
-
-    }, [dispatch]);
 
     var role
 
@@ -29,25 +52,6 @@ const DetailedRequest = () => {
     } else if(user.role === 'OSAS Director' || user.role === 'Department Dean'
         || user.role === 'Organization Adviser' || user.role === 'Head of Office'){
             role = 'admin'
-    }
-
-    const approveReq = (e) => {
-        e.preventDefault()
-
-        const resID = reservation._id
-        dispatch(updateReserve(resID))
-    }
-
-    const denyReq = (e) => {
-        e.preventDefault()
-
-        reservation.status = 'Denied'
-    }
-
-    const cancelReq = (e) => {
-        e.preventDefault()
-
-        reservation.status = 'Cancelled'
     }
 
     const goBack = () => {
@@ -71,9 +75,22 @@ return (
                 {/* RD Heading */}
                 <div className="RD-Header">
                     <h3>REQUEST DETAILS</h3>
-                    <div id='RStatus1' className="RStatus">
-                        <p className="pending">PENDING</p> {reservation.counter}/3
-                    </div>
+                    
+                        {reservation.status === 'Cancelled' ? (
+                            <div className="CStatus">
+                                <p className='pending'>Cancelled</p>
+                            </div>
+                        ):(<>{reservation.status === 'Denied' ? (<>
+                            <div className="DStatus">
+                                <p className="pending">Denied</p>
+                            </div>
+                            </>) : (<>
+                            <div id='RStatus1' className="PStatus">
+                                <p className="pending">PENDING</p> {reservation.counter}/3
+                            </div>
+                            </>)}
+                        </>)}
+                    
                 </div>
 
                 {/* Divider */}
@@ -130,21 +147,27 @@ return (
                 </div>
                 
                 {/* RD Buttons */}
-                {role === 'user' ? (
-                    <div id="btnCancel" class="RD-Btns" onClick={cancelReq}>
+                {role === 'user' && reservation.status !== 'Cancelled' ? (<>
+                    <div id="btnCancel" class="RD-Btns" onClick={openCancel}>
                         <p>Cancel Request</p>
                         <i class='bx bxs-x-circle'/>
                     </div>
-              ) : (<>
-                    <div id="btnApprove" class="RD-Btns" onClick={approveReq}>
-                        <p>Approve Request</p>
-                        <i class='bx bxs-x-circle'/>
-                    </div>
+                    <PopupCancel />
+                    </>) : (<>
+                    {role === 'admin' && reservation.status !== 'Denied' ? (<>
+                        <div id="btnApprove" class="RD-Btns" onClick={openApprove}>
+                            <p>Approve Request</p>
+                            <i class='bx bxs-x-circle'/>
+                        </div>
+                        <PopupApprove />
+                        
+                        <div id="btnDeny" class="RD-Btns" onClick={openDeny}>
+                            <p>Deny Request</p>
+                            <i class='bx bxs-x-circle'/>
+                        </div>
+                        <PopupDeny />
+                    </>): (<></>)}
                     
-                    <div id="btnDeny" class="RD-Btns" onClick={denyReq}>
-                        <p>Deny Request</p>
-                        <i class='bx bxs-x-circle'/>
-                    </div>
                 </>)}
 
             </div>

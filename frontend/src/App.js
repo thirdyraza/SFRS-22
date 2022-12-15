@@ -16,6 +16,9 @@ import DetailedRequest from './pages/DetailedRequest';
 import MainVIC from './pages/MainVIC';
 import MainSysAd from './pages/MainSysAd';
 import DashboardRegular from './pages/DashboardRegular';
+import Popup_Confirm from './components/PopupApprove';
+import Popup_Deny from './components/PopupDeny';
+import Popup_Cancel from './components/PopupCancel';
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
           <Routes>
             <Route path='/' element={<Landing />}/>
             <Route path='/login' element={<Login />}/>
+            <Route path='/popup1' element={<Popup_Confirm/>}/>
+            <Route path='/popup2' element={<Popup_Deny/>}/>
+            <Route path='/popup3' element={<Popup_Cancel/>}/>            
 
             {/* private routes */}
 

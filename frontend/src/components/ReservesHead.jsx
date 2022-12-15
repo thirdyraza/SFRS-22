@@ -25,6 +25,7 @@ function ReservesHead() {
                 <p>Room</p>
                 <p>Time</p>
                 <p>Status</p>
+                <p>Approval</p>
             </div>
         ) : (
             <div class='heading'>
