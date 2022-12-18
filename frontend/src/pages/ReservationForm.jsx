@@ -1,19 +1,16 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { createReserve, getReservation, reset, getIfExist } from '../features/reserves/reserveSlice'
+import { createReserve } from '../features/reserves/reserveSlice'
 import '../assets/scss/mainform.scss';
 
-import ReservesHead from '../components/ReservesHead'
-import ReservesContent from '../components/ReservesContent'
+// import ReservesHead from '../components/ReservesHead'
+// import ReservesContent from '../components/ReservesContent'
 
 function ReservationForm(){
 
     const {user} = useSelector((state) => state.auth)
-    const {reserves, ifExist} = useSelector((state) => state.reserves)
 
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         activity: '',
@@ -26,13 +23,6 @@ function ReservationForm(){
         time_out: '',
     })
     const { activity, purpose, org, venue, room, date, time_in, time_out } = formData
-
-    useEffect(() => {
-        dispatch(getIfExist(venue))
-        return () => {
-            dispatch(reset())
-        };
-    }, [dispatch, venue]);
 
     const SEAITE = ["PICE", "IIEE", "LITES", "UAPSA", "JIEEP", "LTL", "SSC", "CCA", "LUSC" ]
     const SABH = ["HOST", "JFINEX", "JPIA", "JMAH", "LTL", "SSC", "CCA", "LUSC" ]
@@ -233,17 +223,6 @@ function ReservationForm(){
 
                     </form>
                     
-                </div>
-                <div id='ownreq' class='user-req'>
-                <h1>USER REQUESTS</h1>
-                    <ReservesHead />
-                    {ifExist.length > 0 ? (
-                        <div>
-                        {ifExist.map((reserve) => (
-                            <ReservesContent key={reserve._id} reserves={reserve}/>
-                        ))}
-                        </div>
-                    ) : (<h3 className='none'>No Reservations Found</h3>)}
                 </div>
             </div>
         </div>

@@ -1,0 +1,148 @@
+@import './var&mixins.scss';
+
+.checked-table{
+    margin-top: 30px;
+
+    p{
+        margin-bottom: 10px;
+        color: $color-gray
+    }
+
+    #notice{
+        opacity: 70%;
+        color: black;
+        background-color: $color-yellow;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    #yestice{
+        font-size: 18px;
+        opacity: 80%;
+        color: black;
+        padding: 8px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .check-table-head{
+        padding: 20px 5%;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: $color-white;
+        box-shadow: 0 1px 20px rgba(0, 0, 0, 0.219);
+
+    }
+}
+
+.chk-buttons{
+    display: grid;
+    grid-template-columns: 1fr .5fr;
+
+    .check-pill{
+        background-color: $color-blue;
+        margin-right: 15px;
+        &:hover{
+            background-color: $color-yellow;
+        }
+    }
+    .check-clear{
+        background-color: $color-gray2;
+        margin-left: 15px;
+        &:hover{
+            background-color: #ccc;
+        }
+    }
+
+    button{
+        font-size: 14px;
+        padding: 15px 0;
+        border-radius: 100px;
+        color: $color-white;
+        text-align: center;
+        margin-top: 30px;
+        border-style: none;
+    }
+}
+
+
+// Table Heading
+.check-heading{
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px 50px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1.2fr .9fr .7fr .7fr .5fr;
+    justify-content: space-evenly;
+    background-color: $color-blue;
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.315);
+
+    p{
+        margin: 0 10px;
+        font-size: 14px;
+        color: $color-white;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .check-heading{
+        font-size: 2vw;
+    }
+}
+
+// Table Content
+.check-container{
+    margin: 15px 0;
+    padding: 30px 50px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: 1.2fr .9fr .7fr .7fr .5fr;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $color-white;
+    color: $color-gray;
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.13);
+    transition: all 0.2s ease;
+    
+    input{
+        width: 16px;
+        height: 16px;
+        place-self: center;
+    }
+
+    p{
+        margin: 0 10px;
+        font-size: 14px;
+        text-decoration: none;
+    }
+}
+
+.btnGo{
+    font-size: 14px;
+    padding: 15px;
+    width: 100%;
+    border-radius: 100px;
+    color: $color-white;
+    text-align: center;
+    margin-top: 30px;
+    border-style: none;
+    background-color: $color-blue;
+    &:hover{
+        background-color: $color-yellow;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .check-container{
+        font-size: 2vw;
+    }
+}

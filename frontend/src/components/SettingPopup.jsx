@@ -24,7 +24,7 @@ export default function SettingPopup(){
     const onLogout =() => {
         dispatch(logout())
         dispatch(reset())
-        navigate('/')
+        navigate('/login')
     }
 
 

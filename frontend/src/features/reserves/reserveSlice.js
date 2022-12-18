@@ -2,13 +2,22 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import reserveService from './reserveService'
 
 const reservation = JSON.parse(localStorage.getItem('reserve'))
+const temporary = JSON.parse(localStorage.getItem('temporary'))
 const initialState = {
     reservation: reservation ? reservation: null,
+    temporary: temporary ? temporary: null,
     reserves: [],
+    reservesDash: [],
+    tempres: [],
+    existings: [reservation],
+    existingdays: [reservation],
     allReserves: [reservation],
     forReviews: [reservation],
+    forReviewsDash: [reservation],
     forChecks: [reservation],
-    ifExist: [reservation],
+    forChecksDash: [reservation],
+    forDeans: [reservation],
+    forDeansDash: [reservation],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -26,11 +35,77 @@ export const createReserve =createAsyncThunk('reserves/create', async(reserveDat
     }
 })
 
+// create temporary values
+export const setTemp = createAsyncThunk('reserves/setTemp', async(tempData, thunkAPI) =>{
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.setTemp(tempData, token)
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get temporary values
+export const getTemp = createAsyncThunk('reserves/getTemp', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getTemp(token)
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// delete temporary values
+export const deleteTemp = createAsyncThunk('reserves/deleteTemp', async(tempId, thunkAPI) =>{
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.deleteTemp(tempId, token)
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get user reservation
+export const getIfExist = createAsyncThunk('reserves/existing', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getIfExist(token)
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+// get user reservation
+export const getIfExistDay = createAsyncThunk('reserves/existingDay', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getIfExistDay(token)
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 // get user reservation
 export const getReserves = createAsyncThunk('reserves/getMine', async(_id, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await reserveService.getReserves(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get user reservation
+export const getReservesDash = createAsyncThunk('reserves/dashMine', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getReservesDash(token)
 
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
@@ -71,6 +146,17 @@ export const getForReview = createAsyncThunk('reserves/review', async(_id, thunk
         return thunkAPI.rejectWithValue(message)
     }
 })
+// get reservation for reviewing
+export const getForReviewDash = createAsyncThunk('reserves/dashReview', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getForReviewDash(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 
 // get reservation for checking
 export const getForCheck = createAsyncThunk('reserves/check', async(_id, thunkAPI) => {
@@ -83,12 +169,34 @@ export const getForCheck = createAsyncThunk('reserves/check', async(_id, thunkAP
         return thunkAPI.rejectWithValue(message)
     }
 })
-
-// check for existing reservations
-export const getIfExist = createAsyncThunk('reserves/exist', async(venue, _id, thunkAPI) => {
+// get reservation for checking
+export const getForCheckDash = createAsyncThunk('reserves/dashCheck', async(_id, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await reserveService.getIfExist(venue, token)
+        return await reserveService.getForCheckDash(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get reservation for deans
+export const getForDean = createAsyncThunk('reserves/deans', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getForDean(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+// get reservation for deans
+export const getForDeanDash = createAsyncThunk('reserves/dashDeans', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getForDeanDash(token)
 
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
@@ -138,6 +246,71 @@ export const reserveSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
+            .addCase(setTemp.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(setTemp.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.tempres.push(action.payload)
+            })
+            .addCase(setTemp.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getTemp.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getTemp.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.tempres = action.payload
+            })
+            .addCase(getTemp.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })        
+            .addCase(deleteTemp.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(deleteTemp.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.tempres = state.tempres.filter((temporary) => temporary._id !== action.payload.id)
+            })
+            .addCase(deleteTemp.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getIfExist.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getIfExist.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.existings = action.payload
+            })
+            .addCase(getIfExist.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getIfExistDay.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getIfExistDay.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.existingdays = action.payload
+            })
+            .addCase(getIfExistDay.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
             .addCase(getReserves.pending, (state) => {
                 state.isLoading = true
             })
@@ -147,6 +320,19 @@ export const reserveSlice = createSlice({
                 state.reserves = action.payload
             })
             .addCase(getReserves.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getReservesDash.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getReservesDash.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.reservesDash = action.payload
+            })
+            .addCase(getReservesDash.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
@@ -190,6 +376,19 @@ export const reserveSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
+            .addCase(getForReviewDash.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getForReviewDash.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.forReviewsDash = action.payload
+            })
+            .addCase(getForReviewDash.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
             .addCase(getForCheck.pending, (state) => {
                 state.isLoading = true
             })
@@ -203,15 +402,41 @@ export const reserveSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
-            .addCase(getIfExist.pending, (state) => {
+            .addCase(getForCheckDash.pending, (state) => {
                 state.isLoading = true
             })
-            .addCase(getIfExist.fulfilled, (state, action) => {
+            .addCase(getForCheckDash.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.ifExist = action.payload
+                state.forChecksDash = action.payload
             })
-            .addCase(getIfExist.rejected, (state, action) => {
+            .addCase(getForCheckDash.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getForDean.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getForDean.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.forDeans = action.payload
+            })
+            .addCase(getForDean.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getForDeanDash.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getForDeanDash.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.forDeansDash = action.payload
+            })
+            .addCase(getForDeanDash.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

@@ -18,6 +18,66 @@ const createReserve = async(reserveData, token) =>{
     return response.data
 }
 
+// create temporary values
+const setTemp = async(tempData, token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.post(API_URL + 'temp', tempData, config)
+
+    if(response.data) {
+        localStorage.setItem('temporary', JSON.stringify(response.data))
+    }
+
+    return response.data
+}
+
+// get user reservations
+const getTemp = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'temp', config)
+    return response.data
+}
+
+//delete reservation
+const deleteTemp = async(tempId, token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.delete(API_URL + 'temp/' + tempId, config)
+    return response.data
+}
+
+// get user reservations
+const getIfExist = async(tempData, token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'existing', tempData, config)
+    return response.data
+}
+
+// get user reservations
+const getIfExistDay = async(tempData, token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'existingDay', tempData, config)
+    return response.data
+}
+
 // get user reservations
 const getReserves = async(token) =>{
     const config = {
@@ -26,6 +86,15 @@ const getReserves = async(token) =>{
         }
     }
     const response = await axios.get(API_URL, config)
+    return response.data
+}
+const getReservesDash = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'limited', config)
     return response.data
 }
 
@@ -56,6 +125,15 @@ const getForReview = async(token) =>{
     const response = await axios.get(API_URL + 'review', config)
     return response.data
 }
+const getForReviewDash = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'reviewLimited', config)
+    return response.data
+}
 
 // get reservation for checking
 const getForCheck = async(token) =>{
@@ -67,22 +145,39 @@ const getForCheck = async(token) =>{
     const response = await axios.get(API_URL + 'check', config)
     return response.data
 }
-
-// check if reservations exist
-const getIfExist = async(venue, token) =>{
+const getForCheckDash = async(token) =>{
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
-    const response = await axios.get(API_URL + 'exist', venue, config)
+    const response = await axios.get(API_URL + 'checkLimited', config)
+    return response.data
+}
+
+// get reservation for checking (deans)
+const getForDean = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'deans', config)
+    return response.data
+}
+const getForDeanDash = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'deansLimited', config)
     return response.data
 }
 
 //update reservation
 const updateReserve = async(updateData) => {
     const response = await axios.put(API_URL + updateData.resID, updateData)
-    
     return response.data
 }
 
@@ -99,14 +194,23 @@ const deleteReserve = async(reserveId, token) =>{
 
 const reserveService = {
     createReserve,
+    setTemp,
+    getTemp,
+    deleteTemp,
     getReserves,
+    getReservesDash,
     deleteReserve,
     getAllReserves,
     getReservation,
     getForReview,
+    getForReviewDash,
     getForCheck,
-    getIfExist,
+    getForCheckDash,
+    getForDean,
+    getForDeanDash,
     updateReserve,
+    getIfExist,
+    getIfExistDay,
 }
 
 export default reserveService

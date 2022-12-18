@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler')
 
 const Reserve = require('../models/reserve.model')
-const User = require('../models/user.model')
+const Temp = require('../models/temp.model')
 
 // @desc Get own reservations
 // @route GET /api/reserves
@@ -10,6 +10,11 @@ const getReserves = asyncHandler( async (req, res) => {
     const reserves = await Reserve.find({ user: req.user.id })
 
     res.status(200).json(reserves)
+})
+const getReservesDash = asyncHandler( async (req, res) => {
+    const reserves = await Reserve.find({ user: req.user.id })
+
+    res.status(200).json(reserves).limit(5)
 })
 
 // @desc Get one reservation
@@ -66,8 +71,6 @@ const updateReserve = asyncHandler( async (req, res) => {
     const {review} = req.body
     const reserve = await Reserve.findById(req.params.id)
 
-    console.log(review)
-
     if(!reserve){
         res.status(400)
         throw new Error('Reservation not found')
@@ -81,7 +84,11 @@ const updateReserve = asyncHandler( async (req, res) => {
     } else if(reserve.status === 'Deparment Dean') {
         updStat = 'OSAS Director'
         ctr +=1
-    }else if(review === 'Deny'){
+    }else if(reserve.status === 'OSAS Director'){
+        updStat = 'Successfully Reserved'
+        ctr +=1
+    }
+    else if(review === 'Deny'){
         updStat = 'Denied'
         ctr = 0
     }else if(review === 'Cancel'){
@@ -140,19 +147,32 @@ const getAllReserves = asyncHandler(async(req, res) =>{
 const getForReview = asyncHandler( async (req, res) => {
 
     let respooff
-    let respodept
 
     if(req.user.role === 'Organization Adviser'){
         respooff = req.user.org
     } else if(req.user.role === 'Head of Office'){
         respooff = req.user.org
-    } else if(req.user.role === 'Department Dean'){
-        respodept = req.user.dept
-    } else if(req.user.role === 'OSAS Director'){
+    }else if(req.user.role === 'OSAS Director'){
         respooff = req.reserve.org
     }
     
-    const forReview = await Reserve.find({ status: req.user.role, reqdept: respodept} || {status: req.user.role, org: respooff})
+    const forReview = await Reserve.find({status: req.user.role, org: respooff}).sort('-updatedAt')
+
+    res.status(200).json(forReview)
+})
+const getForReviewDash = asyncHandler( async (req, res) => {
+
+    let respooff
+
+    if(req.user.role === 'Organization Adviser'){
+        respooff = req.user.org
+    } else if(req.user.role === 'Head of Office'){
+        respooff = req.user.org
+    }else if(req.user.role === 'OSAS Director'){
+        respooff = req.reserve.org
+    }
+    
+    const forReview = await Reserve.find({status: req.user.role, org: respooff}).sort('-updatedAt').limit(3)
 
     res.status(200).json(forReview)
 })
@@ -172,37 +192,132 @@ const getForCheck = asyncHandler( async (req, res) => {
         venrespo = 'Friendship Park'
     }
     
-    const forCheck = await Reserve.find({venue: venrespo})
+    const forCheck = await Reserve.find({venue: venrespo}).sort('-updatedAt')
+
+    res.status(200).json(forCheck)
+})
+const getForCheckDash = asyncHandler( async (req, res) => {
+
+    let venrespo
+
+    if(req.user.role === 'Gym In-Charge'){
+        venrespo = 'James Ter Mier Gymnasium'
+    } else if(req.user.role === 'Outdoor Stage In-Charge'){
+        venrespo = 'Open Stage'
+    } else if(req.user.role === 'Friendship Park In-Charge'){
+        venrespo = 'Friendship Park'
+    }
+    
+    const forCheck = await Reserve.find({venue: venrespo}).sort('-updatedAt').limit(3)
 
     res.status(200).json(forCheck)
 })
 
-// @desc Get reservations with same venue
-// @route GET /api/reserves/exist
+// @desc Get reservation for checking (department-wise)
+// @route GET /api/reserves/check
+// @access Private
+const getForDean = asyncHandler( async (req, res) => {
+    
+    const forDean = await Reserve.find({status: req.user.role, reqdept: req.user.dept}).sort('-updatedAt')
+    res.status(200).json(forDean)
+})
+
+const getForDeanDash = asyncHandler( async (req, res) => {
+    
+    const forDean = await Reserve.find({status: req.user.role, reqdept: req.user.dept}).sort('-updatedAt').limit(3)
+    res.status(200).json(forDean)
+
+})
+
+// @desc Create a temporary model
+// @route POST /api/reserves/temps
+// @access Private
+const setTemp = asyncHandler( async (req, res) => {
+    const { tempven, tempro, tempda } = req.body
+
+    if(!tempven){
+        return res.status(400).json({message: 'Please enter a venue'})
+    }
+
+    const temps = await Temp.create({
+        tempVenue: tempven,
+        tempRoom: tempro,
+        tempDate: tempda
+    })
+
+    if(!temps){
+        return res.status(400).json({message: 'Incomplete creation'})
+    } else {
+        res.status(200).json(temps)
+    }
+
+})
+
+// @desc Get one reservation
+// @route GET /api/reserves:id
+// @access Private
+const getTemp = asyncHandler(async(req, res) =>{
+    const temporary = await Temp.find({})
+
+    res.status(200).json(temporary)
+})
+
+// @desc Delete reservation
+// @route DELETE /api/reserves:id
+// @access Private
+const deleteTemp = asyncHandler( async (req, res) => {
+    const temp = await Temp.findById(req.params.id)
+
+    if(!temp){
+        res.status(400)
+        throw new Error('Reservation not found')
+    }
+
+    await temp.remove()
+    res.status(200).json({ id: req.params.id })
+})
+
+// @desc Get own reservations
+// @route GET /api/reserves
 // @access Private
 const getIfExist = asyncHandler( async (req, res) => {
-    const { venue } = req.body
 
-    if(!venue){
-        res.status(400)
-        throw new Error('Please choose a venue first')
-    }
-    
-    const ifExist = await Reserve.find({venue: venue})
-    res.status(200).json(ifExist)
+    var chkven = 'Open Stage'
 
-    console.log('brrt brrt')
-    
+    const existing = await Reserve.find({venue: chkven})
+
+    res.status(200).json(existing)
+})
+
+// @desc Get own reservations
+// @route GET /api/reserves
+// @access Private
+const getIfExistDay = asyncHandler( async (req, res) => {
+
+    var chkdate = '2023-17-01'
+
+    const existing = await Reserve.find({date: chkdate})
+
+    res.status(200).json(existing)
 })
 
 module.exports = {
     getReserves,
+    getReservesDash,
     getReservation,
     setReserve,
     updateReserve,
     deleteReserve,
     getAllReserves,
     getForReview,
+    getForReviewDash,
     getForCheck,
-    getIfExist
+    getForCheckDash,
+    getForDean,
+    getForDeanDash,
+    setTemp,
+    getTemp,
+    deleteTemp,
+    getIfExist,
+    getIfExistDay,
 }

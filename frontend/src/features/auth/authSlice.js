@@ -5,6 +5,7 @@ const user = JSON.parse(localStorage.getItem('user'))
 const initialState = {
     user: user ? user:null,
     users: [user],
+    usersDash: [user],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -23,6 +24,18 @@ export const register = createAsyncThunk('auth/register', async(user, thunkAPI) 
 
 // get users
 export const getUsers = createAsyncThunk('auth/getAll', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await authService.getUsers(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get users
+export const getUsersDash = createAsyncThunk('auth/getAllDash', async(_id, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await authService.getUsers(token)
@@ -105,6 +118,19 @@ export const authSlice = createSlice({
                 state.users = action.payload
             })
             .addCase(getUsers.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getUsersDash.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getUsersDash.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.usersDash = action.payload
+            })
+            .addCase(getUsersDash.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

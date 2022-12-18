@@ -6,12 +6,12 @@ import PopupApprove from '../components/PopupApprove';
 import PopupDeny from '../components/PopupDeny';
 
 function openApprove(){
-    document.getElementById('popup_container').style.cssText = 'display:flex';
+    document.getElementById('popup_approve').style.cssText = 'display:flex';
     document.getElementById('close').style.cssText = 'display:flex';
     document.getElementById('open_popup').style.cssText = 'display:hidden';
 }
 function openDeny(){
-    document.getElementById('popup_container').style.cssText = 'display:flex';
+    document.getElementById('popup_deny').style.cssText = 'display:flex';
     document.getElementById('close').style.cssText = 'display:flex';
     document.getElementById('open_popup').style.cssText = 'display:hidden';
 }
@@ -19,21 +19,6 @@ function openCancel(){
     document.getElementById('popup_cancel').style.cssText = 'display:flex';
     document.getElementById('close').style.cssText = 'display:flex';
     document.getElementById('open_cancel').style.cssText = 'display:hidden';
-}
-function closeCancel(){
-    document.getElementById('popup_cancel').style.cssText = 'display:none';
-    document.getElementById('close').style.cssText = 'display:none';
-    document.getElementById('open_cancel').style.cssText = 'opacity: 100%';
-}
-function closeDeny(){
-    document.getElementById('popup_deny').style.cssText = 'display:none';
-    document.getElementById('close').style.cssText = 'display:none';
-    document.getElementById('open_popup').style.cssText = 'opacity: 100%';
-}
-function closeApprove(){
-    document.getElementById('popup_approve').style.cssText = 'display:none';
-    document.getElementById('close').style.cssText = 'display:none';
-    document.getElementById('open_popup').style.cssText = 'opacity: 100%';
 }
 
 
@@ -155,6 +140,7 @@ return (
                     <PopupCancel />
                     </>) : (<>
                     {role === 'admin' && reservation.status !== 'Denied' ? (<>
+                    
                         <div id="btnApprove" class="RD-Btns" onClick={openApprove}>
                             <p>Approve Request</p>
                             <i class='bx bxs-x-circle'/>

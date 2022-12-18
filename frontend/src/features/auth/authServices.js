@@ -24,6 +24,17 @@ const getUsers = async(token) =>{
     return response.data
 }
 
+// get all users
+const getUsersDash = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'alldash', config)
+    return response.data
+}
+
 // get user
 const getMe = async(token) =>{
     const config = {
@@ -67,6 +78,7 @@ const authService = {
     login,
     logout,
     getUsers,
+    getUsersDash,
     getMe,
     deleteUser
 }

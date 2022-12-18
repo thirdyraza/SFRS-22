@@ -1,21 +1,18 @@
 import { FaFlag } from 'react-icons/fa';
-import { updateReserve } from '../features/reserves/reserveSlice';
+import { updateReserve, getReservation } from '../features/reserves/reserveSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import '../assets/scss/popup.scss'
+import { useNavigate } from 'react-router-dom';
 
 function closeCancel(){
     document.getElementById('popup_cancel').style.cssText = 'display:none';
     document.getElementById('close').style.cssText = 'display:none';
     document.getElementById('open_cancel').style.cssText = 'opacity: 100%';
 }
-function openCancel(){
-    document.getElementById('popup_cancel').style.cssText = 'display:flex';
-    document.getElementById('close').style.cssText = 'display:flex';
-    document.getElementById('open_cancel').style.cssText = 'display:hidden';
-}
 
 export default function PopupCancel() {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const {reservation} = useSelector((state) => state.reserves)
 
@@ -26,8 +23,12 @@ export default function PopupCancel() {
             review: 'Cancel',
             resID: reservation._id
         }
-    
+
         dispatch(updateReserve(updateData))
+
+        const resID = reservation._id
+        dispatch(getReservation(resID))
+        navigate('../details:' + resID)
     }
 
     return (

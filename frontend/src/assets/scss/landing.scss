@@ -4,19 +4,17 @@
     background-color: #fff;
     border-radius: 15px;
     overflow: hidden;
-    margin: 15px;
-    height: 95.5vh;
+    margin: 25px;
+    height: 94vh;
+
     .landing_nav{
-        background-color: #699BF7;
         position: relative;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
+        border-radius: 15px;
         padding: 15px 50px;
         align-items: center;
         z-index: 2;
-        box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     
         .nav_left{
             display: flex;
@@ -25,7 +23,6 @@
             
             img{
                 align-items: flex-start;
-                box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
                 border-radius: 50%;
                 height: 60px;
             }
@@ -35,20 +32,22 @@
             justify-content: end;
             align-items: center;
             padding-right: 15px;
-            color: #fff;
+            color: $color-blue;
     
-            p{
-                transition: .5s ease;
+            p, a{
+                color: $color-blue;
+                transition: .3s ease;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 width: 150px;
-                height: 7vh;
-                border-radius: 10px;
+                border-radius: 15px;
                 padding: 20px;
                 margin: 0px 15px;
+
                 &:hover{
-                    border: 1px solid #fff;
+                    color: #fff;
+                    background-color: $color-blue;
                 }
             }
         }
@@ -57,32 +56,29 @@
     .landing_content{
         display: flex;
         flex-direction: row;
-        height: 83vh;
         font-size: 50px;
-        line-height: .8;
         align-items: center;
-        
+        background-color: #fff;
 
         .lc_left{
-            margin-top: 35px;
+            margin-top: 50px;
             color: #fff;
             width: 50%;
-            height: 100%;
             display: flex;
-            align-items: end;
+            align-items: center;
             justify-content: center;
             flex-direction: column;
             z-index: 2;
+            
             .left-container{
-                background-color: rgba(173, 173, 173, 0.5);
-                padding: 30px;
+                background-color: $color-blue;
+                padding: 45px;
                 border-radius: 25px;
-                width: 43vw;
+                width: 40vw;
 
                 .lc_title
                 {
                     font-weight: bolder;
-                    text-shadow: 2px 2px 5px #5f5f5f;
                 }
             }
 
@@ -97,65 +93,63 @@
 
             .lc_details{
                 margin-top: 30px;
-                font-size: 20px;
-                width: 40vw;
+                font-size: 18px;
             }
 
             .btnLanding{
+                cursor: pointer;
                 margin-top: 40px;
                 color: #fff;
                 display: flex;
+                font-weight: 600;
                 justify-content: center;
                 align-items: center;
-                background: rgb(209,226,241);
-                background: linear-gradient(34deg, rgba(209,226,241,1) 0%, rgba(94,160,244,1) 45%, rgba(0,212,255,1) 100%);
+                background-color: #7395d4;
                 padding: 15px;
                 width: 150px;
-                border-radius: 50px;
-                box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+                border-radius: 25px;
                 font-size: 15px;
-                border-style: none;        
-
-                &:hover{
-                    transition: .5s ease;
-                    transform: scale(1.1);
-                }
+                border-style: none;
             }
 
             .yourReqs{
-                display: flex;
-                flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                padding: 0px 50px;
-                width: 43vw;
-                height: 350px;
-                font-size: 20px;
+                margin-top: 100px;
+                width: 38vw;
+                font-size: 10px;
+
+                h2{
+                    text-align: center;
+                }
                 .contact {
-                    background-color: #fff;
-                    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-                    display: flex;
-                    margin: 5px;
-                    overflow: hidden;
-                    width: 500px;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    justify-content: center;
                     align-items: center;
-                    background-color: $color-gray2;
-                
-                    .contact-icon {
-                        background-color: #fff;
-                        padding: 30px;
-                        font-size: 30px;
-                        height: 115px;
-                        
-                        i{
-                            color: #699BF7;
-                        }
+
+                    .contact-cont{
+                        display: grid;
+                        grid-template-columns: .5fr 1.5fr;
+                        margin: 10px;
                     }
                 
-                    .contact-info {
+                    .contact-icon {
+                        display: flex;
+                        align-items: center;
+                        justify-content: end;
                         padding: 30px;
-                        position: relative;
-                        width: 100%;
+                        font-size: 40px;
+                        i{
+                            color: $color-blue;
+                        }
+                    }
+                    .contact-info {
+                        font-size: 12px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        padding: 10px;
                     }
                 }
             }
@@ -191,8 +185,8 @@
     }
 
     .shape2{
-        left: 150px;
-        bottom: 100px;
+        left: 250px;
+        bottom: 40px;
         width: 200px;
 
     }
@@ -204,7 +198,7 @@
     }
 
     .vector{
-        transform: translate(-24%, -85%);
+        transform: translate(-24%, -81%);
 
     }
 

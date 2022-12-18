@@ -84,6 +84,12 @@ const getAll = asyncHandler(async(req, res) =>{
     res.status(200).json(users)
 })
 
+const getAllDash = asyncHandler(async(req, res) =>{
+    const usersDash = await User.find({user: req.user.id}).sort('createdAt')
+    
+    res.status(200).json(usersDash)
+})
+
 // @desc Delete users
 // @route DELETE /api/users:id
 // @access Private
@@ -111,5 +117,6 @@ module.exports = {
     loginUser,
     getMe,
     getAll,
+    getAllDash,
     deleteUser
 }

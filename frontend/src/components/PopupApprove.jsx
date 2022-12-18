@@ -1,22 +1,19 @@
 import { FaCheck } from 'react-icons/fa';
-import { updateReserve } from '../features/reserves/reserveSlice';
+import { updateReserve, getReservation } from '../features/reserves/reserveSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import '../assets/scss/popup.scss'
+import { useNavigate } from 'react-router-dom';
 
 function closeApprove(){
     document.getElementById('popup_approve').style.cssText = 'display:none';
     document.getElementById('close').style.cssText = 'display:none';
     document.getElementById('open_popup').style.cssText = 'opacity: 100%';
 }
-function openApprove(){
-    document.getElementById('popup_approve').style.cssText = 'display:flex';
-    document.getElementById('close').style.cssText = 'display:flex';
-    document.getElementById('open_popup').style.cssText = 'display:hidden';
-}
 
 export default function PopupApprove() {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const {reservation} = useSelector((state) => state.reserves)
 
     const approveReq = (e) => {
@@ -26,8 +23,11 @@ export default function PopupApprove() {
             review: 'Approve',
             resID: reservation._id
         }
-
         dispatch(updateReserve(updateData))
+
+        const resID = reservation._id
+        dispatch(getReservation(resID))
+        navigate('../details:' + resID)
     }
 
      return (
@@ -42,7 +42,7 @@ export default function PopupApprove() {
                 </div>
                 <div className='popup_button'>
                     <button id='btn' className='btnCancel'>Back</button>
-                    <button id='btn' className='btnConfirm'>Confirm</button>
+                    <button id='btn' className='btnConfirm' onClick={approveReq}>Approve</button>
                 </div>
             </div>
         </div>

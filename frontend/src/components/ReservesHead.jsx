@@ -35,6 +35,7 @@ function ReservesHead() {
                 <p>Venue</p>
                 <p>Room</p>
                 <p>Time</p>
+                <p>Approval</p>
             </div>
         )}
     </>);
