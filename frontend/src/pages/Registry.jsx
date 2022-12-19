@@ -28,12 +28,16 @@ function Registry() {
         if(!user){
             return navigate('/login')
         }
-        if(isSuccess){
-            toast.info('User Registered')
-            navigate('/admin/dashboard')
-        }
 
     }, [user, isError, isSuccess, message, navigate, dispatch])
+
+    const SEAITE = ["PICE", "IIEE", "LITES", "UAPSA", "JIEEP", "LTL", "SSC", "CCA", "LUSC" ]
+    const SABH = ["HOST", "JFINEX", "JPIA", "JMAH", "LTL", "SSC", "CCA", "LUSC" ]
+    const SEAS = ["LIFE", "JAPS", "PSS", "CRIM", "LTL", "SSC", "CCA", "LUSC" ]
+    const SHAS = ["LPSO", "LNSO", "LMTO", "LTL", "SSC", "CCA", "LUSC" ]
+
+    let underDept = null
+    let orgs = null
 
     const onChange = (e) =>{
         setFormData((prevState) => ({
@@ -42,8 +46,14 @@ function Registry() {
         }))
     }
 
-    const onSubmit = (e) =>{
-        e.preventDefault()
+    if (dept === 'SEAITE') {underDept = SEAITE}
+    else if (dept === 'SABH') { underDept = SABH }
+    else if (dept === 'SEAS') { underDept = SEAS }
+    else if (dept === 'SHAS') { underDept = SHAS }
+
+    if(underDept){ orgs = underDept.map((e) => <option key={e}>{e}</option>) }
+
+    const onSubmit = () =>{
 
         if(password !== cpassword){
             toast.error('Password do no match')
@@ -68,11 +78,12 @@ function Registry() {
             org: '',
             dept: '',
         })
+        navigate(-1)
     }
 
     return (
       <div class='ehe'>
-        <div class='form-container'>
+        <div class='reg-form-container'>
             <form onSubmit={onSubmit}>
             <div class='form-title'><h1>USER REGISTRATION</h1></div>
 
@@ -133,7 +144,7 @@ function Registry() {
                         <option>- - - - -</option>
                         <option>Student Officer</option>
                         <option>Faculty</option>
-                        <option>OSAS Director</option>
+                        <option>Dean of the OSAS</option>
                         <option>OSAS Staff</option>
                         <option>Venue-In-Charge</option>
                         <option>Department Dean</option>
@@ -150,7 +161,7 @@ function Registry() {
                         value={dept}
                         placeholder='Select Department'
                         onChange={onChange}>
-                            <option>- - - - -</option>
+                            <option hidden>- - - - -</option>
                             <option>SEAITE</option>
                             <option>SABH</option>
                             <option>SHAS</option>
@@ -167,17 +178,14 @@ function Registry() {
                     value={org}
                     placeholder='Select Organization'
                     onChange={onChange}>
-                        <option>- - - - -</option>
-                        <option>LITES</option>
-                        <option>JPIA</option>
-                        <option>LMTS</option>
-                        <option>LIFE</option>
+                        <option hidden>- - - - -</option>
+                        {orgs}
                     </select>
                     </div>
                 </div>
 
-                <div class='buttons' id='form-buttons'>
-                  <button type='submit' className='btn btn-block'>Register</button>
+                <div className ='reg-button' id='form-buttons'>
+                  <button type='submit'>Register</button>
                 </div>
             </div>
             </form>

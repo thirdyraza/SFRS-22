@@ -26,12 +26,6 @@ function UsersList() {
                 <div class='search-icon'></div>
             </div>
 
-            <div class='switches'>
-                <a href='/admin-home/requestor'>Requestors</a>
-                <a href='/admin-home/admins'>Admins</a>
-                <a href='/admin-home/archived'>Archived</a>
-            </div>
-
             <div class='table-heading'>
                 <UserHead/>
             </div>

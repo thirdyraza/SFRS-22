@@ -18,65 +18,43 @@ const createReserve = async(reserveData, token) =>{
     return response.data
 }
 
-// create temporary values
-const setTemp = async(tempData, token) =>{
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
-    const response = await axios.post(API_URL + 'temp', tempData, config)
+// // create temporary values
+// const setTemp = async(tempData, token) =>{
+//     const config = {
+//         headers: {
+//             Authorization: `Bearer ${token}`
+//         }
+//     }
+//     const response = await axios.post(API_URL + 'temp', tempData, config)
 
-    if(response.data) {
-        localStorage.setItem('temporary', JSON.stringify(response.data))
-    }
+//     if(response.data) {
+//         localStorage.setItem('temporary', JSON.stringify(response.data))
+//     }
 
-    return response.data
-}
+//     return response.data
+// }
 
-// get user reservations
-const getTemp = async(token) =>{
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
-    const response = await axios.get(API_URL + 'temp', config)
-    return response.data
-}
+// // get user reservations
+// const getTemp = async(token) =>{
+//     const config = {
+//         headers: {
+//             Authorization: `Bearer ${token}`
+//         }
+//     }
+//     const response = await axios.get(API_URL + 'temp', config)
+//     return response.data
+// }
 
-//delete reservation
-const deleteTemp = async(tempId, token) =>{
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
-    const response = await axios.delete(API_URL + 'temp/' + tempId, config)
-    return response.data
-}
-
-// get user reservations
-const getIfExist = async(tempData, token) =>{
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
-    const response = await axios.get(API_URL + 'existing', tempData, config)
-    return response.data
-}
-
-// get user reservations
-const getIfExistDay = async(tempData, token) =>{
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
-    const response = await axios.get(API_URL + 'existingDay', tempData, config)
-    return response.data
-}
+// //delete reservation
+// const deleteTemp = async(tempId, token) =>{
+//     const config = {
+//         headers: {
+//             Authorization: `Bearer ${token}`
+//         }
+//     }
+//     const response = await axios.delete(API_URL + 'temp/' + tempId, config)
+//     return response.data
+// }
 
 // get user reservations
 const getReserves = async(token) =>{
@@ -209,8 +187,6 @@ const reserveService = {
     getForDean,
     getForDeanDash,
     updateReserve,
-    getIfExist,
-    getIfExistDay,
 }
 
 export default reserveService

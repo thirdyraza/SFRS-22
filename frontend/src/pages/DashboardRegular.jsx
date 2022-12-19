@@ -45,6 +45,11 @@ function DashboardRegular() {
     role = 'system admin'
   }
 
+  const goUsers = (e) =>{
+    e.preventDefault()
+    navigate('../users-list')
+  }
+
   return (<>
 
     <div className="app">
@@ -95,7 +100,7 @@ function DashboardRegular() {
                       ))}
                     </div>
                   ) : (<h3 className='none'>No Users Found</h3>)}
-                  <div class='more'>See more ...</div>
+                  <div class='more' onClick={goUsers}>See more ...</div>
               </div>
             </div>
           )}

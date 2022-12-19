@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getIfExist, getIfExistDay, setTemp, getTemp, reset } from '../features/reserves/reserveSlice';
+import { reset } from '../features/reserves/reserveSlice';
 import CheckerHead from '../components/CheckerHead'
 import CheckerContent from '../components/CheckerContent'
 
@@ -21,14 +21,12 @@ function Checker() {
     });
 
     useEffect(() => {
-        dispatch(getTemp())
         return () => {
             dispatch(reset())
         };
     }, [dispatch]);
 
     const { tempven, tempro, tempda } = tempData
-    const { existings, tempres } = useSelector((state) => state.reserves)
 
     const C = ["C 21", "C 22", "C 23", "C 24", "C 25", "C 26"]
     const B = ["B 11", "B 12", "B 13", "B 14"]
@@ -76,16 +74,6 @@ function Checker() {
     
     const ifExist = (e) => {
         e.preventDefault()
-
-        if(tempven){
-            dispatch(setTemp(tempData))
-            dispatch(getIfExist())
-        } else if(tempda){
-            dispatch(setTemp(tempData))
-            dispatch(getIfExistDay())
-        } else {
-            dispatch(reset())
-        }
     }
 
     const clear = () =>{

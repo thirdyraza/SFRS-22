@@ -17,7 +17,6 @@ import MainVIC from './pages/MainVIC';
 import MainSysAd from './pages/MainSysAd';
 import DashboardRegular from './pages/DashboardRegular';
 import Checker from './pages/Checker';
-import LoginPage from './pages/newLogin';
 
 function App() {
   return (
@@ -25,8 +24,7 @@ function App() {
       <Router>
           <Routes>
             <Route path='/' element={<Landing />}/>
-            <Route path='/login' element={<Login />}/>
-            <Route path='/login-page' element={<LoginPage />}/>       
+            <Route path='/login' element={<Login />}/>   
 
             {/* private routes */}
 
@@ -36,7 +34,6 @@ function App() {
               <Route path='reserve' element={<MainForm/>}></Route>
               <Route path='your-request-list' element={<RequestList/>}></Route>
               <Route path='details:id' element={<DetailedRequest/>}></Route>
-              <Route path='users-list' element={<UsersList/>}></Route>
               <Route path='notifications' element={<Notifications/>}></Route>
             </Route>
 

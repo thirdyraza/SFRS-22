@@ -38,7 +38,7 @@ export const getUsers = createAsyncThunk('auth/getAll', async(_id, thunkAPI) => 
 export const getUsersDash = createAsyncThunk('auth/getAllDash', async(_id, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await authService.getUsers(token)
+        return await authService.getUsersDash(token)
 
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()

@@ -229,77 +229,63 @@ const getForDeanDash = asyncHandler( async (req, res) => {
 
 })
 
-// @desc Create a temporary model
-// @route POST /api/reserves/temps
-// @access Private
-const setTemp = asyncHandler( async (req, res) => {
-    const { tempven, tempro, tempda } = req.body
+// // @desc Create a temporary model
+// // @route POST /api/reserves/temps
+// // @access Private
+// const setTemp = asyncHandler( async (req, res) => {
+//     const { tempven, tempro, tempda } = req.body
 
-    if(!tempven){
-        return res.status(400).json({message: 'Please enter a venue'})
-    }
+//     const temps = await Temp.create({
+//         tempVenue: tempven,
+//         tempRoom: tempro,
+//         tempDate: tempda
+//     })
 
-    const temps = await Temp.create({
-        tempVenue: tempven,
-        tempRoom: tempro,
-        tempDate: tempda
-    })
+//     res.status(200).json(temps)
 
-    if(!temps){
-        return res.status(400).json({message: 'Incomplete creation'})
-    } else {
-        res.status(200).json(temps)
-    }
 
-})
+// })
 
-// @desc Get one reservation
-// @route GET /api/reserves:id
-// @access Private
-const getTemp = asyncHandler(async(req, res) =>{
-    const temporary = await Temp.find({})
+// // @desc Get one reservation
+// // @route GET /api/reserves:id
+// // @access Private
+// const getTemp = asyncHandler(async(req, res) =>{
+//     const temporary = await Temp.find({})
 
-    res.status(200).json(temporary)
-})
+//     res.status(200).json(temporary)
+// })
 
-// @desc Delete reservation
-// @route DELETE /api/reserves:id
-// @access Private
-const deleteTemp = asyncHandler( async (req, res) => {
-    const temp = await Temp.findById(req.params.id)
+// // @desc Delete reservation
+// // @route DELETE /api/reserves:id
+// // @access Private
+// const deleteTemp = asyncHandler( async (req, res) => {
+//     const temp = await Temp.findById(req.params.id)
 
-    if(!temp){
-        res.status(400)
-        throw new Error('Reservation not found')
-    }
+//     if(!temp){
+//         res.status(400)
+//         throw new Error('Reservation not found')
+//     }
 
-    await temp.remove()
-    res.status(200).json({ id: req.params.id })
-})
+//     await temp.remove()
+//     res.status(200).json({ id: req.params.id })
+// })
 
-// @desc Get own reservations
-// @route GET /api/reserves
-// @access Private
-const getIfExist = asyncHandler( async (req, res) => {
 
-    var chkven = 'Open Stage'
+// // @desc Get existing reservations (if any)
+// // @route GET /api/reserves/existing?
+// // @access Private
+// const getExisting= asyncHandler( async (req, res) => {
+//     const {tempven, tempro, tempda} = req.query
 
-    const existing = await Reserve.find({venue: chkven})
+//     if(!req.query){
+//         res.status(400)
+//         throw new Error('Reservation not found')
+//     } else if(tempven){
+//         const chkVen = await Reserve.find({tempven: tempven})
+//         res.status(200).json(chkVen)
+//     }
 
-    res.status(200).json(existing)
-})
-
-// @desc Get own reservations
-// @route GET /api/reserves
-// @access Private
-const getIfExistDay = asyncHandler( async (req, res) => {
-
-    var chkdate = '2023-17-01'
-
-    const existing = await Reserve.find({date: chkdate})
-
-    res.status(200).json(existing)
-})
+// })
 
 module.exports = {
     getReserves,
@@ -315,9 +301,4 @@ module.exports = {
     getForCheckDash,
     getForDean,
     getForDeanDash,
-    setTemp,
-    getTemp,
-    deleteTemp,
-    getIfExist,
-    getIfExistDay,
 }

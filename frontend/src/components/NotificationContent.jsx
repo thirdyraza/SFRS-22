@@ -30,6 +30,7 @@ function NotificationContent({reserves}) {
 
     var by
     var role
+    var respo
     var reviewed
 
     if(user.role === 'Faculty' || user.role === 'Student Officer'){
@@ -43,10 +44,12 @@ function NotificationContent({reserves}) {
 
     if(reserves.counter === 1 && user.role === 'Student Officer'){
         reviewed = 'Organization Adviser'
-        by = 'Sander Sedano'
+        by = 'Noted by Sander Sedano'
+        respo = 'Victor Villaluz'
     } else if (reserves.counter === 2 && user.role === 'Student Officer'){
         reviewed = 'Deparment Dean'
-        by = 'Victor Villaluz'
+        by = 'Approved by Victor Villaluz'
+        respo = 'Dean of Student Affairs and Services'
     }
 
     return ( 
@@ -80,7 +83,7 @@ function NotificationContent({reserves}) {
                         <div className='notif-container'>
                             <i class='bx bxs-user-pin' ></i>
                             <div>
-                                <p className="notif-name">Approved by {by}</p>
+                                <p className="notif-name">{reserves.status === 'Denied' ? (<>Denied by {respo}</>) : (<>{by}</>)}</p>
                                 <p className="notif-subject">Activity: {reserves.activity}</p>
                             </div>
                         </div>
