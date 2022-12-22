@@ -21,6 +21,9 @@ function Login() {
         if(isError){
           toast.error(message)
         }
+        if(!user){
+          return navigate('/login')
+        }
         
         if(isSuccess || user){
           if(user.role === 'Faculty'
@@ -40,10 +43,14 @@ function Login() {
             navigate('/' + role + '/dashboard')
           }
         }
+        
+        
 
         return () => {
           dispatch(reset())
         }
+
+        
 
     }, [user, isError, isSuccess, message, navigate, dispatch])
 

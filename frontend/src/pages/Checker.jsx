@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { reset } from '../features/reserves/reserveSlice';
+import { getExisting, reset } from '../features/reserves/reserveSlice';
 import CheckerHead from '../components/CheckerHead'
 import CheckerContent from '../components/CheckerContent'
 
@@ -25,6 +25,8 @@ function Checker() {
             dispatch(reset())
         };
     }, [dispatch]);
+
+    const {existings, tempres} = useSelector((state) => state.reserves)
 
     const { tempven, tempro, tempda } = tempData
 
@@ -74,6 +76,8 @@ function Checker() {
     
     const ifExist = (e) => {
         e.preventDefault()
+
+        dispatch(getExisting(tempres))
     }
 
     const clear = () =>{

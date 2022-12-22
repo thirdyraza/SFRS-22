@@ -18,44 +18,6 @@ const createReserve = async(reserveData, token) =>{
     return response.data
 }
 
-// // create temporary values
-// const setTemp = async(tempData, token) =>{
-//     const config = {
-//         headers: {
-//             Authorization: `Bearer ${token}`
-//         }
-//     }
-//     const response = await axios.post(API_URL + 'temp', tempData, config)
-
-//     if(response.data) {
-//         localStorage.setItem('temporary', JSON.stringify(response.data))
-//     }
-
-//     return response.data
-// }
-
-// // get user reservations
-// const getTemp = async(token) =>{
-//     const config = {
-//         headers: {
-//             Authorization: `Bearer ${token}`
-//         }
-//     }
-//     const response = await axios.get(API_URL + 'temp', config)
-//     return response.data
-// }
-
-// //delete reservation
-// const deleteTemp = async(tempId, token) =>{
-//     const config = {
-//         headers: {
-//             Authorization: `Bearer ${token}`
-//         }
-//     }
-//     const response = await axios.delete(API_URL + 'temp/' + tempId, config)
-//     return response.data
-// }
-
 // get user reservations
 const getReserves = async(token) =>{
     const config = {
@@ -172,9 +134,6 @@ const deleteReserve = async(reserveId, token) =>{
 
 const reserveService = {
     createReserve,
-    setTemp,
-    getTemp,
-    deleteTemp,
     getReserves,
     getReservesDash,
     deleteReserve,

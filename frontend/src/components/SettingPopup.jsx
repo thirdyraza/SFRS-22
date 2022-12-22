@@ -45,9 +45,9 @@ export default function SettingPopup(){
                         <Link id='btnChange' className='btnSettings'>
                             <div>Account Settings</div>
                         </Link>                
-                        <button className='btnSettings' onClick={onLogout} id='btnLogout'>
+                        <Link to='/login'className='btnSettings' onClick={onLogout} id='btnLogout'>
                         <FaSignOutAlt />Logout
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>

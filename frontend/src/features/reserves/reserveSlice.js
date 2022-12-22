@@ -31,39 +31,6 @@ export const createReserve =createAsyncThunk('reserves/create', async(reserveDat
     }
 })
 
-// create temporary values
-// export const setTemp = createAsyncThunk('reserves/setTemp', async(tempData, thunkAPI) =>{
-//     try {
-//         const token = thunkAPI.getState().auth.user.token
-//         return await reserveService.setTemp(tempData, token)
-//     } catch (error) {
-//         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
-//         return thunkAPI.rejectWithValue(message)
-//     }
-// })
-
-// // get temporary values
-// export const getTemp = createAsyncThunk('reserves/getTemp', async(_id, thunkAPI) => {
-//     try {
-//         const token = thunkAPI.getState().auth.user.token
-//         return await reserveService.getTemp(token)
-//     } catch (error) {
-//         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
-//         return thunkAPI.rejectWithValue(message)
-//     }
-// })
-
-// // delete temporary values
-// export const deleteTemp = createAsyncThunk('reserves/deleteTemp', async(tempId, thunkAPI) =>{
-//     try {
-//         const token = thunkAPI.getState().auth.user.token
-//         return await reserveService.deleteTemp(tempId, token)
-//     } catch (error) {
-//         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
-//         return thunkAPI.rejectWithValue(message)
-//     }
-// })
-
 // get user reservation
 export const getReserves = createAsyncThunk('reserves/getMine', async(_id, thunkAPI) => {
     try {
@@ -82,6 +49,17 @@ export const getReservesDash = createAsyncThunk('reserves/dashMine', async(_id, 
         const token = thunkAPI.getState().auth.user.token
         return await reserveService.getReservesDash(token)
 
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get user reservation
+export const getExisting = createAsyncThunk('reserves/existing', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getIfExist(token)
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -247,6 +225,45 @@ export const reserveSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
+            .addCase(setTemp.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(setTemp.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.tempres.push(action.payload)
+            })
+            .addCase(setTemp.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getTemp.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getTemp.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.tempres = action.payload
+            })
+            .addCase(getTemp.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getExisting.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getExisting.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.existings = action.payload
+            })
+            .addCase(getExisting.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })   
             .addCase(getReservation.pending, (state) => {
                 state.isLoading = true
             })

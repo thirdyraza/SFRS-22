@@ -20,9 +20,9 @@ export default function PopupApprove() {
         e.preventDefault()
 
         const updateData = {
-            review: 'Approve',
             resID: reservation._id
         }
+
         dispatch(updateReserve(updateData))
 
         const resID = reservation._id
