@@ -1,8 +1,7 @@
 import NotificationContent from '../components/NotificationContent';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getForReview, getReserves, getForCheck, reset } from '../features/reserves/reserveSlice';
-import { getMe } from '../features/auth/authSlice';
+import { getReserves, reset } from '../features/reserves/reserveSlice';
 import '../assets/scss/notifications.scss'
 
 function Notifications() {
@@ -10,14 +9,11 @@ function Notifications() {
     const dispatch = useDispatch()
 
     const { user } = useSelector((state) => state.auth)
-    const { reserves, forReviews, forChecks } = useSelector((state) => state.reserves)
+    const { reserves } = useSelector((state) => state.reserves)
 
     useEffect(() => {
 
         dispatch(getReserves())
-        dispatch(getForReview())
-        dispatch(getForCheck())
-        dispatch(getMe())
 
         return () => {
             dispatch(reset())
@@ -69,33 +65,13 @@ function Notifications() {
                 <p>Approval</p>
             </div>
 
-            {role === 'admin' ? (<>
-                {forReviews.length > 0 ? (
-                    <div>
-                    {forReviews.map((reserve) => (
+            {reserves.length > 0 ? (
+                <div>
+                    {reserves.map((reserve) => (
                     <NotificationContent key={reserve._id} reserves={reserve}/>
                     ))}
-                    </div>
-                ) : (<h3 className='notif-none'>No Notifications Found</h3>)}</>
-            ) : (<>
-                {role === 'venue in-charge' ? (<>
-                    {forChecks.length > 0 ? (
-                        <div>
-                        {forChecks.map((reserve) => (
-                        <NotificationContent key={reserve._id} reserves={reserve}/>
-                        ))}
-                        </div>
-                    ) : (<h3 className='notif-none'>No Notifications Found</h3>)}</>
-                ) : (<>
-                    {reserves.length > 0 ? (
-                        <div>
-                        {reserves.map((reserve) => (
-                        <NotificationContent key={reserve._id} reserves={reserve}/>
-                        ))}
-                        </div>
-                    ) : (<h3 className='notif-none'>No Notifications Found</h3>)}
-                    </>)}
-            </>)}
+                </div>
+            ) : (<h3 className='notif-none'>No Notifications Found</h3>)}
 
             
 

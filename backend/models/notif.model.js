@@ -1,16 +1,21 @@
 const mongoose = require('mongoose');
 
-const notifSchema = mongooseSchema({
+const notifSchema = mongoose.Schema({
     reservation: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: [true, 'What reservation is this?'],
         ref: 'Reserve'
     },
-    requestor: {
+    updid: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, 'User not found'],
+        ref: 'User'
+    },
+    updby: {
         type: String,
         required: true
     },
-    reqrole: {
+    updrole: {
         type: String,
     },
     resact: {
@@ -37,20 +42,30 @@ const notifSchema = mongooseSchema({
         type: String,
         required: [true, 'Please add an ending time']
     },
+    restatus: {
+        type: String,
+        required: [true, 'Check the status']
+    },
+    remarks: {
+        type: String,
+    },
+    sign: {
+        type: String,
+    }
 }, {
     timestamps: true
 })
 
-reserveSchema.virtual('requestor-name', {
+notifSchema.virtual('update-name', {
     ref: 'User',
-    localField: 'requestor',
+    localField: 'updby',
     foreignField: 'name',
     },
 )
 
-reserveSchema.virtual('requestor-role', {
+notifSchema.virtual('update-role', {
     ref: 'User',
-    localField: 'reqrole',
+    localField: 'updrole',
     foreignField: 'role',
     },
 )

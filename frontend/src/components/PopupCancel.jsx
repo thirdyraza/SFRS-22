@@ -1,5 +1,5 @@
 import { FaFlag } from 'react-icons/fa';
-import { updateReserve, getReservation } from '../features/reserves/reserveSlice';
+import { updateReserve } from '../features/reserves/reserveSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import '../assets/scss/popup.scss'
 import { useNavigate } from 'react-router-dom';
@@ -25,10 +25,8 @@ export default function PopupCancel() {
         }
 
         dispatch(updateReserve(updateData))
+        navigate('../dashboard')
 
-        const resID = reservation._id
-        dispatch(getReservation(resID))
-        navigate('../details:' + resID)
     }
 
     return (
