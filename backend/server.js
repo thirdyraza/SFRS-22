@@ -13,6 +13,7 @@ app.use(express.urlencoded({extended: false}))
 
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/reserves', require('./routes/reserveRoutes'))
+app.use('/api/notifs', require('./routes/notifRoutes'))
 
 app.use(errorHandler)
 

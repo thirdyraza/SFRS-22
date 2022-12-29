@@ -30,8 +30,7 @@ const getReservation = asyncHandler(async(req, res) =>{
 // @access Private
 const setReserve = asyncHandler( async (req, res) => {
     if(!req.body.activity){
-        res.status(400)
-        throw new Error('Please provide a activity')
+        return res.status(400).json({message: 'Provide an activity'})
     }
 
     let respo
@@ -71,21 +70,23 @@ const updateReserve = asyncHandler( async (req, res) => {
     const reserve = await Reserve.findById(req.params.id)
 
     if(!reserve){
-        res.status(400)
-        throw new Error('Reservation not found')
+        return res.status(400).json({message: 'Reservation not found'})
     }
-    let updStat
+
+    let updStat = reserve.status
     let ctr = reserve.counter
 
-    if(reserve.status === 'Head of Office' || reserve.status === 'Organization Adviser') {
-        updStat = 'Department Dean'
-        ctr +=1
-    } else if(reserve.status === 'Deparment Dean') {
-        updStat = 'OSAS Director'
-        ctr +=1
-    }else if(reserve.status === 'OSAS Director'){
-        updStat = 'Successfully Reserved'
-        ctr +=1
+    if(review === 'Approve'){
+        if(reserve.status === 'Head of Office' || reserve.status === 'Organization Adviser') {
+            updStat = 'Department Dean'
+            ctr +=1
+        } else if(reserve.status === 'Department Dean') {
+            updStat = 'OSAS Dean'
+            ctr +=1
+        }else if(reserve.status === 'OSAS Dean'){
+            updStat = 'Successfully Reserved'
+            ctr +=1
+        }
     }
     else if(review === 'Deny'){
         updStat = 'Denied'
@@ -96,7 +97,7 @@ const updateReserve = asyncHandler( async (req, res) => {
     }
 
     const updatedReserve = await Reserve.findByIdAndUpdate(req.params.id, {status: updStat, counter: ctr}, {new: true})
-    res. status(200).json(updatedReserve)
+    return res.status(200).json(updatedReserve)
 })
 
 // @desc Delete reservation
@@ -106,23 +107,16 @@ const deleteReserve = asyncHandler( async (req, res) => {
     const reserve = await Reserve.findById(req.params.id)
 
     if(!reserve){
-        res.status(400)
-        throw new Error('Reservation not found')
-    }
-    // check for user
-    if(!req.user){
-        res.status(401)
-        throw new Error('User not found')
+        return res.status(400).json({message: 'reservation not found'})
     }
 
     // logged in user = reservation owner
     if(reserve.user.toString() !== req.user.id){
-        res.status(401)
-        throw new Error('User not authorized')
+        return res.status(400).json({message: 'User not authorized'})
     }
 
     await reserve.remove()
-    res.status(200).json({ id: req.params.id })
+    return res.status(200).json({ id: req.params.id })
 })
 
 // @desc Get all reservation
@@ -131,9 +125,9 @@ const deleteReserve = asyncHandler( async (req, res) => {
 const getAllReserves = asyncHandler(async(req, res) =>{
     Reserve.find()
         .then(allReserves => {
-            res.status(200).json(allReserves)
+             return res.status(200).json(allReserves)
         }).catch(err=>{
-            res.status(500).json({
+            return res.status(500).json({
                 message:err.message || "Can't retrieve all reservations"
             })
         })
@@ -151,8 +145,6 @@ const getForReview = asyncHandler( async (req, res) => {
         respooff = req.user.org
     } else if(req.user.role === 'Head of Office'){
         respooff = req.user.org
-    }else if(req.user.role === 'OSAS Director'){
-        respooff = req.user.org
     }
     
     const forReview = await Reserve.find({status: req.user.role, org: respooff}).sort('-updatedAt')
@@ -167,8 +159,6 @@ const getForReviewDash = asyncHandler( async (req, res) => {
         respooff = req.user.org
     } else if(req.user.role === 'Head of Office'){
         respooff = req.user.org
-    }else if(req.user.role === 'OSAS Director'){
-        respooff = req.reserve.org
     }
     
     const forReview = await Reserve.find({status: req.user.role, org: respooff}).sort('-updatedAt').limit(3)
@@ -228,20 +218,19 @@ const getForDeanDash = asyncHandler( async (req, res) => {
 
 })
 
-
-// @desc Get existing reservations (if any)
-// @route GET /api/reserves/existing?
+// @desc Get reservation for checking (department-wise)
+// @route GET /api/reserves/check
 // @access Private
-const getExisting= asyncHandler( async (req, res) => {
-    const {tempven, tempro, tempda} = req.body
+const getForOsas = asyncHandler( async (req, res) => {
+    
+    const forOsas = await Reserve.find({status: req.user.role}).sort('-updatedAt')
+    res.status(200).json(forOsas)
+})
 
-    if(!tempven){
-        res.status(400)
-        throw new Error('Reservation not found')
-    } else if(tempven){
-        const chkVen = await Reserve.find({venue: tempven})
-        res.status(200).json(chkVen)
-    }
+const getForOsasDash = asyncHandler( async (req, res) => {
+    
+    const forOsas = await Reserve.find({status: req.user.role}).sort('-updatedAt').limit(3)
+    res.status(200).json(forOsas)
 
 })
 
@@ -259,5 +248,6 @@ module.exports = {
     getForCheckDash,
     getForDean,
     getForDeanDash,
-    getExisting,
+    getForOsas,
+    getForOsasDash,
 }

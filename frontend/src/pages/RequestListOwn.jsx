@@ -30,9 +30,9 @@ function RequestList() {
   if(user.role === 'Gym In-Charge' || user.role === 'Friendship Park In-Charge' || user.role === 'Outdoor Stage In-Charge'){
     role = 'venue'
   } else if(user.role === 'OSAS Director' ){
-    role = 'direct'
+    role = 'osas'
   } else if(user.role === 'Organization Adviser' || user.role === 'Head of Office'){
-    role = 'he-ad'
+    role = 'head'
   } else if(user.role === 'Department Dean'){
     role = 'dean'
   }
@@ -40,7 +40,7 @@ function RequestList() {
   return (
     <div className="app">
       <div id="home">
-          {role === 'direct' ? (<>
+          {role === 'osas' ? (<>
             <div class='container'>
               <div class='title' id='personal-req'>
                   ALL <div class='yellow'>USER REQUESTS</div>
@@ -60,7 +60,7 @@ function RequestList() {
               </div>
             </div>
           </>) : (<>
-            {role === 'he-ad' ? (<>
+            {role === 'head' ? (<>
               <div class='container'>
                 <div class='title' id='personal-req'>
                     USER <div class='yellow'>REQUESTS</div>

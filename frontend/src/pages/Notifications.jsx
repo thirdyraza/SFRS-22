@@ -28,7 +28,7 @@ function Notifications() {
 
     if(user.role === 'Faculty' || user.role === 'Student Officer'){
         role = 'user'
-    } else if(user.role === 'OSAS Director' || user.role === 'Department Dean'
+    } else if(user.role === 'OSAS Dean' || user.role === 'Department Dean'
         || user.role === 'Organization Adviser' || user.role === 'Head of Office'){
             role = 'admin'
     } else if(user.role === 'Gym In-Charge' || user.role === 'Friendship Park In-Charge' || user.role === 'Outdoor Stage In-Charge'){
@@ -66,7 +66,7 @@ function Notifications() {
                 <p>Reservation Details</p>
                 <p>Role</p>
                 <p>Requested Date</p>
-                <p>Status</p>
+                <p>Approval</p>
             </div>
 
             {role === 'admin' ? (<>

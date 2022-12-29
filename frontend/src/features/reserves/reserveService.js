@@ -115,6 +115,26 @@ const getForDeanDash = async(token) =>{
     return response.data
 }
 
+// get reservation for checking (deans)
+const getForOsas = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'osas', config)
+    return response.data
+}
+const getForOsasDash = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'osasLimited', config)
+    return response.data
+}
+
 //update reservation
 const updateReserve = async(updateData) => {
     const response = await axios.put(API_URL + updateData.resID, updateData)
@@ -145,6 +165,8 @@ const reserveService = {
     getForCheckDash,
     getForDean,
     getForDeanDash,
+    getForOsas,
+    getForOsasDash,
     updateReserve,
 }
 

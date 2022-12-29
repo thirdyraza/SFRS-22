@@ -34,7 +34,7 @@ function DetailedRequest() {
 
     if(user.role === 'Faculty' || user.role === 'Student Officer'){
             role = 'user'
-    } else if(user.role === 'OSAS Director' || user.role === 'Department Dean'
+    } else if(user.role === 'OSAS Dean' || user.role === 'Department Dean'
         || user.role === 'Organization Adviser' || user.role === 'Head of Office'){
             role = 'admin'
     }
@@ -63,17 +63,21 @@ return (
                     
                         {reservation.status === 'Cancelled' ? (
                             <div className="CStatus">
-                                <p className='pending'>Cancelled</p>
+                                <p className='pending'>CANCELLED</p>
                             </div>
                         ):(<>{reservation.status === 'Denied' ? (<>
                             <div className="DStatus">
-                                <p className="pending">Denied</p>
+                                <p className="pending">DENIED</p>
                             </div>
+                            </>) : (<>{reservation.counter === 3 ? (<>
+                                <div className="AStatus">
+                                    <p className="pending">APPROVED</p>
+                                </div>
                             </>) : (<>
-                            <div id='RStatus1' className="PStatus">
+                                <div id='RStatus1' className="PStatus">
                                 <p className="pending">PENDING</p> {reservation.counter}/3
-                            </div>
-                            </>)}
+                                </div>
+                            </>)}</>)}
                         </>)}
                     
                 </div>
@@ -132,14 +136,14 @@ return (
                 </div>
                 
                 {/* RD Buttons */}
-                {role === 'user' && reservation.status !== 'Cancelled' ? (<>
+                {role === 'user' && reservation.status !== 'Cancelled' && reservation.counter !== 3 ? (<>
                     <div id="btnCancel" class="RD-Btns" onClick={openCancel}>
                         <p>Cancel Request</p>
                         <i class='bx bxs-x-circle'/>
                     </div>
                     <PopupCancel />
                     </>) : (<>
-                    {role === 'admin' && reservation.status !== 'Denied' ? (<>
+                    {role === 'admin' && reservation.status !== 'Denied' && reservation.counter !== 3 ? (<>
                     
                         <div id="btnApprove" class="RD-Btns" onClick={openApprove}>
                             <p>Approve Request</p>

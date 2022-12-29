@@ -35,7 +35,7 @@ function NotificationContent({reserves}) {
 
     if(user.role === 'Faculty' || user.role === 'Student Officer'){
         role = 'user'
-    } else if(user.role === 'OSAS Director' || user.role === 'Department Dean'
+    } else if(user.role === 'OSAS Dean' || user.role === 'Department Dean'
         || user.role === 'Organization Adviser' || user.role === 'Head of Office'){
             role = 'admin'
     } else if(user.role === 'Gym In-Charge' || user.role === 'Friendship Park In-Charge' || user.role === 'Outdoor Stage In-Charge'){
@@ -48,7 +48,11 @@ function NotificationContent({reserves}) {
         respo = 'Victor Villaluz'
     } else if (reserves.counter === 2 && user.role === 'Student Officer'){
         reviewed = 'Deparment Dean'
-        by = 'Approved by Victor Villaluz'
+        by = 'Recommended by Victor Villaluz'
+        respo = 'SEAITE Department Dean'
+    } else if (reserves.counter === 3 && user.role === 'Student Officer'){
+        reviewed = 'Deparment Dean'
+        by = 'Approved by Leonora Cagurangan'
         respo = 'Dean of Student Affairs and Services'
     }
 
@@ -96,7 +100,7 @@ function NotificationContent({reserves}) {
                             <p>{reserves.time_in} to {reserves.time_out}</p>
                         </div>
                         <div className="notif-stat">  
-                            <p>{reserves.counter}/4</p>
+                            <p>{reserves.counter}/3</p>
                         </div>
                         <button id="btnDetails" onClick={gotoDetails}>Details</button>
                     </div>

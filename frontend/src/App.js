@@ -16,7 +16,6 @@ import DetailedRequest from './pages/DetailedRequest';
 import MainVIC from './pages/MainVIC';
 import MainSysAd from './pages/MainSysAd';
 import DashboardRegular from './pages/DashboardRegular';
-import Checker from './pages/Checker';
 
 function App() {
   return (
@@ -30,7 +29,6 @@ function App() {
 
             <Route path='/admin' element={<MainAdmin/>}>
               <Route path='dashboard' element={<DashboardAdmin/>}></Route>
-              <Route path='existing' element={<Checker />}></Route>
               <Route path='reserve' element={<MainForm/>}></Route>
               <Route path='your-request-list' element={<RequestList/>}></Route>
               <Route path='details:id' element={<DetailedRequest/>}></Route>
@@ -39,7 +37,6 @@ function App() {
 
             <Route path='/user' element={<MainUser/>}>
               <Route path='dashboard' element={<DashboardUser/>}></Route>
-              <Route path='existing' element={<Checker />}></Route>
               <Route path='reserve' element={<MainForm/>}></Route>
               <Route path='your-request-list' element={<RequestList/>}></Route>
               <Route path='details:id' element={<DetailedRequest/>}></Route>

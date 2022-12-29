@@ -14,6 +14,8 @@ const initialState = {
     forChecksDash: [reservation],
     forDeans: [reservation],
     forDeansDash: [reservation],
+    forOsas: [reservation],
+    forOsasDash: [reservation],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -157,6 +159,29 @@ export const getForDeanDash = createAsyncThunk('reserves/dashDeans', async(_id, 
     }
 })
 
+// get reservation for deans
+export const getForOsas = createAsyncThunk('reserves/osas', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getForOsas(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+// get reservation for deans
+export const getForOsasDash = createAsyncThunk('reserves/dashOsas', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getForOsasDash(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 // update reservation
 export const updateReserve = createAsyncThunk('reserves/update', async(updateData, thunkAPI) =>{
     try {
@@ -221,32 +246,6 @@ export const reserveSlice = createSlice({
                 state.reservesDash = action.payload
             })
             .addCase(getReservesDash.rejected, (state, action) => {
-                state.isLoading = false
-                state.isError = true
-                state.message = action.payload
-            })
-            .addCase(setTemp.pending, (state) => {
-                state.isLoading = true
-            })
-            .addCase(setTemp.fulfilled, (state, action) => {
-                state.isLoading = false
-                state.isSuccess = true
-                state.tempres.push(action.payload)
-            })
-            .addCase(setTemp.rejected, (state, action) => {
-                state.isLoading = false
-                state.isError = true
-                state.message = action.payload
-            })
-            .addCase(getTemp.pending, (state) => {
-                state.isLoading = true
-            })
-            .addCase(getTemp.fulfilled, (state, action) => {
-                state.isLoading = false
-                state.isSuccess = true
-                state.tempres = action.payload
-            })
-            .addCase(getTemp.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
@@ -364,6 +363,32 @@ export const reserveSlice = createSlice({
                 state.forDeansDash = action.payload
             })
             .addCase(getForDeanDash.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getForOsas.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getForOsas.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.forOsas = action.payload
+            })
+            .addCase(getForOsas.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getForOsasDash.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getForOsasDash.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.forOsasDash = action.payload
+            })
+            .addCase(getForOsasDash.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

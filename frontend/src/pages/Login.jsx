@@ -30,7 +30,7 @@ function Login() {
             || user.role === 'Student Officer'){
               const role = 'user'
               navigate('/' + role + '/dashboard')
-          } else if(user.role === 'OSAS Staff' || user.role === 'OSAS Director'
+          } else if(user.role === 'OSAS Staff' || user.role === 'OSAS Dean'
             || user.role === 'Department Dean'
             || user.role === 'Organization Adviser' || user.role === 'Head of Office'){
               const role = 'admin'

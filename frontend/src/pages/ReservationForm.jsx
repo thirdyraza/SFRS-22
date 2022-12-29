@@ -2,6 +2,7 @@ import { useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { createReserve } from '../features/reserves/reserveSlice'
 import '../assets/scss/mainform.scss';
+import { useNavigate } from 'react-router-dom';
 
 // import ReservesHead from '../components/ReservesHead'
 // import ReservesContent from '../components/ReservesContent'
@@ -11,6 +12,7 @@ function ReservationForm(){
     const {user} = useSelector((state) => state.auth)
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         activity: '',
@@ -94,6 +96,8 @@ function ReservationForm(){
             time_in: '',
             time_out: '',
         })
+
+        navigate('../dashboard')
         
     }
 

@@ -10,14 +10,14 @@ const registerUser = asyncHandler(async(req, res) =>{
     const { name, idnum, password, role, org, dept } = req.body
 
     if(!name || !idnum || !password || !role || !org || !dept){
-        res.status(400)
+        return res.status(400)
         throw new Error('Please add input data')
     }
 
     // checking existing user
     const userExists = await User.findOne({idnum})
     if(userExists){
-        res.status(400)
+        return res.status(400)
         throw new Error('User already exists')
     }
 
@@ -36,7 +36,7 @@ const registerUser = asyncHandler(async(req, res) =>{
     })
     
     if(user){
-        res.status(201)
+        res.status(200).json(user)
     }
 })
 
@@ -61,7 +61,7 @@ const loginUser = asyncHandler(async(req, res) =>{
             token: generateToken(user._id)
         })
     } else{
-        res.status(400)
+        return res.status(400)
         throw new Error('Invalid credentials')
     }
 })
@@ -85,7 +85,7 @@ const getAll = asyncHandler(async(req, res) =>{
 })
 
 const getAllDash = asyncHandler(async(req, res) =>{
-    const usersDash = await User.find({user: req.user.id}).sort('createdAt')
+    const usersDash = await User.find({user: req.user.id}).sort('-createdAt')
     
     res.status(200).json(usersDash)
 })
