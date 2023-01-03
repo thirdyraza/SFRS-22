@@ -13,23 +13,29 @@ function RequestList() {
 
   useEffect(() => {
 
-    dispatch(getAllReserves())
-    dispatch(getForReview())
-    dispatch(getForCheck())
-    dispatch(getForDean())
-    dispatch(getReserves())
+    if(user.role === 'Gym In-Charge' || user.role === 'Friendship Park In-Charge' || user.role === 'Outdoor Stage In-Charge'){
+      dispatch(getForCheck())
+    } else if(user.role === 'OSAS Dean' ){
+      dispatch(getAllReserves())
+    } else if(user.role === 'Organization Adviser' || user.role === 'Head of Office'){
+      dispatch(getForReview())
+    } else if(user.role === 'Department Dean'){
+      dispatch(getForDean())
+    } else if(user.role === 'Student Officer' || user.role === 'Faculty'){
+      dispatch(getReserves())
+    }
 
     return () => {
       dispatch(reset())
     };
 
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   var role
 
   if(user.role === 'Gym In-Charge' || user.role === 'Friendship Park In-Charge' || user.role === 'Outdoor Stage In-Charge'){
     role = 'venue'
-  } else if(user.role === 'OSAS Director' ){
+  } else if(user.role === 'OSAS Dean' ){
     role = 'osas'
   } else if(user.role === 'Organization Adviser' || user.role === 'Head of Office'){
     role = 'head'
@@ -53,7 +59,7 @@ function RequestList() {
                 {allReserves.length > 0 ? (
                   <div>
                   {allReserves.map((reserve) => (
-                    <ReservesContent key={reserve._id} reserves={reserve} />
+                    <ReservesContent key={reserve.id} reserves={reserve} />
                   ))}
                   </div>
                 ) : (<h2 className='none'>No Reservations Found</h2>)}

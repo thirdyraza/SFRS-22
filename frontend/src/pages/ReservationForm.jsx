@@ -1,15 +1,36 @@
 import { useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { createReserve } from '../features/reserves/reserveSlice'
+import { createReserve, getReservation } from '../features/reserves/reserveSlice'
+import { setNotif } from '../features/notifs/notifSlice';
 import '../assets/scss/mainform.scss';
 import { useNavigate } from 'react-router-dom';
 
-// import ReservesHead from '../components/ReservesHead'
-// import ReservesContent from '../components/ReservesContent'
+    function setMinDate(){
+        
+        var today = new Date()
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
 
-function ReservationForm(){
+        dd += 3
+
+        if(dd < 10){
+            dd = '0' + dd
+        }
+        if(mm < 10){
+            mm = '0' + mm
+        }
+            
+        today = yyyy + '-' + mm + '-' + dd;
+        console.log(today);
+
+        document.getElementById('date').setAttribute("min", today);
+    }
+
+    export default function ReservationForm(){
 
     const {user} = useSelector((state) => state.auth)
+    const {reserves, reservation} = useSelector((state) => state.reserves)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -20,7 +41,7 @@ function ReservationForm(){
         org: '',
         venue: '',
         room: '',
-        date: '',
+        date: new Date(),
         time_in: '',
         time_out: '',
     })
@@ -86,6 +107,33 @@ function ReservationForm(){
     const onSubmit = (e) =>{
         e.preventDefault()
         dispatch(createReserve(formData))
+
+        let sgn = ' sent a reservation request'
+        let updStat
+
+        if(user.role === 'Student Officer'){
+            updStat = 'Organization Adviser'
+        }else if(user.role === 'Faculty'){
+            updStat = 'Head of Office'
+        }
+
+        dispatch(getReservation(reserves._id))
+
+        const notifData = {
+            resid: reservation._id,
+            activity: reservation.activity,
+            org: reservation.org,
+            venue: reservation.venue,
+            date: reservation.date,
+            time_in: reservation.time_in,
+            time_out: reservation.time_out,
+            status: updStat,
+            requestor: reservation.requestor,
+            remarks: ' ',
+            sign: 'You' + sgn,
+        }
+        dispatch(setNotif(notifData))
+
         setFormData({
             activity: '',
             purpose: '',
@@ -100,7 +148,7 @@ function ReservationForm(){
         navigate('../dashboard')
         
     }
-
+    
     return(
     <div className="app">
         <div id="home">
@@ -110,8 +158,8 @@ function ReservationForm(){
                     <form onSubmit={onSubmit}>
                         <h2>ACTIVITY VENUE RESERVATION FORM</h2>
                         <div className="note">
-                            <h3 class="note_header">NOTE:</h3>
-                            <div class="note_content">
+                            <h3 className="note_header">NOTE:</h3>
+                            <div className="note_content">
                                 <p>1. Venue/s for acitivities has/have to be reserved a week before the actual conduct of the activity.</p>
                                 <p>2. This form shall only be used for duly approved activities which will be conducted inside the University Campus.</p>
                                 <p>3. Extra copies shall be given to ever approving bodies.</p>
@@ -183,7 +231,14 @@ function ReservationForm(){
                         <div className="selectbottom">
                             <div className="in">
                                 <label>Date</label>
-                                <input type="date" name="date" id="date" className='date-container' value={date} onChange={onChange}/>
+                                <input type="date"
+                                name= "date"
+                                id= "date"
+                                className='date-container'
+                                value={date}
+                                onChange={onChange}
+                                onClick={setMinDate}
+                                />
                             </div>
 
                             <div className="in">
@@ -195,6 +250,7 @@ function ReservationForm(){
                                     value={time_in}
                                     onChange={onChange}
                                     className='time-input'
+                                    format='hh:mm'
                                     min="07:30" max="19:30"/>
 
                                     <p id="time-span">to</p>
@@ -205,6 +261,7 @@ function ReservationForm(){
                                     value={time_out}
                                     onChange={onChange}
                                     className='time-input'
+                                    format='HH:MM'
                                     min="07:30" max="21:00"/>
                                 </div>
                             </div>
@@ -233,6 +290,5 @@ function ReservationForm(){
     </div>
             
     )
+    
 }
-
-export default ReservationForm;

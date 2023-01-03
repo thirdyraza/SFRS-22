@@ -3,32 +3,49 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getReserves, reset } from '../features/reserves/reserveSlice';
 import '../assets/scss/notifications.scss'
+import { getDeanNotifs, getHeadNotifs, getOsasNotifs, getVenicNotifs } from '../features/notifs/notifSlice';
+import NotificationCell from '../components/NotificationCell';
 
 function Notifications() {
 
     const dispatch = useDispatch()
 
     const { user } = useSelector((state) => state.auth)
+    const { headNotifs, deanNotifs, osasNotifs, venicNotifs } = useSelector((state) => state.notif)
     const { reserves } = useSelector((state) => state.reserves)
 
     useEffect(() => {
-
-        dispatch(getReserves())
+        
+        if(user.role === 'Student Officer' || user.role === 'Faculty'){
+            dispatch(getReserves())
+        } else if(user.role === 'Organization Adviser' || user.role === 'Head of Office'){
+            dispatch(getHeadNotifs())
+        } else if(user.role === 'Department Dean'){
+            dispatch(getDeanNotifs())
+        } else if(user.role === 'OSAS Dean'){
+            dispatch(getOsasNotifs())
+        } else if(user.role === 'Outdoor Stage In-Charge'){
+            dispatch(getVenicNotifs())
+        }
 
         return () => {
             dispatch(reset())
         };
-    }, [dispatch]);
+        
+    }, [dispatch, user]);
 
     var role
 
     if(user.role === 'Faculty' || user.role === 'Student Officer'){
         role = 'user'
-    } else if(user.role === 'OSAS Dean' || user.role === 'Department Dean'
-        || user.role === 'Organization Adviser' || user.role === 'Head of Office'){
-            role = 'admin'
     } else if(user.role === 'Gym In-Charge' || user.role === 'Friendship Park In-Charge' || user.role === 'Outdoor Stage In-Charge'){
         role = 'venue in-charge'
+    } else if(user.role === 'Organization Adviser' || user.role === 'Head of Office'){
+        role = 'head'
+    } else if(user.role === 'Department Dean'){
+        role = 'dean'
+    } else if(user.role === 'OSAS Dean'){
+        role = 'osas'
     }
 
     return ( 
@@ -46,15 +63,6 @@ function Notifications() {
 
                 </div>
 
-                <div className='select-sort'>
-                    <p>Sort by </p>
-                    <select>
-                        <option>Newest</option>
-                        <option>Oldest</option>
-                        <option>Unread</option>
-                    </select>
-                </div>
-
             </div>
 
             <div className="n-top">
@@ -65,13 +73,50 @@ function Notifications() {
                 <p>Approval</p>
             </div>
 
-            {reserves.length > 0 ? (
+            {role === 'user' ? (<>
+                {reserves.length > 0 ? (
                 <div>
                     {reserves.map((reserve) => (
                     <NotificationContent key={reserve._id} reserves={reserve}/>
                     ))}
                 </div>
-            ) : (<h3 className='notif-none'>No Notifications Found</h3>)}
+                ) : (<h3 className='notif-none'>No Notifications Found</h3>)}
+            </>) : (<>{role === 'head' ? (<>
+                {headNotifs.length > 0 ? (
+                <div>
+                    {headNotifs.map((notif) => (
+                    <NotificationCell key={notif._id} notifs={notif}/>
+                    ))}
+                </div>
+                ) : (<h3 className='notif-none'>No Notifications Found</h3>)}
+            </>) : (<>{role === 'dean' ? (<>
+                {deanNotifs.length > 0 ? (
+                <div>
+                    {deanNotifs.map((notif) => (
+                    <NotificationCell key={notif._id} notifs={notif}/>
+                    ))}
+                </div>
+                ) : (<h3 className='notif-none'>No Notifications Found</h3>)}
+            </>) : (<>{role === 'osas' ? (<>
+                {osasNotifs.length > 0 ? (
+                <div>
+                    {osasNotifs.map((notif) => (
+                    <NotificationCell key={notif._id} notifs={notif}/>
+                    ))}
+                </div>
+                ) : (<h3 className='notif-none'>No Notifications Found</h3>)}
+            </>) : (<>
+                {venicNotifs.length > 0 ? (
+                <div>
+                    {venicNotifs.map((notif) => (
+                    <NotificationCell key={notif._id} notifs={notif}/>
+                    ))}
+                </div>
+                ) : (<h3 className='notif-none'>No Notifications Found</h3>)}
+            </>)}
+            </>)}
+            </>)}
+            </>)}
 
             
 

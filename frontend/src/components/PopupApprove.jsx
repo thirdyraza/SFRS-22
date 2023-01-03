@@ -22,13 +22,17 @@ export default function PopupApprove() {
         e.preventDefault()
 
         let sgn
+        let updStat
 
         if(user.role === 'Organization Adviser' || user.role === 'Head of Office'){
             sgn = 'Noted by '
+            updStat = 'Department Dean'
         }else if(user.role === 'Department Dean'){
             sgn = 'Recommended by '
+            updStat = 'OSAS Dean'
         }else if(user.role === 'OSAS Dean'){
             sgn = 'Approved by '
+            updStat = 'Approved'
         }
 
         const updateData = {
@@ -37,6 +41,8 @@ export default function PopupApprove() {
         }
         dispatch(updateReserve(updateData))
 
+        // remarks can be fetched via input in frontend
+        
         const notifData = {
             resid: reservation._id,
             activity: reservation.activity,
@@ -45,13 +51,13 @@ export default function PopupApprove() {
             date: reservation.date,
             time_in: reservation.time_in,
             time_out: reservation.time_out,
-            status: reservation.status,
+            status: updStat,
             requestor: reservation.requestor,
             remarks: 'Reviewed',
             sign: sgn + user.name,
         }
         dispatch(setNotif(notifData))
-        
+
         navigate('../dashboard')
     }
 

@@ -6,6 +6,10 @@ const initialState = {
     notification: notification ? notification : null,
     notifs: [],
     allNotifs: [notification],
+    headNotifs: [notification],
+    deanNotifs: [notification],
+    osasNotifs: [notification],
+    venicNotifs: [notification],
     isSuccess: false,
     isLoading: false,
     isError: false,
@@ -28,6 +32,65 @@ export const getNotifs = createAsyncThunk('notifs/getNotifs', async(resid, thunk
     try {
         const token = thunkAPI.getState().auth.user.token
         return await notifService.getNotifs(resid, token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get all notifications
+export const getAllNotifs = createAsyncThunk('notifs/getAll', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await notifService.getAllNotifs(token)
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get notifications for org advisers/head of office
+export const getHeadNotifs = createAsyncThunk('notifs/getForHead', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await notifService.getHeadNotifs(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get notifications for dept deans
+export const getDeanNotifs = createAsyncThunk('notifs/getForDean', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await notifService.getDeanNotifs(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get notifications for org advisers/head of office
+export const getOsasNotifs = createAsyncThunk('notifs/getForOsas', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await notifService.getOsasNotifs(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get notifications for venue in-charge
+export const getVenicNotifs = createAsyncThunk('notifs/getForVenic', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await notifService.getVenicNotifs(token)
 
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
@@ -66,6 +129,71 @@ export const notifSlice = createSlice({
                 state.notifs = action.payload
             })
             .addCase(getNotifs.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getAllNotifs.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAllNotifs.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.allNotifs = action.payload
+            })
+            .addCase(getAllNotifs.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getHeadNotifs.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getHeadNotifs.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.headNotifs = action.payload
+            })
+            .addCase(getHeadNotifs.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getDeanNotifs.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getDeanNotifs.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.deanNotifs = action.payload
+            })
+            .addCase(getDeanNotifs.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getOsasNotifs.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getOsasNotifs.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.osasNotifs = action.payload
+            })
+            .addCase(getOsasNotifs.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getVenicNotifs.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getVenicNotifs.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.venicNotifs = action.payload
+            })
+            .addCase(getVenicNotifs.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

@@ -22,7 +22,7 @@ function LandingPage() {
 
             <div className='nav_right'>
                 <p>FAQ</p>
-                <a href='http://usl.edu.ph/'>Visit our Site</a>
+                <a href='http://usl.edu.ph/' target="_blank" rel="noreferrer">Visit our Site</a>
             </div>
         </div>
 

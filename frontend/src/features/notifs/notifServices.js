@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = '/api/notifs/'
 
-// create new reservation
+// create new notification
 const setNotif = async(reserveData, token) =>{
     const config = {
         headers: {
@@ -18,7 +18,7 @@ const setNotif = async(reserveData, token) =>{
     return response.data
 }
 
-// get user reservations
+// get user notifications
 const getNotifs = async(resid, token) =>{
     const config = {
         headers: {
@@ -29,9 +29,66 @@ const getNotifs = async(resid, token) =>{
     return response.data
 }
 
+// get user notifications
+const getAllNotifs = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'all', config)
+    return response.data
+}
+
+// get notifications for org adviser/head of office
+const getHeadNotifs = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'head', config)
+    return response.data
+}
+// get notifications for dept deans
+const getDeanNotifs = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'dean', config)
+    return response.data
+}
+// get notifications for osas dean
+const getOsasNotifs = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'osas', config)
+    return response.data
+}
+// get notifications for venue in-charge
+const getVenicNotifs = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'venic', config)
+    return response.data
+}
+
 const notifService = {
     setNotif,
     getNotifs,
+    getAllNotifs,
+    getHeadNotifs,
+    getDeanNotifs,
+    getOsasNotifs,
+    getVenicNotifs,
 }
 
 export default notifService

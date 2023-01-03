@@ -16,6 +16,7 @@ import DetailedRequest from './pages/DetailedRequest';
 import MainVIC from './pages/MainVIC';
 import MainSysAd from './pages/MainSysAd';
 import DashboardRegular from './pages/DashboardRegular';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
       <Router>
           <Routes>
             <Route path='/' element={<Landing />}/>
-            <Route path='/login' element={<Login />}/>   
+            <Route path='/login' element={<LoginPage />}/>   
 
             {/* private routes */}
 
