@@ -5,13 +5,14 @@ import { getReserves, reset } from '../features/reserves/reserveSlice';
 import '../assets/scss/notifications.scss'
 import { getDeanNotifs, getHeadNotifs, getOsasNotifs, getVenicNotifs } from '../features/notifs/notifSlice';
 import NotificationCell from '../components/NotificationCell';
+import Loader from '../components/Loader';
 
 function Notifications() {
 
     const dispatch = useDispatch()
 
     const { user } = useSelector((state) => state.auth)
-    const { headNotifs, deanNotifs, osasNotifs, venicNotifs } = useSelector((state) => state.notif)
+    const { headNotifs, deanNotifs, osasNotifs, venicNotifs, isLoading } = useSelector((state) => state.notif)
     const { reserves } = useSelector((state) => state.reserves)
 
     useEffect(() => {
@@ -48,6 +49,10 @@ function Notifications() {
         role = 'osas'
     }
 
+    if(isLoading){
+        <Loader />
+    }
+
     return ( 
         <div className="app">
         <div id="home">
@@ -66,11 +71,12 @@ function Notifications() {
             </div>
 
             <div className="n-top">
-                <span/>      
+                <p/>
                 <p>Reservation Details</p>
-                <p>Role</p>
+                <p>Remarks</p>
+                <p>Requested Venue</p>
                 <p>Requested Date</p>
-                <p>Approval</p>
+                <p></p>
             </div>
 
             {role === 'user' ? (<>
@@ -80,7 +86,7 @@ function Notifications() {
                     <NotificationContent key={reserve._id} reserves={reserve}/>
                     ))}
                 </div>
-                ) : (<h3 className='notif-none'>No Notifications Found</h3>)}
+                ) : (<h3 className='notif-none'>No Notification Found</h3>)}
             </>) : (<>{role === 'head' ? (<>
                 {headNotifs.length > 0 ? (
                 <div>

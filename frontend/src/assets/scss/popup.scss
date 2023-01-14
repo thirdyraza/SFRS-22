@@ -1,4 +1,4 @@
-@import 'var&mixins.scss';
+@import './var&mixins.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
 // Removable Testing Button
@@ -12,7 +12,7 @@
     transition: 0.2s;
   }
 }
-#popup_container, #popup_cancel, #popup_approve, #popup_deny { 
+#popup_container, #popup_cancel, #popup_approve, #popup_deny, #popup_logs { 
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
@@ -207,6 +207,7 @@
     background-color: white;
     width: 70px;
     height: 70px;
+    margin: 10px;
     justify-content: center;
     align-items: center;
     border-radius: 200px;
@@ -216,6 +217,23 @@
       width: 33px;
       color: #2f4152;
     }
+
+    #iconConfirm{
+      color: $color-green;    
+    }
+    
+    #iconDeny{
+      color: $color-red;
+    }
+    
+    #iconCancel{
+      color: $color-yellow2;
+    }
+    
+    #iconLogs{
+      color: $color-blue;
+    }
+
   }
 
   .popup_text{
@@ -227,12 +245,49 @@
     align-items: center;
     text-align: center;
   }
+
+  .logs-cont{
+    margin: 15px 40px;
+    color: $color-white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    h2{
+      font-size: 30px;
+    }
+
+    .logs-items{
+      opacity: 100%;
+      padding: 8px;
+      text-align: center;
+    
+      .log-sign{
+        color: white;
+        font-weight: 650;
+      }
+      .log-upd{
+        color: white;
+        font-style: italic;
+      }
+    }
+
+    .log-crtd{
+      font-style: italic;
+    }
+    .log-crtd-txt{
+      font-weight: 650;
+    }
+
+  }
+
 }
 
 .popup_button{
   display: flex;
-  flex-direction: row;
-  background-color: $color-white;
+  flex-direction: column;
   width: 100%;
   border-radius: 10px;
   justify-content: center;
@@ -252,37 +307,80 @@
   margin: 10px;
 }
 .btnCancel{
+  cursor: pointer;
   background-color: $color-gray;
   &:hover{
     background-color: $color-grayshade;
   }
 }
 .btnConfirm{
+  cursor: pointer;
   background-color: $color-green;
   &:hover{
     background-color: $color-greenshade;
   }
 }
 .btnDeny{
+  cursor: pointer;
   background-color: $color-red;
   &:hover{
     background-color: $color-redshade;
   }
 }
 .btnCancel2{
+  cursor: pointer;
   background-color: $color-yellow;
   &:hover{
     background-color: $color-yellow2shade;
   }
 }
-#iconConfirm{
-  color: $color-green;    
+.btnAdd{
+  cursor: pointer;
+  background-color: $color-blue;
+  &:hover{
+    background-color: $color-blue;
+  }
 }
 
-#iconDeny{
-  color: $color-red;
+.remarks-container{
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: grid;
+  width: 100%;
+
+  .remarks{
+    color: #fff;
+  }
+  
+  textarea{
+    background-color: $color-white;
+    padding: 12px 20px;
+    min-width: 20vw;
+    height: 10vh;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+  }
 }
 
-#iconCancel{
-  color: $color-yellow2;
+.p_buttons{
+  display: flex;
+  flex-direction: row;
+}
+
+.equipment-container{
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  select{
+    padding: 12px 20px;
+    min-width: 20vw;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+  }
 }

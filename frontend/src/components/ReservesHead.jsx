@@ -29,12 +29,12 @@ function ReservesHead() {
             </div>
         ) : (
             <div class='heading'>
-                <p>Requestor</p>
                 <p>Activity</p>
+                <p>Requestor</p>
                 <p>Organization</p>
                 <p>Venue</p>
                 <p>Room</p>
-                <p>Time</p>
+                <p>Date & Time</p>
                 <p>Approval</p>
             </div>
         )}

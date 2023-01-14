@@ -73,11 +73,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    display: inline-block;
     
     .icons {
       width: 30px;
       height: 30px;
       fill: $color-white;
+    }
+
+    .counter{
+      position: absolute;
+      top: 4px;
+      right: 8px;
+      color: $color-yellow;
+      font-weight: 600;
     }
 
     &:hover {
@@ -88,6 +98,10 @@
     &:hover > .icons {
       fill: $color-blue;
       transition: 0.35s;
+    }
+
+    &:hover > .counter{
+      color: $color-blue;
     }
   }
 

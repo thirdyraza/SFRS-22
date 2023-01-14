@@ -147,6 +147,12 @@
             border: none;
         }
 
+        button{
+            color: #fff;
+            border-style: none;
+            background-color: $color-gray;
+        }
+
         .time-container{
             flex-direction: row;
             justify-content: center;

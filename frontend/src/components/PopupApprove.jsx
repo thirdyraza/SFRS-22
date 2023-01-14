@@ -63,7 +63,7 @@ export default function PopupApprove() {
 
      return (
     <div className='testing-popup'>
-        <div id='popup_approve' onClick={closeApprove}>
+        <div id='popup_approve'>
             <div className='confirmation_popup'>
                 <div className='confirmation_header'>
                     <FaCheck className='icon' id='iconConfirm'/>
@@ -71,9 +71,9 @@ export default function PopupApprove() {
                 <div className='popup_text'>
                     <h2>Do you want to approve the request?</h2>
                 </div>
-                <div className='popup_button'>
-                    <button id='btn' className='btnCancel'>Back</button>
-                    <button id='btn' className='btnConfirm' onClick={approveReq}>Approve</button>
+                <div className='p_buttons'>
+                    <button id='btn' className='btnCancel' onClick={closeApprove}>Back</button>
+                    <button id='btn' className='btnConfirm' onClick={approveReq}>Confirm</button>
                 </div>
             </div>
         </div>

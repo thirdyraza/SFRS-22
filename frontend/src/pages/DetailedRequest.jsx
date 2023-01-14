@@ -1,34 +1,35 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'
-import '../assets/scss/detailed-reserves.scss'
 import PopupCancel from '../components/PopupCancel';
 import PopupApprove from '../components/PopupApprove';
 import PopupDeny from '../components/PopupDeny';
+import Loader from '../components/Loader';
+import PopupLogs from '../components/PopupLogs';
+import '../assets/scss/detailed-reserves.scss'
 
 function openApprove(){
     document.getElementById('popup_approve').style.cssText = 'display:flex';
-    document.getElementById('close').style.cssText = 'display:flex';
     document.getElementById('open_popup').style.cssText = 'display:hidden';
 }
 function openDeny(){
     document.getElementById('popup_deny').style.cssText = 'display:flex';
-    document.getElementById('close').style.cssText = 'display:flex';
     document.getElementById('open_popup').style.cssText = 'display:hidden';
 }
 function openCancel(){
     document.getElementById('popup_cancel').style.cssText = 'display:flex';
-    document.getElementById('close').style.cssText = 'display:flex';
-    document.getElementById('open_cancel').style.cssText = 'display:hidden';
+    document.getElementById('open_popup').style.cssText = 'display:hidden';
 }
-
-
+function openLogs(){
+    document.getElementById('popup_logs').style.cssText = 'display:flex';
+    document.getElementById('open_popup').style.cssText = 'display:hidden';
+}
 
 function DetailedRequest() {
     
     const navigate = useNavigate()
 
-    const {user} = useSelector((state) => state.auth)
-    const {reservation} = useSelector((state) => state.reserves)
+    const { user } = useSelector((state) => state.auth)
+    const {reservation, isLoading} = useSelector((state) => state.reserves)
 
     var role
 
@@ -43,9 +44,13 @@ function DetailedRequest() {
         navigate(-1)
     }
 
+    if(isLoading){
+        <Loader />
+    }
+
 return (
-    <div class='app'>
-            <div id='home' class="RD-Container">
+    <div className='app'>
+            <div id='home' className="RD-Container">
                 <style>
                     @import url('https://fonts.googleapis.com/css2?family=Reem+Kufi+Ink&display=swap');
                 </style>
@@ -53,7 +58,7 @@ return (
                 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>
                 
                 <div to="/notifications" id="btnBack" className="RD-Btns" onClick={goBack}>
-                    <i class='bx bx-arrow-back' ></i>
+                    <i className='bx bx-arrow-back' ></i>
                     <p>Back</p>
                 </div>
 
@@ -83,13 +88,13 @@ return (
                 </div>
 
                 {/* Divider */}
-                <hr class="solid"/>
+                <hr className="solid"/>
 
                 {/* RD Content */}
-                <div classname="Status">
+                <div className="Status">
                     <div className="RDC-Header">
                         <div className="RDC-Details">
-                            <i id="Request_Icon"class='bx bxs-universal-access'/>
+                            <i id="Request_Icon"className='bx bxs-universal-access'/>
                             
                             <div className="r_name">
                                 <div>
@@ -97,7 +102,7 @@ return (
                                     <p id="r_deptrole">{reservation.reqdept} | {reservation.reqrole}</p>
                                 </div>
                                 <div className="r_email">
-                                    <i class='bx bx-envelope'/>
+                                    <i className='bx bx-envelope'/>
                                     <p>{reservation.reqid}@usl.edu.ph</p>
                                 </div>
 
@@ -106,9 +111,14 @@ return (
 
                         <div className="r_right">
                             <p>{reservation.createdAt}</p>
-                            <i class='bx bxs-info-square'></i>
+                            <i className='bx bxs-info-square' onClick={openLogs}></i>
+                            <PopupLogs />
                         </div>
+                        
                     </div>
+                    
+                    
+                    
 
                     <div className="RDC-Body">
                         <div>
@@ -136,24 +146,25 @@ return (
                 </div>
                 
                 {/* RD Buttons */}
-                {role === 'user' && reservation.status !== 'Cancelled' && reservation.counter !== 3 ? (<>
-                    <div id="btnCancel" class="RD-Btns" onClick={openCancel}>
+                {role === 'user' && reservation.status !== 'Cancelled' && reservation.status !== 'Denied' && reservation.counter !== 3 ? (<>
+                    <div id="btnCancel" className="RD-Btns" onClick={openCancel}>
                         <p>Cancel Request</p>
-                        <i class='bx bxs-x-circle'/>
+                        <i className='bx bxs-x-circle'/>
                     </div>
                     <PopupCancel />
                     </>) : (<>
-                    {role === 'admin' && reservation.status !== 'Denied' && reservation.counter !== 3 ? (<>
+                    {role === 'admin' && reservation.status !== 'Denied' && reservation.status !== 'Cancelled' && reservation.counter !== 3 ? (<>
                     
-                        <div id="btnApprove" class="RD-Btns" onClick={openApprove}>
+                        <div id="btnApprove" className="RD-Btns" onClick={openApprove}>
                             <p>Approve Request</p>
-                            <i class='bx bxs-x-circle'/>
+                            <i className='bx bxs-check-circle'/>
                         </div>
                         <PopupApprove />
                         
-                        <div id="btnDeny" class="RD-Btns" onClick={openDeny}>
+                        
+                        <div id="btnDeny" className="RD-Btns" onClick={openDeny}>
                             <p>Deny Request</p>
-                            <i class='bx bxs-x-circle'/>
+                            <i className='bx bxs-x-circle'/>
                         </div>
                         <PopupDeny />
                     </>): (<></>)}

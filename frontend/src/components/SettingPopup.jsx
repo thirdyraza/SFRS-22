@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {FaSignOutAlt} from 'react-icons/fa'
 import faculty from '../assets/images/faculty.png'
 import '../assets/scss/popup.scss'
@@ -26,6 +27,15 @@ export default function SettingPopup(){
         dispatch(reset())
         navigate('/login')
     }
+
+    useEffect(() => {
+        if(!user) {
+            return navigate('../login')
+        }
+        return () => {
+            dispatch(reset())
+        };
+    }, [dispatch, user, navigate]);
 
 
     return (<>

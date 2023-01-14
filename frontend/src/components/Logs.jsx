@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotifs } from "../features/notifs/notifSlice";
 import { reset } from "../features/auth/authSlice";
-import NotificationCell from "./NotificationCell";
+import PopupLogs from "./PopupLogs";
+import '../assets/scss/popup.scss'
 
-function NotificationContent({reserves}) {
+function Logs({reserve}) {
 
     const dispatch = useDispatch()
 
@@ -13,7 +14,7 @@ function NotificationContent({reserves}) {
 
     useEffect(() => {
 
-        const resid = reserves._id
+        const resid = reserve._id
 
         dispatch(getNotifs(resid))
 
@@ -21,20 +22,20 @@ function NotificationContent({reserves}) {
             dispatch(reset())
         };
 
-    }, [dispatch, reserves, user]);
+    }, [dispatch, reserve, user]);
 
     return (
-    <>
+    <div id="popup_logs">
         {notifs.length > 0 ? (<>
             {notifs.map((notif) => (
-            <NotificationCell key={notif._id} notifs={notif}/>
+            <PopupLogs key={notif._id} notifs={notif}/>
             ))}
         </>) : (
             <h3 className="none">No Notifications Found</h3>
         )}
         
-    </>
+    </div>
     );
 }
 
-export default NotificationContent;
+export default Logs

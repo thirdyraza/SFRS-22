@@ -7,6 +7,7 @@ import bg from '../assets/images/bannerpic1.jpg'
 
 import ReservesHead from '../components/ReservesHead'
 import ReservesContent from '../components/ReservesContent'
+import Loader from '../components/Loader'
 
 function DashboardAdmin() {
 
@@ -14,7 +15,7 @@ function DashboardAdmin() {
   const dispatch = useDispatch()
 
   const {user} = useSelector((state) => state.auth)
-  const { forReviewsDash, forChecksDash, forDeansDash, forOsasDash, isError, message} = useSelector((state) => state.reserves)
+  const { forReviewsDash, forChecksDash, forDeansDash, forOsasDash, isError, message, isLoading} = useSelector((state) => state.reserves)
 
   useEffect(() =>{
 
@@ -22,7 +23,7 @@ function DashboardAdmin() {
       console.log(message)
     }
     if(!user) {
-      return navigate ('/login')
+      navigate('/login')
     }
 
     if(user.role === 'Organization Adviser' || user.role === 'Head of Office'){
@@ -52,6 +53,10 @@ function DashboardAdmin() {
     role = 'dean'
   } else if(user.role === 'OSAS Dean'){
     role = 'osas'
+  }
+
+  if(isLoading){
+    <Loader />
   }
 
   return (<>
@@ -84,7 +89,9 @@ function DashboardAdmin() {
                     ))}
                     </div>
                   ) : (<h3 className='none'>No Reservations Found</h3>)}
-                  <div class='more'>See more ...</div>
+                  <Link to='../user-request-list'>
+                    <div class='more'>See more ...</div>
+                  </Link>
               </div>
 
             </div>
@@ -101,7 +108,9 @@ function DashboardAdmin() {
                       ))}
                       </div>
                     ) : (<h3 className='none'>No Reservations Found</h3>)}
-                    <div class='more'>See more ...</div>
+                    <Link to='../user-request-list'>
+                      <div class='more'>See more ...</div>
+                    </Link>
                 </div>
 
               </div>
@@ -118,7 +127,9 @@ function DashboardAdmin() {
                       ))}
                       </div>
                     ) : (<h3 className='none'>No Reservations Found</h3>)}
-                    <div class='more'>See more ...</div>
+                    <Link to='../user-request-list'>
+                      <div class='more'>See more ...</div>
+                    </Link>
                 </div>
               </div>
             </>) : (<>
@@ -133,7 +144,9 @@ function DashboardAdmin() {
                       ))}
                       </div>
                     ) : (<h3 className='none'>No Reservations Found</h3>)}
-                  <div class='more'>See more ...</div>
+                    <Link to='../user-request-list'>
+                      <div class='more'>See more ...</div>
+                    </Link>
                 </div>
               </div>
             </>)}

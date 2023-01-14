@@ -4,6 +4,7 @@ import { createReserve, getReservation } from '../features/reserves/reserveSlice
 import { setNotif } from '../features/notifs/notifSlice';
 import '../assets/scss/mainform.scss';
 import { useNavigate } from 'react-router-dom';
+import PopupEquipment from '../components/PopupEquipments';
 
     function setMinDate(){
         
@@ -14,17 +15,18 @@ import { useNavigate } from 'react-router-dom';
 
         dd += 3
 
-        if(dd < 10){
-            dd = '0' + dd
-        }
-        if(mm < 10){
-            mm = '0' + mm
-        }
+        if(dd < 10){dd = '0' + dd}
+        if(mm < 10){mm = '0' + mm}
             
         today = yyyy + '-' + mm + '-' + dd;
-        console.log(today);
 
         document.getElementById('date').setAttribute("min", today);
+    }
+
+    function openEquip(){
+        document.getElementById('popup_equip').style.cssText = 'display:flex';
+        document.getElementById('close').style.cssText = 'display:flex';    
+        document.getElementById('open_popup').style.cssText = 'display:hidden';
     }
 
     export default function ReservationForm(){
@@ -130,7 +132,7 @@ import { useNavigate } from 'react-router-dom';
             status: updStat,
             requestor: reservation.requestor,
             remarks: ' ',
-            sign: 'You' + sgn,
+            sign: sgn,
         }
         dispatch(setNotif(notifData))
 
@@ -236,6 +238,7 @@ import { useNavigate } from 'react-router-dom';
                                 id= "date"
                                 className='date-container'
                                 value={date}
+                                format='mmm-dd-yyyy'
                                 onChange={onChange}
                                 onClick={setMinDate}
                                 />
@@ -268,16 +271,6 @@ import { useNavigate } from 'react-router-dom';
 
                         </div>
 
-                        <div className="equipment-container">  
-                            <div className="in">
-                                <label>Equipment</label>
-                                <select type="text">
-                                    <option hidden>- - - - -</option>
-                                    <option>Projector</option>
-                                    <option>Microphone</option>
-                                </select>
-                            </div>
-                        </div>
                         <button type='submit' id="btnSubmit" className='btnForm btn btn-block'>
                             Submit
                         </button>

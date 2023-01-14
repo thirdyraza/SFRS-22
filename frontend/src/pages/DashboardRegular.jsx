@@ -10,6 +10,7 @@ import ReservesHead from '../components/ReservesHead'
 import ReservesContent from '../components/ReservesContent'
 import UserHeading from '../components/UserHeading'
 import UserContent from '../components/UserContent'
+import Loader from '../components/Loader'
 
 function DashboardRegular() {
 
@@ -17,7 +18,7 @@ function DashboardRegular() {
   const dispatch = useDispatch()
 
   const {user, usersDash} = useSelector((state) => state.auth)
-  const { forChecks, isError, message} = useSelector((state) => state.reserves)
+  const { forChecks, isError, message, isLoading} = useSelector((state) => state.reserves)
 
   useEffect(() =>{
 
@@ -25,7 +26,7 @@ function DashboardRegular() {
       console.log(message)
     }
     if(!user) {
-      return navigate ('/login')
+      navigate('/login')
     }
 
     dispatch(getUsersDash())
@@ -48,6 +49,10 @@ function DashboardRegular() {
   const goUsers = (e) =>{
     e.preventDefault()
     navigate('../users-list')
+  }
+
+  if(isLoading){
+    <Loader />
   }
 
   return (<>

@@ -70,35 +70,35 @@ function LoginPage() {
 
   return (<>
     
-    <div class="login-page-body">
-        <div class="login-page-container">
+    <div className="login-page-body">
+        <div className="login-page-container">
 
-            <div class="login-titling">
-                <div class="biglogo">
+            <div className="login-titling">
+                <div className="biglogo">
                     <img src={logo} alt="" />
                 </div>
     
-                <div class="login-texts">
-                    <div class="bigtext">
+                <div className="login-texts">
+                    <div className="bigtext">
                         <p>UNIVERSITY OF</p>
-                        <p class="saint">SAINT LOUIS</p>
+                        <p className="saint">SAINT LOUIS</p>
                     </div>
-                    <div class="smalltext">
+                    <div className="smalltext">
                         <p>School Facility Reservation System</p>
                     </div>
                 </div>
             </div>
     
-            <div class="login-container">
-                <form class="login-wrap" onSubmit={onSubmit}>
-                    <div class="branding">
+            <div className="login-container">
+                <form className="login-wrap" onSubmit={onSubmit}>
+                    <div className="branding">
                         <h1>SIGN-IN</h1>
                         <p> PLEASE ENTER YOUR CREDENTIALS</p>
                     </div>
 
-                    <div class="login-inputs-cont">
-                        <div class="login-inputs">
-                            <label for="fname">ID NUMBER</label>
+                    <div className="login-inputs-cont">
+                        <div className="login-inputs">
+                            <label htmlFor="fname">ID NUMBER</label>
                             <input type="text" id="idnum"
                             name="idnum"
                             value={idnum}
@@ -107,8 +107,8 @@ function LoginPage() {
                             placeholder="ENTER YOUR ID NUMBER"
                             /><br></br>
                         </div>
-                        <div class="login-inputs">
-                            <label for="fname">PASSWORD</label>
+                        <div className="login-inputs">
+                            <label htmlFor="fname">PASSWORD</label>
                             <input type="password" id="password"
                             name="password"
                             value={password}
@@ -118,9 +118,9 @@ function LoginPage() {
                             /><br></br>
                         </div>
                     </div>
-                    <a href="/" class="forgot">FORGOT PASSWORD?</a>
+                    <a href="/" className="forgot">FORGOT PASSWORD?</a>
 
-                    <button class="login-button" type='submit'>
+                    <button className="login-button" type='submit'>
                         <p>SIGN IN</p>
                     </button>
                 </form>

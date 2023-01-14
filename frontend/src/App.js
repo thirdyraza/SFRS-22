@@ -4,7 +4,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import DashboardAdmin from './pages/DashboardAdmin';
 import DashboardUser from './pages/DashboardUser';
 import Landing from './pages/Landing';
-import Login from './pages/Login';
 import MainAdmin from './pages/MainAdmin';
 import UsersList from './pages/UsersList';
 import MainForm from './pages/ReservationForm';
@@ -24,14 +23,14 @@ function App() {
       <Router>
           <Routes>
             <Route path='/' element={<Landing />}/>
-            <Route path='/login' element={<LoginPage />}/>   
+            <Route path='/login' element={<LoginPage />}/>
 
             {/* private routes */}
 
             <Route path='/admin' element={<MainAdmin/>}>
               <Route path='dashboard' element={<DashboardAdmin/>}></Route>
               <Route path='reserve' element={<MainForm/>}></Route>
-              <Route path='your-request-list' element={<RequestList/>}></Route>
+              <Route path='user-request-list' element={<RequestList/>}></Route>
               <Route path='details:id' element={<DetailedRequest/>}></Route>
               <Route path='notifications' element={<Notifications/>}></Route>
             </Route>

@@ -4,14 +4,22 @@ import { getAllReserves, getForCheck, getForDean, getForReview, getReserves, res
 import ReservesHead from '../components/ReservesHead';
 import ReservesContent from '../components/ReservesContent';
 import '../assets/scss/table.scss';
+import Loader from '../components/Loader';
+import { useNavigate } from 'react-router-dom';
 
 function RequestList() {
+
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const { user } = useSelector((state) => state.auth)
-  const { allReserves, forReviews, forChecks, forDeans, reserves} = useSelector((state) => state.reserves)
+  const { allReserves, forReviews, forChecks, forDeans, reserves, isLoading} = useSelector((state) => state.reserves)
 
   useEffect(() => {
+
+    if(!user){
+      navigate('/login')
+    }
 
     if(user.role === 'Gym In-Charge' || user.role === 'Friendship Park In-Charge' || user.role === 'Outdoor Stage In-Charge'){
       dispatch(getForCheck())
@@ -29,7 +37,7 @@ function RequestList() {
       dispatch(reset())
     };
 
-  }, [dispatch, user]);
+  }, [dispatch, user, navigate]);
 
   var role
 
@@ -41,6 +49,10 @@ function RequestList() {
     role = 'head'
   } else if(user.role === 'Department Dean'){
     role = 'dean'
+  }
+
+  if(isLoading){
+    <Loader />
   }
 
   return (

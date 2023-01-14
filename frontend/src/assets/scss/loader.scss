@@ -1,0 +1,46 @@
+@import './var&mixins.scss';
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.loader-cont{
+    background-color: $color-blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20%;
+
+    img{
+        width: 70px;
+        margin-bottom: 10px;
+    }
+    h3, h4{
+        font-family: 'Times New Roman', Times, serif;
+        color: $color-white;
+        padding: 3px;
+        animation-name: fade;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+    }
+}
+
+@keyframes fade {
+    0%{
+        opacity: 100%;
+    }
+    25%{
+        opacity: 50%;
+    }
+    50%{
+        opacity: 0%;
+    }
+    75%{
+        opacity: 50%;
+    }
+    100%{
+        opacity: 100%;
+    }
+}

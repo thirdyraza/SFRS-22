@@ -8,13 +8,14 @@ import bg from '../assets/images/bannerpic1.jpg'
 
 import ReservesHead from '../components/ReservesHead'
 import ReservesContent from '../components/ReservesContent'
+import Loader from '../components/Loader'
 
 function DashboardUser(){
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const {user} = useSelector((state) => state.auth)
-  const {reserves, isError, message} = useSelector((state) => state.reserves)
+  const {reserves, isError, message, isLoading} = useSelector((state) => state.reserves)
 
   useEffect(() =>{
 
@@ -22,15 +23,20 @@ function DashboardUser(){
       console.log(message)
     }
     if(!user) {
-      return navigate ('/login')
+      return navigate('../login')
     }
+
     dispatch(getReserves())
+
     return () =>{
-      
       dispatch(reset());
     }
     
   }, [user, navigate, isError, message, dispatch])
+
+  if(isLoading){
+    <Loader />
+  }
 
   return (<>
     <div className="app">
