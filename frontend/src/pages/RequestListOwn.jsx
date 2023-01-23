@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllReserves, getForCheck, getForDean, getForReview, getReserves, reset } from '../features/reserves/reserveSlice';
+import { getAllReserves, getForCheck, getForDean, getForReview, getReserves, getSorted, reset } from '../features/reserves/reserveSlice';
 import ReservesHead from '../components/ReservesHead';
 import ReservesContent from '../components/ReservesContent';
 import '../assets/scss/table.scss';
+import '../assets/scss/buttons.scss'
 import Loader from '../components/Loader';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +14,12 @@ function RequestList() {
   const dispatch = useDispatch()
 
   const { user } = useSelector((state) => state.auth)
-  const { allReserves, forReviews, forChecks, forDeans, reserves, isLoading} = useSelector((state) => state.reserves)
+  const { allReserves, forReviews, forChecks, forDeans, reserves, sorted, isLoading} = useSelector((state) => state.reserves)
+
+  var active = 'All'
+  const sortPage = (e) =>{
+    active = e.target.name
+  }
 
   useEffect(() => {
 
@@ -33,11 +39,23 @@ function RequestList() {
       dispatch(getReserves())
     }
 
+    let header = document.getElementById("buttons");
+    let btns = header.getElementsByClassName("btn");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function() {
+      var current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+      this.className += " active";
+      });
+    }
+
+    dispatch(getSorted(active))
+
     return () => {
       dispatch(reset())
     };
 
-  }, [dispatch, user, navigate]);
+  }, [dispatch, user, navigate, active]);
 
   var role
 
@@ -67,7 +85,6 @@ function RequestList() {
                 <ReservesHead />        
               </div>
               <div class='table-cell'>
-                <req />
                 {allReserves.length > 0 ? (
                   <div>
                   {allReserves.map((reserve) => (
@@ -86,8 +103,7 @@ function RequestList() {
                 <div class='table-heading'>
                   <ReservesHead />        
                 </div>
-                <div class='table-cell'>
-                  <req />
+                <div class='table-cell'>  
                   {forReviews.length > 0 ? (
                     <div>
                     {forReviews.map((reserve) => (
@@ -106,8 +122,7 @@ function RequestList() {
                   <div class='table-heading'>
                     <ReservesHead />        
                   </div>
-                  <div class='table-cell'>
-                    <req />
+                  <div class='table-cell'>    
                     {forDeans.length > 0 ? (
                       <div>
                       {forDeans.map((reserve) => (
@@ -126,8 +141,7 @@ function RequestList() {
                     <div class='table-heading'>
                       <ReservesHead />        
                     </div>
-                    <div class='table-cell'>
-                      <req />
+                    <div class='table-cell'>      
                       {forChecks.length > 0 ? (
                         <div>
                         {forChecks.map((reserve) => (
@@ -142,18 +156,55 @@ function RequestList() {
                     <div class='title' id='personal-req'>
                         YOUR <div class='yellow'>REQUESTS</div>
                     </div>
+                    <div className="btn-cont" id='buttons'>
+                      <button className="btn active" onClick={sortPage} name='All'>All</button>
+                      <button className="btn" onClick={sortPage} name='Pending'>Pending</button>
+                      <button className="btn" onClick={sortPage} name='Approved'>Approved</button>
+                      <button className="btn" onClick={sortPage} name='Denied'>Denied</button>
+                      <button className="btn" onClick={sortPage} name='Cancelled'>Cancelled</button>
+                    </div>
                     <div class='table-heading'>
-                      <ReservesHead />        
+                      <ReservesHead />
                     </div>
                     <div class='table-cell'>
-                      <req />
-                      {reserves.length > 0 ? (
-                        <div>
-                        {reserves.map((reserve) => (
-                          <ReservesContent key={reserve._id} reserves={reserve} />
-                        ))}
-                        </div>
-                      ) : (<h2 className='none'>No Reservations Found</h2>)}
+                      {active === 'Approved' ? (<>
+                        {sorted.length > 0 ? (
+                              <div>
+                              {sorted.map((reserve) => (
+                                <ReservesContent key={reserve._id} reserves={reserve} />
+                              ))}
+                              </div>
+                            ) : (<h2 className='none'>No Approved Reservations</h2>)}
+                      </>) : (<>
+                        {active === 'Denied' ? (<>
+                          {sorted.length > 0 ? (
+                              <div>
+                              {sorted.map((reserve) => (
+                                <ReservesContent key={reserve._id} reserves={reserve} />
+                              ))}
+                              </div>
+                            ) : (<h2 className='none'>No Denied Reservations</h2>)}
+                        </>) : (<>
+                          {active === 'Cancelled' ? (<>
+                            {sorted.length > 0 ? (
+                              <div>
+                              {sorted.map((reserve) => (
+                                <ReservesContent key={reserve._id} reserves={reserve} />
+                              ))}
+                              </div>
+                            ) : (<h2 className='none'>No Cancelled Reservations</h2>)}
+                          </>) : (<>
+                            {reserves.length > 0 ? (
+                              <div>
+                              {reserves.map((reserve) => (
+                                <ReservesContent key={reserve._id} reserves={reserve} />
+                              ))}
+                              </div>
+                            ) : (<h2 className='none'>No Reservations</h2>)}
+                          </>)}
+                        </>)}
+                      </>)}    
+                      
                     </div>
                   </div>
                 </>)}

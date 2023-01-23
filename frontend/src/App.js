@@ -45,7 +45,7 @@ function App() {
 
             <Route path='/venue-incharge' element={<MainVIC/>}>
               <Route path='dashboard' element={<DashboardRegular/>}></Route>
-              <Route path='your-request-list' element={<RequestList/>}></Route>
+              <Route path='user-request-list' element={<RequestList/>}></Route>
               <Route path='details:id' element={<DetailedRequest/>}></Route>
               <Route path='notifications' element={<Notifications/>}></Route>
             </Route>

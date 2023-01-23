@@ -29,6 +29,7 @@ export default function PopupDeny() {
 
         const updateData = {
             review: 'Deny',
+            level: 'Denied',
             resID: reservation._id
         }
 

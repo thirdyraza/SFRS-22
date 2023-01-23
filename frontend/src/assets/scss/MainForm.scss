@@ -148,9 +148,7 @@
         }
 
         button{
-            color: #fff;
             border-style: none;
-            background-color: $color-gray;
         }
 
         .time-container{
@@ -174,7 +172,7 @@
 
     .selectbottom{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1.5fr 2fr;
         .date-container{
             display: flex;
             flex-direction: column;
@@ -184,9 +182,62 @@
         }
 
     }
+    .btn-equip{
+        margin-top: 10px;
+        padding: 15px;
+        width: 150px;
+        background-color: #E5E4E2;
+        border-radius: 15px;
+        cursor: pointer;
 
-    .equipment-container{
-        display: grid;
-        grid-template-columns: 10fr 10fr;
+        &:hover{
+            color: white;
+            background-color: $color-blue;
+        }
     }
+
+    /* Customize the label (the container) */
+
+    .equipments{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #ffff;
+        border-radius: 25px;
+        width: auto;
+        padding: 25px 0px 25px 0px;
+
+        h2{
+            margin-bottom: 20px;
+        }
+
+        .cbo-container{
+            display: flex;
+    
+        }
+    
+        .eq-divider{
+            width: 40vw;
+            justify-content: space-between;
+            display: flex;
+            
+        }
+    
+        .eq-other{
+            display: flex;
+            flex-direction: column;
+            width: 40vw;
+        }
+    
+        .eq-cbo{
+            margin-right: 10px;
+        }
+    
+        .eq-other{
+            margin-top: 20px;
+        }
+    }
+
+
 }

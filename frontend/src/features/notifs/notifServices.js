@@ -81,6 +81,28 @@ const getVenicNotifs = async(token) =>{
     return response.data
 }
 
+// update read status
+const readNotif = async(notifID, token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.put(API_URL + 'reading/' + notifID, config)
+    return response.data
+}
+
+// get unread notifs
+const getUnread = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'reading/', config)
+    return response.data
+}
+
 const notifService = {
     setNotif,
     getNotifs,
@@ -89,6 +111,8 @@ const notifService = {
     getDeanNotifs,
     getOsasNotifs,
     getVenicNotifs,
+    readNotif,
+    getUnread,
 }
 
 export default notifService

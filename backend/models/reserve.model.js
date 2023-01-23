@@ -52,9 +52,16 @@ const reserveSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add an ending time']
     },
+    equipment: {
+        type: Array,
+    },
     status: {
         type: String,
-        enum: ["Successfully Reserved", "Department Dean", "OSAS Staff", "OSAS Director", "Venue In-Charge", "Head of Office", "Organization Adviser", "Denied", "Cancelled"]
+        enum: ["Successfully Reserved", "Department Dean", "OSAS Director", "Venue In-Charge", "Head of Office", "Organization Adviser", "Denied", "Cancelled"]
+    },
+    level: {
+        type: String,
+        enum: ["Pending", "Reserved", "Cancelled", "Denied", "Completed"]
     },
     counter:{
         type: Number,

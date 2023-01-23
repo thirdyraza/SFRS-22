@@ -50,6 +50,9 @@ const notifSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add remarks']
     },
+    read: {
+        type: Boolean,
+    },
     sign: {
         type: String,
     }

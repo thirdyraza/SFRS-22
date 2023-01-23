@@ -135,6 +135,44 @@ const getForOsasDash = async(token) =>{
     return response.data
 }
 
+// get approved reservations
+const getApproved = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'approved', config)
+    return response.data
+}
+// get cancelled reservations
+const getCancelled = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'cancelled', config)
+    return response.data
+}
+// get denied reservations
+const getDenied = async(token) =>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'denied', config)
+    return response.data
+}
+
+// get sorted reservations
+const getSorted = async(active) =>{
+
+    const response = await axios.get(API_URL + 'sorted', active)
+    return response.data
+}
+
 //update reservation
 const updateReserve = async(updateData) => {
     const response = await axios.put(API_URL + updateData.resID, updateData)
@@ -156,7 +194,6 @@ const reserveService = {
     createReserve,
     getReserves,
     getReservesDash,
-    deleteReserve,
     getAllReserves,
     getReservation,
     getForReview,
@@ -167,7 +204,12 @@ const reserveService = {
     getForDeanDash,
     getForOsas,
     getForOsasDash,
+    getApproved,
+    getCancelled,
+    getDenied,
+    getSorted,
     updateReserve,
+    deleteReserve,
 }
 
 export default reserveService

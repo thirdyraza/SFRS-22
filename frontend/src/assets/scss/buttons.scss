@@ -1,0 +1,38 @@
+@import './var&mixins.scss';
+
+.btn-cont{
+    display: flex;
+    flex-direction: row;
+
+    button{
+        color: #294A70;
+        font-weight: 600;
+        padding: 8px;
+        width: 100px;
+        margin-left: 13px;
+        border-radius: 25px;
+        border-style: none;
+        cursor: pointer;
+        background-color: white;
+        transition: all 0.2s ease;
+        opacity: 50%;
+
+        &:hover{
+            opacity: 100%;
+            color: white;
+            background-color: #294A70;
+        }
+    }
+
+    button.active{
+        opacity: 100%;
+        cursor: default;
+        color: white;
+        background-color: $color-yellow;
+
+        &:hover{
+            color: white;
+            background-color: $color-yellow;
+        }
+    }
+}

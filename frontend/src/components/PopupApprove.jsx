@@ -23,20 +23,25 @@ export default function PopupApprove() {
 
         let sgn
         let updStat
+        let level
 
         if(user.role === 'Organization Adviser' || user.role === 'Head of Office'){
             sgn = 'Noted by '
             updStat = 'Department Dean'
+            level = 'Pending'
         }else if(user.role === 'Department Dean'){
             sgn = 'Recommended by '
             updStat = 'OSAS Dean'
+            level = 'Pending'
         }else if(user.role === 'OSAS Dean'){
             sgn = 'Approved by '
             updStat = 'Approved'
+            level = 'Reserved'
         }
 
         const updateData = {
             review: 'Approve',
+            level,
             resID: reservation._id
         }
         dispatch(updateReserve(updateData))

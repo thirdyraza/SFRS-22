@@ -25,7 +25,6 @@ import PopupEquipment from '../components/PopupEquipments';
 
     function openEquip(){
         document.getElementById('popup_equip').style.cssText = 'display:flex';
-        document.getElementById('close').style.cssText = 'display:flex';    
         document.getElementById('open_popup').style.cssText = 'display:hidden';
     }
 
@@ -269,6 +268,50 @@ import PopupEquipment from '../components/PopupEquipments';
                                 </div>
                             </div>
 
+                            <div className="equipments">
+                                <h2>Equipments</h2>
+                                <div className="eq-divider">
+                                    <div className="eq-1">
+                                        <div className="cbo-container">
+                                        <input className="eq-cbo" type="checkbox"/>
+                                        <p>Chair/s</p>
+                                        </div>
+                                        
+                                        <div className="cbo-container">
+                                        <input className="eq-cbo" type="checkbox"/>
+                                        <p>LCD Projector/s</p>
+                                        </div>
+
+                                        <div className="cbo-container">
+                                        <input className="eq-cbo" type="checkbox"/>
+                                        <p>Speaker/s or Sound System</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="eq-2">
+                                        <div className="cbo-container">
+                                        <input className="eq-cbo" type="checkbox"/>
+                                        <p>Table</p>
+                                        </div>
+
+                                        <div className="cbo-container">
+                                        <input className="eq-cbo" type="checkbox"/>
+                                        <p>Projector Screen</p>
+                                        </div>
+
+                                        <div className="cbo-container">
+                                        <input className="eq-cbo" type="checkbox"/>
+                                        <p>Microphone</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="eq-other">
+                                    <label>Others, please specify</label>
+                                    <textarea/>
+                                </div>
+                            </div>
+
                         </div>
 
                         <button type='submit' id="btnSubmit" className='btnForm btn btn-block'>
@@ -276,7 +319,6 @@ import PopupEquipment from '../components/PopupEquipments';
                         </button>
 
                     </form>
-                    
                 </div>
             </div>
         </div>

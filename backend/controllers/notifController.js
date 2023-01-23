@@ -99,6 +99,7 @@ const setNotif = asyncHandler( async (req, res) => {
         restime_out: req.body.time_out,
         restatus: req.body.status,
         requestor: req.body.requestor,
+        read: false,
         updid: req.user.id,
         updby: req.user.name,
         updrole: req.user.role,
@@ -107,6 +108,30 @@ const setNotif = asyncHandler( async (req, res) => {
     })
 
     res.status(200).json(notif)
+})
+
+// @desc update notification read status
+// @route UPDATE /api/notifs/status
+// @access Private
+const readNotif = asyncHandler(async (req, res) => {
+
+    let upd
+    if(!req.body.read){
+        upd = true
+        const reading = await Notif.findByIdAndUpdate(req.params.id, {read: upd})
+        res.status(200).json(reading)
+    }
+    
+})
+
+// @desc update notification read status
+// @route UPDATE /api/notifs/status
+// @access Private
+const getUnread = asyncHandler(async (req, res) => {
+
+    const unread = await Notif.find({read: false})
+    res.status(200).json(unread)
+    
 })
 
 
@@ -118,4 +143,6 @@ module.exports = {
     getDeanNotifs,
     getOsasNotifs,
     getCheckNotifs,
+    readNotif,
+    getUnread,
 }

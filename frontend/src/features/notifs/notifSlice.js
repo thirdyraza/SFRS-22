@@ -10,6 +10,7 @@ const initialState = {
     deanNotifs: [notification],
     osasNotifs: [notification],
     venicNotifs: [notification],
+    reading: [notification],
     isSuccess: false,
     isLoading: false,
     isError: false,
@@ -91,6 +92,30 @@ export const getVenicNotifs = createAsyncThunk('notifs/getForVenic', async(_id, 
     try {
         const token = thunkAPI.getState().auth.user.token
         return await notifService.getVenicNotifs(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// update read status
+export const readNotif = createAsyncThunk('notifs/updateRead', async(notifID, _id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await notifService.readNotif(notifID, token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get unread notifs
+export const getUnread = createAsyncThunk('notifs/unread', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await notifService.getUnread(token)
 
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
@@ -194,6 +219,32 @@ export const notifSlice = createSlice({
                 state.venicNotifs = action.payload
             })
             .addCase(getVenicNotifs.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(readNotif.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(readNotif.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.notifs = state.notifs.filter((notif) => notif._id !== action.payload.id)
+            })
+            .addCase(readNotif.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getUnread.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getUnread.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.reading = action.payload
+            })
+            .addCase(getUnread.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

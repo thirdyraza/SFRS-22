@@ -50,7 +50,9 @@ const setReserve = asyncHandler( async (req, res) => {
         date: req.body.date,
         time_in: req.body.time_in,
         time_out: req.body.time_out,
+        equipment: req.body.equipment,
         status: respo,
+        level: "Pending",
         counter: 0,
         user: req.user.id,
         requestor: req.user.name,
@@ -96,7 +98,7 @@ const updateReserve = asyncHandler( async (req, res) => {
         ctr = 0
     }
 
-    const updatedReserve = await Reserve.findByIdAndUpdate(req.params.id, {status: updStat, counter: ctr}, {new: true})
+    const updatedReserve = await Reserve.findByIdAndUpdate(req.params.id, {status: updStat, counter: ctr, level: req.body.level}, {new: true})
     return res.status(200).json(updatedReserve)
 })
 
@@ -234,6 +236,27 @@ const getForOsasDash = asyncHandler( async (req, res) => {
 
 })
 
+const getApproved = asyncHandler(async(req, res) => {
+    const approved = await Reserve.find({status: 'Successfully Reserved'})
+    res.status(200).json(approved)
+})
+
+const getCancelled = asyncHandler(async(req, res) => {
+    const cancelled = await Reserve.find({status: 'Cancelled'})
+    res.status(200).json(cancelled)
+})
+
+const getDenied = asyncHandler(async(req, res) => {
+    const denied = await Reserve.find({status: 'Denied'})
+    res.status(200).json(denied)
+})
+
+const getSorted = asyncHandler(async(req, res) => {
+    
+    const sortedRes = await Reserve.find({level: req.body.active})
+    res.status(200).json(sortedRes)
+})
+
 module.exports = {
     getReserves,
     getReservesDash,
@@ -250,4 +273,8 @@ module.exports = {
     getForDeanDash,
     getForOsas,
     getForOsasDash,
+    getApproved,
+    getCancelled,
+    getDenied,
+    getSorted
 }

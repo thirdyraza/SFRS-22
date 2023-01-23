@@ -12,7 +12,7 @@
     transition: 0.2s;
   }
 }
-#popup_container, #popup_cancel, #popup_approve, #popup_deny, #popup_logs { 
+#popup_container, #popup_cancel, #popup_approve, #popup_deny, #popup_logs, #popup_equip { 
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
@@ -102,7 +102,6 @@
     }
   }
   #open_popup{
-
     &:hover{
       transform: scale(1.1);
       transition: .5s ease;
@@ -190,9 +189,11 @@
       }
     }
   }
+
    // Confirmation Popup
  .confirmation_popup{
   position: relative;
+  color: white;
   border-radius: 15px;
   background-color: $color-blue;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
@@ -302,7 +303,6 @@
   justify-content: center;
   align-items: center;
   width: 100px;
-  font: $color-white;
   color: $color-white;
   margin: 10px;
 }
@@ -336,9 +336,9 @@
 }
 .btnAdd{
   cursor: pointer;
-  background-color: $color-blue;
+  background-color: $color-green;
   &:hover{
-    background-color: $color-blue;
+    background-color: $color-greenshade;
   }
 }
 
@@ -369,12 +369,23 @@
   flex-direction: row;
 }
 
-.equipment-container{
+#equip-title{
+  color: white;
+}
+
+.equip-cont{
   display: grid;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
+
+  .equip-input{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
   select{
     padding: 12px 20px;
@@ -383,4 +394,12 @@
     border: 1px solid #ccc;
     border-radius: 15px;
   }
+
+  .equip-btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    padding-top: 20px;
+  }
+
 }

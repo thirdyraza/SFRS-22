@@ -16,6 +16,10 @@ const initialState = {
     forDeansDash: [reservation],
     forOsas: [reservation],
     forOsasDash: [reservation],
+    pending: [reservation],
+    cancelled: [reservation],
+    denied: [reservation],
+    sorted: [reservation],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -175,6 +179,51 @@ export const getForOsasDash = createAsyncThunk('reserves/dashOsas', async(_id, t
     try {
         const token = thunkAPI.getState().auth.user.token
         return await reserveService.getForOsasDash(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get sorted reservation (approved)
+export const getApproved = createAsyncThunk('reserves/approved', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getApproved(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+// get sorted reservation (cancelled)
+export const getCancelled = createAsyncThunk('reserves/cancelled', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getCancelled(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+// get sorted reservation (denied)
+export const getDenied = createAsyncThunk('reserves/denied', async(_id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await reserveService.getDenied(token)
+
+    } catch (error) {
+        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get sorted reservation
+export const getSorted = createAsyncThunk('reserves/sorted', async(active, thunkAPI) => {
+    try {
+        return await reserveService.getSorted(active)
 
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
@@ -389,6 +438,58 @@ export const reserveSlice = createSlice({
                 state.forOsasDash = action.payload
             })
             .addCase(getForOsasDash.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getApproved.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getApproved.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.approved = action.payload
+            })
+            .addCase(getApproved.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getCancelled.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getCancelled.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.cancelled = action.payload
+            })
+            .addCase(getCancelled.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getDenied.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getDenied.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.denied = action.payload
+            })
+            .addCase(getDenied.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getSorted.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getSorted.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.sorted = action.payload
+            })
+            .addCase(getSorted.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

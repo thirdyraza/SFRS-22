@@ -28,6 +28,7 @@ export default function PopupCancel() {
     
         const updateData = {
             review: 'Cancel',
+            level: 'Cancelled',
             resID: reservation._id
         }
 
