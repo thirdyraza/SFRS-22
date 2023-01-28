@@ -1,9 +1,9 @@
 import NotificationContent from '../components/NotificationContent';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getReserves, reset } from '../features/reserves/reserveSlice';
+import { getForCheck, getReserves, reset } from '../features/reserves/reserveSlice';
 import '../assets/scss/notifications.scss'
-import { getDeanNotifs, getHeadNotifs, getOsasNotifs, getVenicNotifs } from '../features/notifs/notifSlice';
+import { getDeanNotifs, getHeadNotifs, getOsasNotifs } from '../features/notifs/notifSlice';
 import NotificationCell from '../components/NotificationCell';
 import Loader from '../components/Loader';
 
@@ -12,8 +12,8 @@ function Notifications() {
     const dispatch = useDispatch()
 
     const { user } = useSelector((state) => state.auth)
-    const { headNotifs, deanNotifs, osasNotifs, venicNotifs, isLoading } = useSelector((state) => state.notif)
-    const { reserves } = useSelector((state) => state.reserves)
+    const { headNotifs, deanNotifs, osasNotifs, isLoading } = useSelector((state) => state.notif)
+    const { reserves, forChecks } = useSelector((state) => state.reserves)
 
     useEffect(() => {
         
@@ -26,7 +26,7 @@ function Notifications() {
         } else if(user.role === 'OSAS Dean'){
             dispatch(getOsasNotifs())
         } else if(user.role === 'Outdoor Stage In-Charge'){
-            dispatch(getVenicNotifs())
+            dispatch(getForCheck())
         }
 
         return () => {
@@ -112,10 +112,10 @@ function Notifications() {
                 </div>
                 ) : (<h3 className='notif-none'>No Notifications Found</h3>)}
             </>) : (<>
-                {venicNotifs.length > 0 ? (
+                {forChecks.length > 0 ? (
                 <div>
-                    {venicNotifs.map((notif) => (
-                    <NotificationCell key={notif._id} notifs={notif}/>
+                    {forChecks.map((reserve) => (
+                    <NotificationContent key={reserve._id} reserves={reserve}/>
                     ))}
                 </div>
                 ) : (<h3 className='notif-none'>No Notifications Found</h3>)}

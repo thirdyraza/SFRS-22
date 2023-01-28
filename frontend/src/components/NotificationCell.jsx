@@ -12,11 +12,10 @@ export default function NotificationCell({notifs}) {
 
     const gotoDetails = (e) =>{
         e.preventDefault()
-
-        console.log(notifs._id)
         
         const resID = notifs.reservation
         dispatch(getReservation(resID))
+        dispatch(readNotif(resID))
     
         navigate('../details:' + resID)
     }
@@ -33,7 +32,7 @@ export default function NotificationCell({notifs}) {
             <div>
                 <p className="notif-name">{role === 'head' ? (<>{notifs.updby} {notifs.sign}</>)
                 : (<>{user.name === notifs.updby ? (<>{notifs.sign}</>)
-                    : (<>{notifs.sign}</>)}</>)}</p>
+                    : (<>{notifs.updby} {notifs.sign}</>)}</>)}</p>
                 <p className="notif-subject">Activity: {notifs.resact}</p>
             </div>
         </div>

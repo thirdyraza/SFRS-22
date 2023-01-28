@@ -88,10 +88,10 @@ export const getOsasNotifs = createAsyncThunk('notifs/getForOsas', async(_id, th
 })
 
 // get notifications for venue in-charge
-export const getVenicNotifs = createAsyncThunk('notifs/getForVenic', async(_id, thunkAPI) => {
+export const getVenicNotifs = createAsyncThunk('notifs/getForVenic', async(notifID, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await notifService.getVenicNotifs(token)
+        return await notifService.getVenicNotifs(token, notifID)
 
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()

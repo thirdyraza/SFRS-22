@@ -4,7 +4,6 @@ import { createReserve, getReservation } from '../features/reserves/reserveSlice
 import { setNotif } from '../features/notifs/notifSlice';
 import '../assets/scss/mainform.scss';
 import { useNavigate } from 'react-router-dom';
-import PopupEquipment from '../components/PopupEquipments';
 
     function setMinDate(){
         
@@ -23,11 +22,6 @@ import PopupEquipment from '../components/PopupEquipments';
         document.getElementById('date').setAttribute("min", today);
     }
 
-    function openEquip(){
-        document.getElementById('popup_equip').style.cssText = 'display:flex';
-        document.getElementById('open_popup').style.cssText = 'display:hidden';
-    }
-
     export default function ReservationForm(){
 
     const {user} = useSelector((state) => state.auth)
@@ -43,10 +37,11 @@ import PopupEquipment from '../components/PopupEquipments';
         venue: '',
         room: '',
         date: new Date(),
+        equipment: '',
         time_in: '',
         time_out: '',
     })
-    const { activity, purpose, org, venue, room, date, time_in, time_out } = formData
+    const { activity, purpose, org, venue, room, date, equipment, time_in, time_out } = formData
 
     const SEAITE = ["PICE", "IIEE", "LITES", "UAPSA", "JIEEP", "LTL", "SSC", "CCA", "LUSC" ]
     const SABH = ["HOST", "JFINEX", "JPIA", "JMAH", "LTL", "SSC", "CCA", "LUSC" ]
@@ -142,6 +137,7 @@ import PopupEquipment from '../components/PopupEquipments';
             venue: '',
             room: '',
             date: '',
+            equipment: '',
             time_in: '',
             time_out: '',
         })
@@ -273,34 +269,34 @@ import PopupEquipment from '../components/PopupEquipments';
                                 <div className="eq-divider">
                                     <div className="eq-1">
                                         <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox"/>
+                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
                                         <p>Chair/s</p>
                                         </div>
                                         
                                         <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox"/>
+                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
                                         <p>LCD Projector/s</p>
                                         </div>
 
                                         <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox"/>
+                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
                                         <p>Speaker/s or Sound System</p>
                                         </div>
                                     </div>
 
                                     <div className="eq-2">
                                         <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox"/>
+                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
                                         <p>Table</p>
                                         </div>
 
                                         <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox"/>
+                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
                                         <p>Projector Screen</p>
                                         </div>
 
                                         <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox"/>
+                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
                                         <p>Microphone</p>
                                         </div>
                                     </div>
@@ -308,7 +304,7 @@ import PopupEquipment from '../components/PopupEquipments';
                                 
                                 <div className="eq-other">
                                     <label>Others, please specify</label>
-                                    <textarea/>
+                                    <textarea  value={equipment}/>
                                 </div>
                             </div>
 

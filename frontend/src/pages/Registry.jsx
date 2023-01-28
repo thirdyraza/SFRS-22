@@ -146,7 +146,7 @@ function Registry() {
                         <option>Faculty</option>
                         <option>Dean of the OSAS</option>
                         <option>OSAS Staff</option>
-                        <option>Venue-In-Charge</option>
+                        <option>Outdoor Stage In-Charge</option>
                         <option>Department Dean</option>
                     </select>
                 </div>

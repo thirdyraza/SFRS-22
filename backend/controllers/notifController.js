@@ -79,7 +79,7 @@ const getCheckNotifs = asyncHandler( async (req, res) => {
         venrespo = 'Friendship Park'
     }
 
-    const notifs = await Notif.find({ reservation: req.params.id, resven: venrespo}).sort('-createdAt')
+    const notifs = await Notif.find({resven: venrespo}).sort('-createdAt')
 
     res.status(200).json(notifs)
 })

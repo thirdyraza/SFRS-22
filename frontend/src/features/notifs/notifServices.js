@@ -71,15 +71,15 @@ const getOsasNotifs = async(token) =>{
     return response.data
 }
 // get notifications for venue in-charge
-const getVenicNotifs = async(token) =>{
+const getVenicNotifs = async(token, notifID) =>{
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
-    const response = await axios.get(API_URL + 'venic', config)
+    const response = await axios.get(API_URL + 'venic/' + notifID, config)
     return response.data
-}
+} 
 
 // update read status
 const readNotif = async(notifID, token) =>{
