@@ -142,6 +142,9 @@ return (
                         <p>Room:  {reservation.room}</p>
                         <p>Requested Date: {reservation.date}</p>
                         <p>Time: {reservation.time_in} to {reservation.time_out}</p>
+                        <br />
+                        <p>Equipment:</p>
+                        {reservation.equipment.length > 0 ? (<p>{reservation.equipment}</p>) : (<p>None Requested</p>)}
                     </div>
                 </div>
                 

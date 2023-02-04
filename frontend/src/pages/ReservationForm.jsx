@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
         if(dd < 10){dd = '0' + dd}
         if(mm < 10){mm = '0' + mm}
             
-        today = yyyy + '-' + mm + '-' + dd;
+        today = mm + '-' + dd + '-' + yyyy;
 
         document.getElementById('date').setAttribute("min", today);
     }
@@ -37,11 +37,11 @@ import { useNavigate } from 'react-router-dom';
         venue: '',
         room: '',
         date: new Date(),
-        equipment: '',
         time_in: '',
         time_out: '',
     })
-    const { activity, purpose, org, venue, room, date, equipment, time_in, time_out } = formData
+    const { activity, purpose, org, venue, room, date, time_in, time_out} = formData
+    const [equipment, setEquipment] = useState([]);
 
     const SEAITE = ["PICE", "IIEE", "LITES", "UAPSA", "JIEEP", "LTL", "SSC", "CCA", "LUSC" ]
     const SABH = ["HOST", "JFINEX", "JPIA", "JMAH", "LTL", "SSC", "CCA", "LUSC" ]
@@ -92,6 +92,25 @@ import { useNavigate } from 'react-router-dom';
 
     if(underBldg){ rooms = underBldg.map((e) => <option key={e}>{e}</option>)}
     else if(noRooms) { rooms = noRooms.map((e) => <option key={e}>{e}</option>)}
+
+    const equips = [
+        {
+            name: 'Chair/s',
+            quantity: 0
+        },
+        {
+            name: 'Table/s',
+            quantity: 0
+        },
+        {
+            name: 'Microphone/s',
+            quantity: 0
+        },
+        {
+            name: 'Speaker or Sound System',
+            quantity: 0
+        },
+    ]
     
     const onChange = (e) =>{
         setFormData((prevState) => ({
@@ -100,9 +119,47 @@ import { useNavigate } from 'react-router-dom';
         }))
     }
 
+    const [checkedState, setCheckedState] = useState(
+        new Array(equips.length).fill(false)
+    )
+
+    const handleOnChange = (position) => {
+        const updatedCheckedState = checkedState.map((item, index) =>
+          index === position ? !item : item
+        );
+    
+        setCheckedState(updatedCheckedState);
+
+        const equiping = updatedCheckedState.reduce(
+            (list, currentState, index) => {
+                if(currentState === true){
+                    return list + equips[index].name + ', '
+                }
+                return list
+            },
+            []
+        )
+
+        setEquipment(equiping)
+    };
+
     const onSubmit = (e) =>{
         e.preventDefault()
-        dispatch(createReserve(formData))
+        const reserveData = {
+            activity: activity,
+            purpose: purpose,
+            org: org,
+            venue: venue,
+            room: room,
+            date: date,
+            time_in: time_in,
+            time_out: time_out,
+            equipment: equipment,
+        }
+
+        dispatch(createReserve(reserveData))
+
+        console.log('continues')
 
         let sgn = ' sent a reservation request'
         let updStat
@@ -137,9 +194,9 @@ import { useNavigate } from 'react-router-dom';
             venue: '',
             room: '',
             date: '',
-            equipment: '',
             time_in: '',
             time_out: '',
+            equipment: [],
         })
 
         navigate('../dashboard')
@@ -186,7 +243,7 @@ import { useNavigate } from 'react-router-dom';
                         </div>
 
                         <div className="input-container">
-                                <div className="in">
+                                <div className="in" id='organization'>
                                     <label>Organization</label>
                                     <select
                                     type="text"
@@ -198,7 +255,7 @@ import { useNavigate } from 'react-router-dom';
                                         {orgs}
                                     </select>
                                 </div>
-                                <div className="in">
+                                <div className="in" id='venue'>
                                     <label>Venue</label>
                                     <select
                                     type="text"
@@ -211,7 +268,7 @@ import { useNavigate } from 'react-router-dom';
                                         {bldgs}
                                     </select>
                                 </div>
-                                <div className="in">
+                                <div className="in" id="room">
                                     <label>Room</label>
                                     <select
                                     type="text"
@@ -226,20 +283,21 @@ import { useNavigate } from 'react-router-dom';
                         </div>
 
                         <div className="selectbottom">
-                            <div className="in">
+                            <div className="in" id='date'>
                                 <label>Date</label>
                                 <input type="date"
                                 name= "date"
                                 id= "date"
                                 className='date-container'
                                 value={date}
-                                format='mmm-dd-yyyy'
+                                format = 'mm-dd-yyyy'
                                 onChange={onChange}
                                 onClick={setMinDate}
                                 />
                             </div>
+           
 
-                            <div className="in">
+                            <div className="in" id='time'>
                                 <label>Time</label>
                                 <div className="time-container">                        
                                     <input type="time"
@@ -264,55 +322,52 @@ import { useNavigate } from 'react-router-dom';
                                 </div>
                             </div>
 
-                            <div className="equipments">
+                        </div>
+                        <div className="equipments">
                                 <h2>Equipments</h2>
                                 <div className="eq-divider">
                                     <div className="eq-1">
-                                        <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
-                                        <p>Chair/s</p>
-                                        </div>
-                                        
-                                        <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
-                                        <p>LCD Projector/s</p>
-                                        </div>
-
-                                        <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
-                                        <p>Speaker/s or Sound System</p>
-                                        </div>
+                                        {equips.map(({name}, index) => {
+                                            return (
+                                                <div className="cbo-container" key={index}>
+                                                    <input className="eq-cbo" type="checkbox"
+                                                    id={`chkbox-${index}`}
+                                                    value={name} name={name}
+                                                    checked={checkedState[index]}
+                                                    onChange={() => handleOnChange(index)}/>{name}
+                                                </div>
+                                            )
+                                        })}
                                     </div>
-
+{/* 
                                     <div className="eq-2">
                                         <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
-                                        <p>Table</p>
+                                        <input className="eq-cbo" type="checkbox"
+                                        value='Table/s' name="equipment"
+                                        onChange={handleCheck}/> Table/s                                    
                                         </div>
 
                                         <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
-                                        <p>Projector Screen</p>
+                                        <input className="eq-cbo" type="checkbox"
+                                        value='Projector Screen' name="equipment"
+                                        onChange={handleCheck}/> Projector Screen
                                         </div>
 
                                         <div className="cbo-container">
-                                        <input className="eq-cbo" type="checkbox" value={equipment}/>
-                                        <p>Microphone</p>
+                                        <input className="eq-cbo" type="checkbox"
+                                        value='Microphone' name="equipment"
+                                        onChange={handleCheck}/> Microphone                                    
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
-                                
-                                <div className="eq-other">
-                                    <label>Others, please specify</label>
-                                    <textarea  value={equipment}/>
-                                </div>
+
                             </div>
-
+                        
+                        <div className='submit'>
+                            <button type='submit' id="btnSubmit" className='btnForm btn btn-block'>
+                                Submit
+                            </button>
                         </div>
-
-                        <button type='submit' id="btnSubmit" className='btnForm btn btn-block'>
-                            Submit
-                        </button>
 
                     </form>
                 </div>

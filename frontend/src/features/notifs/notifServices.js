@@ -3,13 +3,13 @@ import axios from "axios";
 const API_URL = '/api/notifs/'
 
 // create new notification
-const setNotif = async(reserveData, token) =>{
+const setNotif = async(notifData, token) =>{
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
-    const response = await axios.post(API_URL, reserveData, config)
+    const response = await axios.post(API_URL, notifData, config)
 
     if(response.data) {
         localStorage.setItem('notif', JSON.stringify(response.data))

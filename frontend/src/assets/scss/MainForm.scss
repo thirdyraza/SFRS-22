@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 @import './var&mixins.scss';
 
+
 .reserve-form-container{
     margin: 80px auto;
     border-radius: 25px;
-    padding: 50px 0;
+    padding: 50px 50px;
     display: flex;
     justify-content: center;
     background-color: $color-white;
@@ -39,6 +40,7 @@
         float: right;
         width: 7vw;
         border-style: none;
+        display: flex;
     }
     #btnAdd{
         border-radius: 50px;
@@ -81,11 +83,10 @@
 
     .note{
         background-color: #E9C185;
-        place-self: center;
         border-radius: 8px;
         padding: 10px 30px;
-        display: flex;
         flex-direction: column;
+        width: 100%;
 
         .note_header{
             font-weight: bolder;
@@ -116,19 +117,12 @@
         flex-direction: column;
         grid-template-columns: 1fr;
         width: 100%;
-        textarea{
-            height: 100px;
-            padding: 12px 20px;
-            margin: 8px 0;
-            border: 1px solid #E5E4E2;
-            border-radius: 15px;
-        }
     }
 
     .in, .time-container{
         display: flex;
         flex-direction: column;
-        padding-right: 10px;
+        justify-content: space-between;
 
         select{
             background-color: #E5E4E2;
@@ -168,11 +162,14 @@
     .input-container{
         display: grid;
         grid-template-columns: .8fr 1fr .7fr;
+        width: 100%;
     }
 
     .selectbottom{
         display: grid;
         grid-template-columns: 1.5fr 2fr;
+        width: 100%;
+        margin-bottom: 30px;
         .date-container{
             display: flex;
             flex-direction: column;
@@ -199,17 +196,14 @@
     /* Customize the label (the container) */
 
     .equipments{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        background-color: #ffff;
-        border-radius: 25px;
-        width: auto;
-        padding: 25px 0px 25px 0px;
+        display:grid;
+        grid-template-columns: 1fr;
+        width: 100%;
 
         h2{
+            font-size: 20px;
             margin-bottom: 20px;
+            text-align: left;
         }
 
         .cbo-container{
@@ -227,7 +221,6 @@
         .eq-other{
             display: flex;
             flex-direction: column;
-            width: 40vw;
         }
     
         .eq-cbo{
@@ -240,4 +233,29 @@
     }
 
 
+}
+
+// Quick Fix
+form{
+    display: flex;
+    flex-direction: column;
+}
+textarea{
+    height: 100px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border-radius: 15px;
+    width: 100%;
+}
+#venue{
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.input-container{
+    display: flex;
+    justify-content: space-between;
+}
+#date{
+    margin-right: 8px;
 }

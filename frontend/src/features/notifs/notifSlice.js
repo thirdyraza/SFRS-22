@@ -18,7 +18,7 @@ const initialState = {
 }
 
 // set notification
-export const setNotif = createAsyncThunk('notifs/setNotif', async(notifData, thunkAPI) =>{
+export const setNotif = createAsyncThunk('notifs/createNotifs', async(notifData, thunkAPI) =>{
     try {
         const token = thunkAPI.getState().auth.user.token
         return await notifService.setNotif(notifData, token)
@@ -29,7 +29,7 @@ export const setNotif = createAsyncThunk('notifs/setNotif', async(notifData, thu
 })
 
 // get notifications
-export const getNotifs = createAsyncThunk('notifs/getNotifs', async(resid, thunkAPI) => {
+export const getNotifs = createAsyncThunk('notifs/fetchNotifs', async(resid, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await notifService.getNotifs(resid, token)
@@ -219,32 +219,6 @@ export const notifSlice = createSlice({
                 state.venicNotifs = action.payload
             })
             .addCase(getVenicNotifs.rejected, (state, action) => {
-                state.isLoading = false
-                state.isError = true
-                state.message = action.payload
-            })
-            .addCase(readNotif.pending, (state) => {
-                state.isLoading = true
-            })
-            .addCase(readNotif.fulfilled, (state, action) => {
-                state.isLoading = false
-                state.isSuccess = true
-                state.notifs = state.notifs.filter((notif) => notif._id !== action.payload.id)
-            })
-            .addCase(readNotif.rejected, (state, action) => {
-                state.isLoading = false
-                state.isError = true
-                state.message = action.payload
-            })
-            .addCase(getUnread.pending, (state) => {
-                state.isLoading = true
-            })
-            .addCase(getUnread.fulfilled, (state, action) => {
-                state.isLoading = false
-                state.isSuccess = true
-                state.reading = action.payload
-            })
-            .addCase(getUnread.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

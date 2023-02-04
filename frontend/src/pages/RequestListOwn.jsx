@@ -19,6 +19,7 @@ function RequestList() {
   var active = 'All'
   const sortPage = (e) =>{
     active = e.target.name
+    dispatch(getSorted(active))
   }
 
   useEffect(() => {
@@ -37,25 +38,23 @@ function RequestList() {
       dispatch(getForDean())
     } else if(user.role === 'Student Officer' || user.role === 'Faculty'){
       dispatch(getReserves())
+      
+      let header = document.getElementById("buttons");
+      let btns = header.getElementsByClassName("btn");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function() {
+        var current = document.getElementsByClassName("active");
+        current[0].className = current[0].className.replace(" active", "");
+        this.className += " active";
+        });
+      }
     }
-
-    let header = document.getElementById("buttons");
-    let btns = header.getElementsByClassName("btn");
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].addEventListener("click", function() {
-      var current = document.getElementsByClassName("active");
-      current[0].className = current[0].className.replace(" active", "");
-      this.className += " active";
-      });
-    }
-
-    dispatch(getSorted(active))
 
     return () => {
       dispatch(reset())
     };
 
-  }, [dispatch, user, navigate, active]);
+  }, [dispatch, user, navigate]);
 
   var role
 
@@ -194,9 +193,9 @@ function RequestList() {
                               </div>
                             ) : (<h2 className='none'>No Cancelled Reservations</h2>)}
                           </>) : (<>
-                            {reserves.length > 0 ? (
+                            {sorted.length > 0 ? (
                               <div>
-                              {reserves.map((reserve) => (
+                              {sorted.map((reserve) => (
                                 <ReservesContent key={reserve._id} reserves={reserve} />
                               ))}
                               </div>

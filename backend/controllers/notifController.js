@@ -99,7 +99,6 @@ const setNotif = asyncHandler( async (req, res) => {
         restime_out: req.body.time_out,
         restatus: req.body.status,
         requestor: req.body.requestor,
-        read: false,
         updid: req.user.id,
         updby: req.user.name,
         updrole: req.user.role,
