@@ -2,7 +2,7 @@ import {useEffect} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {reset} from '../features/auth/authSlice'
-import { getReserves } from '../features/reserves/reserveSlice'
+import { getReservesDash } from '../features/reserves/reserveSlice'
 import '../assets/scss/home.scss'
 import bg from '../assets/images/bannerpic1.jpg'
 
@@ -15,7 +15,7 @@ function DashboardUser(){
   const dispatch = useDispatch()
 
   const {user} = useSelector((state) => state.auth)
-  const {reserves, isError, message, isLoading} = useSelector((state) => state.reserves)
+  const {reservesDash, isError, message, isLoading} = useSelector((state) => state.reserves)
 
   useEffect(() =>{
 
@@ -26,7 +26,7 @@ function DashboardUser(){
       return navigate('../login')
     }
 
-    dispatch(getReserves())
+    dispatch(getReservesDash())
 
     return () =>{
       dispatch(reset());
@@ -60,9 +60,9 @@ function DashboardUser(){
             <div id='ownreq' class='user-req'>
               <h1>YOUR REQUESTS</h1>
               <ReservesHead />
-                {reserves.length > 0 ? (
+                {reservesDash.length > 0 ? (
                   <div>
-                  {reserves.map((reserve) => (
+                  {reservesDash.map((reserve) => (
                     <ReservesContent key={reserve._id} reserves={reserve} />
                   ))}
                   </div>

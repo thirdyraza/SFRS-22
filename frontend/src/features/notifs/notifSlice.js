@@ -29,7 +29,7 @@ export const setNotif = createAsyncThunk('notifs/createNotifs', async(notifData,
 })
 
 // get notifications
-export const getNotifs = createAsyncThunk('notifs/fetchNotifs', async(resid, thunkAPI) => {
+export const getNotifs = createAsyncThunk('notifs/getNotifs', async(resid, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await notifService.getNotifs(resid, token)
@@ -92,30 +92,6 @@ export const getVenicNotifs = createAsyncThunk('notifs/getForVenic', async(notif
     try {
         const token = thunkAPI.getState().auth.user.token
         return await notifService.getVenicNotifs(token, notifID)
-
-    } catch (error) {
-        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
-        return thunkAPI.rejectWithValue(message)
-    }
-})
-
-// update read status
-export const readNotif = createAsyncThunk('notifs/updateRead', async(notifID, _id, thunkAPI) => {
-    try {
-        const token = thunkAPI.getState().auth.user.token
-        return await notifService.readNotif(notifID, token)
-
-    } catch (error) {
-        const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()
-        return thunkAPI.rejectWithValue(message)
-    }
-})
-
-// get unread notifs
-export const getUnread = createAsyncThunk('notifs/unread', async(_id, thunkAPI) => {
-    try {
-        const token = thunkAPI.getState().auth.user.token
-        return await notifService.getUnread(token)
 
     } catch (error) {
         const message = (error.reponse && error.response.data && error.response.data.message) || error.message || error.toString()

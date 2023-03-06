@@ -27,7 +27,7 @@ const initialState = {
 }
 
 // create reservation
-export const createReserve =createAsyncThunk('reserves/create', async(reserveData, thunkAPI) =>{
+export const createReserve = createAsyncThunk('reserves/create', async(reserveData, thunkAPI) =>{
     try {
         const token = thunkAPI.getState().auth.user.token
         return await reserveService.createReserve(reserveData, token)

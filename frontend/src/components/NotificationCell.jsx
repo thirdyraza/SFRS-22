@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { readNotif } from "../features/notifs/notifSlice";
 import { getReservation } from "../features/reserves/reserveSlice";
 
 export default function NotificationCell({notifs}) {
@@ -15,7 +14,6 @@ export default function NotificationCell({notifs}) {
         
         const resID = notifs.reservation
         dispatch(getReservation(resID))
-        dispatch(readNotif(resID))
     
         navigate('../details:' + resID)
     }

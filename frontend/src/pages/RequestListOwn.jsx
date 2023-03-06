@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllReserves, getForCheck, getForDean, getForReview, getReserves, getSorted, reset } from '../features/reserves/reserveSlice';
+import { getAllReserves, getForCheck, getForDean, getForReview, getReserves, reset } from '../features/reserves/reserveSlice';
 import ReservesHead from '../components/ReservesHead';
 import ReservesContent from '../components/ReservesContent';
 import '../assets/scss/table.scss';
@@ -14,12 +14,11 @@ function RequestList() {
   const dispatch = useDispatch()
 
   const { user } = useSelector((state) => state.auth)
-  const { allReserves, forReviews, forChecks, forDeans, reserves, sorted, isLoading} = useSelector((state) => state.reserves)
+  const { allReserves, forReviews, forChecks, forDeans, reserves, isLoading} = useSelector((state) => state.reserves)
 
   var active = 'All'
   const sortPage = (e) =>{
     active = e.target.name
-    dispatch(getSorted(active))
   }
 
   useEffect(() => {
@@ -167,35 +166,35 @@ function RequestList() {
                     </div>
                     <div class='table-cell'>
                       {active === 'Approved' ? (<>
-                        {sorted.length > 0 ? (
+                        {reserves.length > 0 ? (
                               <div>
-                              {sorted.map((reserve) => (
+                              {reserves.map((reserve) => (
                                 <ReservesContent key={reserve._id} reserves={reserve} />
                               ))}
                               </div>
                             ) : (<h2 className='none'>No Approved Reservations</h2>)}
                       </>) : (<>
                         {active === 'Denied' ? (<>
-                          {sorted.length > 0 ? (
+                          {reserves.length > 0 ? (
                               <div>
-                              {sorted.map((reserve) => (
+                              {reserves.map((reserve) => (
                                 <ReservesContent key={reserve._id} reserves={reserve} />
                               ))}
                               </div>
                             ) : (<h2 className='none'>No Denied Reservations</h2>)}
                         </>) : (<>
                           {active === 'Cancelled' ? (<>
-                            {sorted.length > 0 ? (
+                            {reserves.length > 0 ? (
                               <div>
-                              {sorted.map((reserve) => (
+                              {reserves.map((reserve) => (
                                 <ReservesContent key={reserve._id} reserves={reserve} />
                               ))}
                               </div>
                             ) : (<h2 className='none'>No Cancelled Reservations</h2>)}
                           </>) : (<>
-                            {sorted.length > 0 ? (
+                            {reserves.length > 0 ? (
                               <div>
-                              {sorted.map((reserve) => (
+                              {reserves.map((reserve) => (
                                 <ReservesContent key={reserve._id} reserves={reserve} />
                               ))}
                               </div>

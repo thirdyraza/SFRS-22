@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
         
         var today = new Date()
         var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0!
+        var mm = today.getMonth() + 1;
         var yyyy = today.getFullYear();
 
         dd += 3
@@ -17,9 +17,10 @@ import { useNavigate } from 'react-router-dom';
         if(dd < 10){dd = '0' + dd}
         if(mm < 10){mm = '0' + mm}
             
-        today = mm + '-' + dd + '-' + yyyy;
+        today = yyyy + '-' + mm + '-' + dd;
+        console.log(today)
 
-        document.getElementById('date').setAttribute("min", today);
+        document.getElementById('dit').setAttribute("min", today);
     }
 
     export default function ReservationForm(){
@@ -156,10 +157,7 @@ import { useNavigate } from 'react-router-dom';
             time_out: time_out,
             equipment: equipment,
         }
-
         dispatch(createReserve(reserveData))
-
-        console.log('continues')
 
         let sgn = ' sent a reservation request'
         let updStat
@@ -285,12 +283,12 @@ import { useNavigate } from 'react-router-dom';
                         <div className="selectbottom">
                             <div className="in" id='date'>
                                 <label>Date</label>
-                                <input type="date"
-                                name= "date"
-                                id= "date"
+                                <input type='date'
+                                name='date'
+                                id='dit'
                                 className='date-container'
                                 value={date}
-                                format = 'mm-dd-yyyy'
+                                format = 'yyyy-mm-dd'
                                 onChange={onChange}
                                 onClick={setMinDate}
                                 />
