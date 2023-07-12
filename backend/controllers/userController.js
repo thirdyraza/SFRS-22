@@ -79,7 +79,7 @@ const getMe = asyncHandler(async(req, res) =>{
 // @route GET /api/users/all
 // @access Private
 const getAll = asyncHandler(async(req, res) =>{
-    const users = await User.find({user: req.user.id})
+    const users = await User.find()
     
     res.status(200).json(users)
 })
